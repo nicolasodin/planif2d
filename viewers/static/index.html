@@ -174,7 +174,7 @@ body { background-color: #222; color: white;
 
 
   <input type="file" id="files" name="files[]" multiple style="float: right" />
-  <p><input type="button" id="reset" value="reset" /></p>
+  <p><input type="button" id="reset" value="reset" style  ="float: right"  /></p>
   <output id="list" style="float: right" ></output>
   <div class="drop" style="z-index: 1">
 
@@ -182,23 +182,23 @@ body { background-color: #222; color: white;
   <div class="drag" style="float: right">
 
 
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px; z-index: 5" />
-    <img src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 5" />
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px; z-index: 5" />
+    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px" />
+    <img src="images/test.jpg" class="draggable" style= " width:80px; height:40px" />
+    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px" />
+
     <script>
       function handleFileSelect(evt) {
         var files = evt.target.files; //
         for (var i = 0, f; f = files[i]; i++) {
-
           // Only process image files.
           if (!f.type.match('image.*')) {
             continue;
           }
           var reader = new FileReader();
-          reader.onload = (function(theFile) {
+           reader.onload = (function(theFile) {
             return function(e) {
               var span = document.createElement('span');
-              span.innerHTML = [' "<img  draggable="true" class = "draggable" style="width:200px; height:200px; class="draggable" src="', e.target.result,
+              span.innerHTML = [' "<img style= "width:200px; height:200px" class="draggable" src="', e.target.result,
                 '" title="', escape(theFile.name), '"/>'].join('');
               document.getElementById('list').insertBefore(span, null);
             };
@@ -206,7 +206,7 @@ body { background-color: #222; color: white;
           reader.readAsDataURL(f);
         }
       }
-      document.getElementById('files').addEventListener('change', handleFileSelect, false);
+      document.getElementById('files').addEventListener('"', handleFileSelect, false);
 
       $(".draggable").draggable({
         revert: 'invalide'
