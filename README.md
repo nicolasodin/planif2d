@@ -1,5 +1,5 @@
 # planif2d
-planif2d
+planification2d version 0.1 beta
 
 les options qui étaient mises en place : 
 
