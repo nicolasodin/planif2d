@@ -182,14 +182,14 @@ body { background-color: #222; color: white;
   <div class="drag" style="float: right">
 
 
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px" />
-    <img src="images/test.jpg" class="draggable" style= " width:80px; height:40px" />
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px" />
-
+    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px; z-index: 500" />
+    <img src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
+    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px ; z-index: 500" />
     <script>
       function handleFileSelect(evt) {
         var files = evt.target.files; //
         for (var i = 0, f; f = files[i]; i++) {
+
           // Only process image files.
           if (!f.type.match('image.*')) {
             continue;
@@ -198,7 +198,7 @@ body { background-color: #222; color: white;
            reader.onload = (function(theFile) {
             return function(e) {
               var span = document.createElement('span');
-              span.innerHTML = [' "<img style= "width:200px; height:200px" class="draggable" src="', e.target.result,
+              span.innerHTML = [' "<img  draggable="true" class = "draggable" style="width:200px; height:200px; class="draggable" src="', e.target.result,
                 '" title="', escape(theFile.name), '"/>'].join('');
               document.getElementById('list').insertBefore(span, null);
             };
@@ -206,7 +206,7 @@ body { background-color: #222; color: white;
           reader.readAsDataURL(f);
         }
       }
-      document.getElementById('files').addEventListener('"', handleFileSelect, false);
+      document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
       $(".draggable").draggable({
         revert: 'invalide'

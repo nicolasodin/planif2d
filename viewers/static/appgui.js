@@ -215,11 +215,14 @@ dwv.gui.setup = function () {
 
     $("#layerDialog").dialog({ width: "auto", resizable: false});
 
-    $("#layerDialog").droppable({
-        drop: function() {
-            alert( "dropped" );
+    $(".drop").droppable({
+        drop: function(event, ui){
+            console.log(ui.draggable.context)
+            OR
+            console.log(ui.draggable.clone() )
         }
     });
+
     // Resizable but keep aspect ratio
     // TODO it seems to add a border that bothers getting the cursor position...
     //$("#layerContainer").resizable({ aspectRatio: true });

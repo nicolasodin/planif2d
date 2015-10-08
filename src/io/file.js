@@ -189,6 +189,7 @@ dwv.io.File.prototype.load = function (ioArray)
             reader.onprogress = dwv.gui.updateProgress;
             reader.onerror = dwv.io.File.createErrorHandler(file, "image", self.onerror);
             reader.readAsDataURL(file);
+            reader.dropped;
         }
         else
         {
@@ -196,6 +197,7 @@ dwv.io.File.prototype.load = function (ioArray)
             reader.onprogress = dwv.gui.updateProgress;
             reader.onerror = dwv.io.File.createErrorHandler(file, "DICOM", self.onerror);
             reader.readAsArrayBuffer(file);
+            reader.dropped;
         }
     }
 
