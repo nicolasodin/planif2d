@@ -203,5 +203,4 @@ dwv.io.File.prototype.load = function (ioArray)
 
 
 
-
 };

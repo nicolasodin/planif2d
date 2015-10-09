@@ -87,10 +87,30 @@ body { background-color: #222; color: white;
 
 
   <style>
+    #container {width:820px;height:100px;overflow:hidden;}
+    #container.rotate90,#container.rotate270 {width:100px;height:820px}
+    #image {
+      transform-origin: top left; /* IE 10+, Firefox, etc. */
+      -webkit-transform-origin: top left; /* Chrome */
+      -ms-transform-origin: top left; /* IE 9 */
+    }
+    #container.rotate90 #image {
+      transform: rotate(90deg) translateY(-100%);
+      -webkit-transform: rotate(90deg) translateY(-100%);
+      -ms-transform: rotate(90deg) translateY(-100%);
+    }
+    #container.rotate180 #image {
+      transform: rotate(180deg) translate(-100%,-100%);
+      -webkit-transform: rotate(180deg) translate(-100%,-100%);
+      -ms-transform: rotate(180deg) translateX(-100%,-100%);
+    }
+    #container.rotate270 #image {
+      transform: rotate(270deg) translateX(-100%);
+      -webkit-transform: rotate(270deg) translateX(-100%);
+      -ms-transform: rotate(270deg) translateX(-100%);
+    }
 
     body {
-
-
       -moz-border-radius: 10px;
       border-radius: 10px;
 
@@ -100,7 +120,6 @@ body { background-color: #222; color: white;
       transition: all 200ms linear;
       float: right;
     }
-
 
     .drop_hover {
       -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
@@ -129,7 +148,6 @@ body { background-color: #222; color: white;
       -khtml-user-select: none;
       -webkit-user-select: none;
       user-select: none;
-
     }
   </style>
 
@@ -137,125 +155,113 @@ body { background-color: #222; color: white;
 
 <body>
 
-<div id="pageHeader">
+  <div id="pageHeader">
 
-<!-- Title -->
-<h1>DICOM Web Viewer
-(<a href="https://github.com/ivmartel/dwv">dwv</a>
-<span class="dwv-version"></span>)</h1>
+  <!-- Title -->
+  <h1>DICOM Web Viewer
+  <a href="https://github.com/ivmartel/dwv">dwv</a>
+  <span class="dwv-version"></span>)</h1>
 
-<!-- Toolbar -->
-<div id="toolbar"></div>
+  <!-- Toolbar -->
+  <div id="toolbar"></div>
 
-</div><!-- /pageHeader -->
+  </div><!-- /pageHeader -->
 
-<div id="pageMain">
+  <div id="pageMain">
 
-<!-- Open file -->
-<div id="openData" title="File">
-<div id="loaderlist"></div>
-<div id="progressbar"></div>
-</div>
-
-<!-- Toolbox -->
-<div id="toolbox" title="Toolbox">
-<ul id="toolList"></ul>
-</div>
-
-<!-- History -->
-<div id="history" title="History"></div>
-
-<!-- Tags -->
-<div id="tags" title="Tags"></div>
-
-<!-- Help -->
-<div id="help" title="Help"></div>
-
-
-
-  <input type="file" id="files" name="files[]" multiple style="float: right" />
-  <p><input type="button" id="reset" value="reset" style  ="float: right"  /></p>
-  <output id="list" style="float: right" ></output>
-  <div class="drop" style="z-index: 1">
-
+  <!-- Open file -->
+  <div id="openData" title="File">
+  <div id="loaderlist"></div>
+  <div id="progressbar"></div>
   </div>
-  <div class="drag" style="float: right">
 
+  <!-- Toolbox -->
+  <div id="toolbox" title="Toolbox">
+    <ul id="toolList"></ul>
+  </div>
 
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px; z-index: 500" />
-    <img src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
-    <img src="images/vw3.png" class="draggable" style= " width:80px; height:40px ; z-index: 500" />
-    <script>
-      function handleFileSelect(evt) {
-        var files = evt.target.files; //
-        for (var i = 0, f; f = files[i]; i++) {
+  <!-- History -->
+  <div id="history" title="History"></div>
 
-          // Only process image files.
-          if (!f.type.match('image.*')) {
-            continue;
+  <!-- Tags -->
+  <div id="tags" title="Tags"></div>
+
+  <!-- Help -->
+  <div id="help" title="Help"></div>
+    <p><input type="button" id="reset" value="reset" style  ="float: right"></p>
+
+    <?php
+      //Définition des variables de connexion à la base de données
+      try {
+          $dbh = new PDO('mysql:host=localhost;dbname=dwv', "root", "");
+      } catch (PDOException $e) {
+          print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+    }
+
+    //On récupère tous les implants
+    $sql="SELECT * FROM implant";
+    $resultat = $dbh->query($sql);
+
+    //On recupère le nombre de résultat
+    $nb_res = $resultat->rowCount();
+    ?>
+
+    <div class="drop" style="z-index: 1">
+
+    </div>
+    <div class="drag" style="float: right">
+
+      <?php
+        // Si on a récupéré un résultat on l'affiche.
+        if($nb_res) {
+          while($ligne = $resultat->fetch(PDO::FETCH_BOTH)) {
+            $id_implant = $ligne["id"];
+            $nom_implant = $ligne["nom"];
+            $chemin_image_implant = $ligne["chemin_image"];
+
+            echo "<img src='".$chemin_image_implant."' class='draggable' alt='implants' style='width:300; height:100 ;z-index: 500'>";
           }
-          var reader = new FileReader();
-           reader.onload = (function(theFile) {
-            return function(e) {
-              var span = document.createElement('span');
-              span.innerHTML = [' "<img  draggable="true" class = "draggable" style="width:200px; height:200px; class="draggable" src="', e.target.result,
-                '" title="', escape(theFile.name), '"/>'].join('');
-              document.getElementById('list').insertBefore(span, null);
-            };
-          })(f);
-          reader.readAsDataURL(f);
         }
-      }
-      document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        else echo _('Pas d implants dans la base de données.');
+      ?>
 
-      $(".draggable").draggable({
-        revert: 'invalide'
-      });
-
-      $("body").droppable({
-        accept: ".draggable"
-      });
-
-      $("#reset").click(function () {
-        $(".draggable").animate({
-          top: "0px",
-          left: "0px"
+      <script>
+        $(".draggable").draggable({
+          revert: 'invalide'
         });
-      });
 
+        $("body").droppable({
+          accept: ".draggable"
+        });
 
+        $("#reset").click(function () {
+          $(".draggable").animate({
+            top: "0px",
+            left: "0px"
+          });
+        });
+      </script>
+    </div>
 
-    </script>
-
-
-
+    <!-- Layer Container -->
+    <div id="layerDialog" title="Image" style="z-index: 10 ; position: static;">
+      <div id="dwv-dropBox" class="dropBox"></div>
+      <div id="dwv" class="layerContainer">
+        <canvas id="dwv-imageLayer" class="imageLayer">Only for HTML5 compatible browsers...</canvas>
+        <div id="dwv-drawDiv" class="drawDiv"></div>
+        <div id="dwv-infoLayer" class="infoLayer">
+          <div id="dwv-infotl" class="infotl"></div>
+          <div id="dwv-infotr" class="infotr"></div>
+          <div id="dwv-infobl" class="infobl"></div>
+          <div id="dwv-infobr" class="infobr"><div id="dwv-plot" class="plot"></div>
+          </div>
+        </div><!-- /infoLayer -->
+      </div><!-- /layerContainer -->
+    </div><!-- /layerDialog -->
   </div>
 
-  <!-- Layer Container -->
-  <div id="layerDialog" title="Image" style="z-index: 10 ; position: static;">
-    <div id="dwv-dropBox" class="dropBox"></div>
-    <div id="dwv" class="layerContainer">
-      <canvas id="dwv-imageLayer" class="imageLayer">Only for HTML5 compatible browsers...</canvas>
-      <div id="dwv-drawDiv" class="drawDiv"></div>
-      <div id="dwv-infoLayer" class="infoLayer">
-        <div id="dwv-infotl" class="infotl"></div>
-        <div id="dwv-infotr" class="infotr"></div>
-        <div id="dwv-infobl" class="infobl"></div>
-        <div id="dwv-infobr" class="infobr"><div id="dwv-plot" class="plot"></div>
-        </div>
-      </div><!-- /infoLayer -->
-    </div><!-- /layerContainer -->
-  </div><!-- /layerDialog -->
-
-
-
-</div>
-
-
-</div><!-- /pageMain -->
-
-
-
+  </div><!-- /pageMain -->
 
 </body>
 </html>
