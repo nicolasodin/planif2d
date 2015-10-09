@@ -243,16 +243,14 @@ body { background-color: #222; color: white;
     $nom_implant = $ligne["nom"];
     $chemin_image_implant = $ligne["chemin_image"];
 
-    echo "<img src='".$chemin_image_implant."' class='draggable' alt='implants' style='width:80px; height:40px'>";
+    echo "<img src='".$chemin_image_implant."' class='draggable' alt='implants' style='width:300; height:100 ;z-index:500'>";
     }
     }
     else echo _('Pas d implants dans la base de données.');
 
     ?>
 
-    <div id="container"> <img src="images/vw3.png" id = "image" class="draggable" style= " width:80px; height:40px; z-index: 500" /> </div>
-    <img src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
-    <img src="images/test1.jpg" class="draggable" style= " width:200px; height:100px ; z-index: 500" />
+
     <script>
       function handleFileSelect(evt) {
         var files = evt.target.files;
