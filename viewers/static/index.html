@@ -3,87 +3,87 @@
 <html>
 
 <head>
-<title>DICOM Web Viewer</title>
-<meta charset="UTF-8">
-<meta name="description" content="DICOM Web Viewer (DWV) static version">
-<meta name="keywords" content="DICOM,HTML5,JavaScript,medical,imaging,DWV">
-<link type="text/css" rel="stylesheet" href="../../css/style.css">
-<style type="text/css" >
-body { background-color: #222; color: white;
-  margin: 10px; padding: 0; font-size: 80%  }
-#pageHeader h1 { display: inline-block; margin: 0; color: #fff; }
-#pageHeader a { color: #ddf; }
-#pageHeader #toolbar { display: inline-block; float: right; }
-#toolbox li:first-child { list-style-type: none; padding-bottom: 10px; margin-left: -20px; }
-#pageMain { position: absolute; height: 92%; width: 99%; bottom: 5px; left: 5px; background-color: #333; }
-#infotl { color: #333; text-shadow: 0 1px 0 #fff; }
-#infotr { color: #333; text-shadow: 0 1px 0 #fff; }
-#dropBox { margin: 20px; }
-</style>
-<link type="text/css" rel="stylesheet" href="../../ext/jquery-ui/themes/ui-darkness/jquery-ui-1.11.2.min.css">
-<!-- Third party -->
-<script type="text/javascript" src="../../ext/jquery/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="../../ext/jquery-ui/jquery-ui-1.11.2.min.js"></script>
-<script type="text/javascript" src="../../ext/flot/jquery.flot.min.js"></script>
-<script type="text/javascript" src="../../ext/pdfjs/jpx.js"></script>
-<script type="text/javascript" src="../../ext/pdfjs/util.js"></script>
-<script type="text/javascript" src="../../ext/pdfjs/arithmetic_decoder.js"></script>
-<script type="text/javascript" src="../../ext/rii-mango/lossless-min.js"></script>
-<script type="text/javascript" src="../../ext/notmasteryet/jpg.js"></script>
-<script type="text/javascript" src="../../ext/kinetic/kinetic-v5.1.1-06.10.min.js"></script>
+  <title>DICOM Web Viewer</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="DICOM Web Viewer (DWV) static version">
+  <meta name="keywords" content="DICOM,HTML5,JavaScript,medical,imaging,DWV">
+  <link type="text/css" rel="stylesheet" href="../../css/style.css">
+  <style type="text/css" >
+    body { background-color: #222; color: white;
+      margin: 10px; padding: 0; font-size: 80%  }
+    #pageHeader h1 { display: inline-block; margin: 0; color: #fff; }
+    #pageHeader a { color: #ddf; }
+    #pageHeader #toolbar { display: inline-block; float: right; }
+    #toolbox li:first-child { list-style-type: none; padding-bottom: 10px; margin-left: -20px; }
+    #pageMain { position: absolute; height: 92%; width: 99%; bottom: 5px; left: 5px; background-color: #333; }
+    #infotl { color: #333; text-shadow: 0 1px 0 #fff; }
+    #infotr { color: #333; text-shadow: 0 1px 0 #fff; }
+    #dropBox { margin: 20px; }
+  </style>
+  <link type="text/css" rel="stylesheet" href="../../ext/jquery-ui/themes/ui-darkness/jquery-ui-1.11.2.min.css">
+  <!-- Third party -->
+  <script type="text/javascript" src="../../ext/jquery/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../ext/jquery-ui/jquery-ui-1.11.2.min.js"></script>
+  <script type="text/javascript" src="../../ext/flot/jquery.flot.min.js"></script>
+  <script type="text/javascript" src="../../ext/pdfjs/jpx.js"></script>
+  <script type="text/javascript" src="../../ext/pdfjs/util.js"></script>
+  <script type="text/javascript" src="../../ext/pdfjs/arithmetic_decoder.js"></script>
+  <script type="text/javascript" src="../../ext/rii-mango/lossless-min.js"></script>
+  <script type="text/javascript" src="../../ext/notmasteryet/jpg.js"></script>
+  <script type="text/javascript" src="../../ext/kinetic/kinetic-v5.1.1-06.10.min.js"></script>
 
 
-<!-- Local -->
+  <!-- Local -->
   <script src="../../ext/kinetic/kinectic-loader.js"></script>
-<script type="text/javascript" src="../../src/app/application.js"></script>
-<script type="text/javascript" src="../../src/app/toolboxController.js"></script>
-<script type="text/javascript" src="../../src/app/viewController.js"></script>
-<script type="text/javascript" src="../../src/app/state.js"></script>
-<script type="text/javascript" src="../../src/dicom/dicomParser.js"></script>
-<script type="text/javascript" src="../../src/dicom/dictionary.js"></script>
-<script type="text/javascript" src="../../src/gui/browser.js"></script>
-<script type="text/javascript" src="../../src/gui/filter.js"></script>
-<script type="text/javascript" src="../../src/gui/generic.js"></script>
-<script type="text/javascript" src="../../src/gui/help.js"></script>
-<script type="text/javascript" src="../../src/gui/html.js"></script>
-<script type="text/javascript" src="../../src/gui/layer.js"></script>
-<script type="text/javascript" src="../../src/gui/loader.js"></script>
-<script type="text/javascript" src="../../src/gui/style.js"></script>
-<script type="text/javascript" src="../../src/gui/tools.js"></script>
-<script type="text/javascript" src="../../src/gui/undo.js"></script>
-<script type="text/javascript" src="../../src/image/filter.js"></script>
-<script type="text/javascript" src="../../src/image/geometry.js"></script>
-<script type="text/javascript" src="../../src/image/image.js"></script>
-<script type="text/javascript" src="../../src/image/luts.js"></script>
-<script type="text/javascript" src="../../src/image/reader.js"></script>
-<script type="text/javascript" src="../../src/image/view.js"></script>
-<script type="text/javascript" src="../../src/io/file.js"></script>
-<script type="text/javascript" src="../../src/io/url.js"></script>
-<script type="text/javascript" src="../../src/math/bucketQueue.js"></script>
-<script type="text/javascript" src="../../src/math/point.js"></script>
-<script type="text/javascript" src="../../src/math/scissors.js"></script>
-<script type="text/javascript" src="../../src/math/shapes.js"></script>
-<script type="text/javascript" src="../../src/math/stats.js"></script>
-<script type="text/javascript" src="../../src/tools/draw.js"></script>
-<script type="text/javascript" src="../../src/tools/editor.js"></script>
-<script type="text/javascript" src="../../src/tools/ellipse.js"></script>
-<script type="text/javascript" src="../../src/tools/filter.js"></script>
-<script type="text/javascript" src="../../src/tools/info.js"></script>
-<script type="text/javascript" src="../../src/tools/line.js"></script>
-<script type="text/javascript" src="../../src/tools/livewire.js"></script>
-<script type="text/javascript" src="../../src/tools/protractor.js"></script>
-<script type="text/javascript" src="../../src/tools/rectangle.js"></script>
-<script type="text/javascript" src="../../src/tools/roi.js"></script>
-<script type="text/javascript" src="../../src/tools/scroll.js"></script>
-<script type="text/javascript" src="../../src/tools/toolbox.js"></script>
-<script type="text/javascript" src="../../src/tools/undo.js"></script>
-<script type="text/javascript" src="../../src/tools/windowLevel.js"></script>
-<script type="text/javascript" src="../../src/tools/zoomPan.js"></script>
-<script type="text/javascript" src="../../src/utils/string.js"></script>
+  <script type="text/javascript" src="../../src/app/application.js"></script>
+  <script type="text/javascript" src="../../src/app/toolboxController.js"></script>
+  <script type="text/javascript" src="../../src/app/viewController.js"></script>
+  <script type="text/javascript" src="../../src/app/state.js"></script>
+  <script type="text/javascript" src="../../src/dicom/dicomParser.js"></script>
+  <script type="text/javascript" src="../../src/dicom/dictionary.js"></script>
+  <script type="text/javascript" src="../../src/gui/browser.js"></script>
+  <script type="text/javascript" src="../../src/gui/filter.js"></script>
+  <script type="text/javascript" src="../../src/gui/generic.js"></script>
+  <script type="text/javascript" src="../../src/gui/help.js"></script>
+  <script type="text/javascript" src="../../src/gui/html.js"></script>
+  <script type="text/javascript" src="../../src/gui/layer.js"></script>
+  <script type="text/javascript" src="../../src/gui/loader.js"></script>
+  <script type="text/javascript" src="../../src/gui/style.js"></script>
+  <script type="text/javascript" src="../../src/gui/tools.js"></script>
+  <script type="text/javascript" src="../../src/gui/undo.js"></script>
+  <script type="text/javascript" src="../../src/image/filter.js"></script>
+  <script type="text/javascript" src="../../src/image/geometry.js"></script>
+  <script type="text/javascript" src="../../src/image/image.js"></script>
+  <script type="text/javascript" src="../../src/image/luts.js"></script>
+  <script type="text/javascript" src="../../src/image/reader.js"></script>
+  <script type="text/javascript" src="../../src/image/view.js"></script>
+  <script type="text/javascript" src="../../src/io/file.js"></script>
+  <script type="text/javascript" src="../../src/io/url.js"></script>
+  <script type="text/javascript" src="../../src/math/bucketQueue.js"></script>
+  <script type="text/javascript" src="../../src/math/point.js"></script>
+  <script type="text/javascript" src="../../src/math/scissors.js"></script>
+  <script type="text/javascript" src="../../src/math/shapes.js"></script>
+  <script type="text/javascript" src="../../src/math/stats.js"></script>
+  <script type="text/javascript" src="../../src/tools/draw.js"></script>
+  <script type="text/javascript" src="../../src/tools/editor.js"></script>
+  <script type="text/javascript" src="../../src/tools/ellipse.js"></script>
+  <script type="text/javascript" src="../../src/tools/filter.js"></script>
+  <script type="text/javascript" src="../../src/tools/info.js"></script>
+  <script type="text/javascript" src="../../src/tools/line.js"></script>
+  <script type="text/javascript" src="../../src/tools/livewire.js"></script>
+  <script type="text/javascript" src="../../src/tools/protractor.js"></script>
+  <script type="text/javascript" src="../../src/tools/rectangle.js"></script>
+  <script type="text/javascript" src="../../src/tools/roi.js"></script>
+  <script type="text/javascript" src="../../src/tools/scroll.js"></script>
+  <script type="text/javascript" src="../../src/tools/toolbox.js"></script>
+  <script type="text/javascript" src="../../src/tools/undo.js"></script>
+  <script type="text/javascript" src="../../src/tools/windowLevel.js"></script>
+  <script type="text/javascript" src="../../src/tools/zoomPan.js"></script>
+  <script type="text/javascript" src="../../src/utils/string.js"></script>
 
-<!-- Launch the app -->
-<script type="text/javascript" src="appgui.js"></script>
-<script type="text/javascript" src="applauncher.js"></script>
+  <!-- Launch the app -->
+  <script type="text/javascript" src="appgui.js"></script>
+  <script type="text/javascript" src="applauncher.js"></script>
 
 
   <style>
@@ -166,53 +166,54 @@ body { background-color: #222; color: white;
 
 <div id="pageHeader">
 
-<!-- Title -->
-<h1>DICOM Web Viewer
-(<a href="https://github.com/ivmartel/dwv">dwv</a>
-<span class="dwv-version"></span>)</h1>
+  <!-- Title -->
+  <h1>DICOM Web Viewer
+    (<a href="https://github.com/ivmartel/dwv">dwv</a>
+    <span class="dwv-version"></span>)</h1>
 
-<!-- Toolbar -->
-<div id="toolbar"></div>
+  <!-- Toolbar -->
+  <div id="toolbar"></div>
 
 </div><!-- /pageHeader -->
 
 <div id="pageMain">
 
-<!-- Open file -->
-<div id="openData" title="File">
-<div id="loaderlist"></div>
-<div id="progressbar"></div>
-</div>
+  <!-- Open file -->
+  <div id="openData" title="File">
+    <div id="loaderlist"></div>
+    <div id="progressbar"></div>
+  </div>
 
-<!-- Toolbox -->
-<div id="toolbox" title="Toolbox">
-<ul id="toolList"></ul>
-</div>
+  <!-- Toolbox -->
+  <div id="toolbox" title="Toolbox">
+    <ul id="toolList"></ul>
+  </div>
 
-<!-- History -->
-<div id="history" title="History"></div>
+  <!-- History -->
+  <div id="history" title="History"></div>
 
-<!-- Tags -->
-<div id="tags" title="Tags"></div>
+  <!-- Tags -->
+  <div id="tags" title="Tags"></div>
 
-<!-- Help -->
-<div id="help" title="Help"></div>
+  <!-- Help -->
+  <div id="help" title="Help"></div>
 
 
 
   <p><input type="button" id="reset" value="reset" style  ="float: right"  /></p>
 
-  <p><input type="button" id="button1" value = "deplacement " style  ="float: right"   /></p>
-  <p><input type="button" id="button2" value = "rotate" style  ="float: right "/></p>
+  <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"   /></p>
+  <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000 "/></p>
+  <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"   /></p>
   <div class="drop" style="z-index: 1">
-    <canvas id="canvas" class="draggable2" style="float: right; z-index: 500; position: relative" ></canvas>
+    <canvas id="canvas" width=900 height=900 class="draggable2" style=" z-index: 500; position:absolute" ></canvas>
   </div>
   <div class="drag" style="float: right">
 
 
 
     <!--<img id ='img' src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
-    <img src="images/test1.jpg" class="draggable" style= " width:200px; height:40px ; z-index: 500" />-->
+    <img src="images/Implant_dimensionne.png" class="draggable" style= " width:auto; height:auto ; z-index: 500" />-->
     <script type="text/javascript " src="rotate.js"> </script>
 
     <script>
@@ -224,8 +225,8 @@ body { background-color: #222; color: white;
         console.log(ctx);
 
         var canvasOffset = $("#canvas").offset();
-        var offsetX = canvasOffset.left;
-        var offsetY = canvasOffset.top;
+        var offsetX = canvasOffset.left ;
+        var offsetY = canvasOffset.top   ;
 
         var isDown = false;
 
@@ -237,24 +238,25 @@ body { background-color: #222; color: white;
 
         var img = new Image;
         img.onload = function () {
-          w = img.width/3 ;
-          h = img.height/3;
+          w = img.width ;
+          h = img.height;
           draw();
         }
-        img.src = "images/test1.jpg";
+        img.src = "images/implant_dimensionne.png";
+
 
 
         function draw() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width,canvas.height);
           drawRotationHandle(false);
           drawRect();
         }
 
         function drawRect() {
           ctx.save();
-          ctx.translate(cx, cy);
+          ctx.translate(cx, 400);
           ctx.rotate(r);
-          ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+          ctx.drawImage(img, 0, 0, img.width , img.height, -w / 2, -h / 2, w, h);
           ctx.restore();
         }
 
@@ -278,11 +280,17 @@ body { background-color: #222; color: white;
           }
           ctx.restore();
         }
-    var element = document.getElementById("button1");
+
+
+
+        var element = document.getElementById("button1");
         element.addEventListener('click', function(){
 
 
-
+          var canvasOffset = $("#canvas").offset();
+          var offsetX = canvasOffset.left ;
+          var offsetY = canvasOffset.top   ;
+          console.log(offsetX,"    ",offsetY);
 
           $( ".draggable2" ).draggable({
             disabled: false
@@ -332,9 +340,9 @@ body { background-color: #222; color: white;
           var isDown = false;
 
           var cx = canvas.width /2;
-          console.log("cx :",cx);
+
           var cy = canvas.height / 2;
-          console.log("cy :",cy);
+
           var w;
           var h;
           var r = 0;
@@ -342,13 +350,11 @@ body { background-color: #222; color: white;
           var img = new Image;
           img.onload = function () {
 
-            w = img.width / 3;
-            console.log("w:",w);
-            h = img.height / 3
-            console.log("h :",h);
+            w = img.width;
+            h = img.height ;
             draw();
           }
-          img.src = "images/vw3.jpg";
+          img.src = "images/Implant_dimensionne.png";
 
 
           function draw() {
@@ -359,7 +365,7 @@ body { background-color: #222; color: white;
 
           function drawRect() {
             ctx.save();
-            ctx.translate(cx, cy);
+            ctx.translate(cx, 400);
             ctx.rotate(r);
             ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
             ctx.restore();
@@ -367,7 +373,7 @@ body { background-color: #222; color: white;
 
           function drawRotationHandle(withFill) {
             ctx.save();
-            ctx.translate(cx, cy);
+            ctx.translate(cx, 400);
             ctx.rotate(r);
             ctx.beginPath();
             ctx.moveTo(0, 1);
@@ -439,9 +445,95 @@ body { background-color: #222; color: white;
         },false)
 
 
+        var element = document.getElementById("button3");
+        element.addEventListener('click', function(){
 
 
-        $(".draggable").draggable({
+
+
+          $( ".draggable2" ).draggable({
+            disabled: false
+          });
+
+          $( ".draggable2" ).draggable( "option", "disabled", false );
+          $("body").droppable({
+            accept: ".draggable"
+          });
+          $(".draggable2").draggable({
+            revert: 'invalide'
+          });
+          $(".draggable").draggable({
+            revert: 'invalide'
+          });
+          $( ".draggable" ).draggable({
+            stop: function( event, ui ) {}
+          });
+
+
+
+          function MaxId()
+          {
+            var xhr;
+            var max;
+
+
+            if (window.XMLHttpRequest) {
+              xhr = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject)
+            {
+              xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            //on définit l'appel de la fonction au retour serveur
+
+            xhr.open("GET", "getdata.php", false);
+            xhr.send(null);
+            xhr.responseText;
+            var docXML= xhr.responseXML;
+            var a = docXML.getElementsByTagName("x");
+            var b = docXML.getElementsByTagName("y");
+            var  X = a.item(0).firstChild.data;
+            var Y  = b.item(0).firstChild.data;
+
+            console.log(X,Y);
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.translate(cx,cy+400);
+            ctx.drawImage(img,0,0,img.width,img.height,X,Y,w,h);
+            console.log("imgage taille ", img.width,"   ",img.height);
+            console.log("w et H ", w,h);
+          /*  console.log(document.getElementById("canvas").clientWidth);
+            console.log(document.getElementById("canvas").clientHeight);
+            console.log(document.body.clientWidth);
+           console.log(document.body.clientHeight);*/
+            console.log(GetDomOffset( document.getElementById('canvas'), 'offsetLeft' ));
+            console.log(GetDomOffset( document.getElementById('canvas'), 'offsetTop' ));
+
+            console.log(GetDomOffset( document.getElementById('dwv-dropBox'), 'offsetLeft' ));
+            console.log(GetDomOffset( document.getElementById('dwv-dropBox'), 'offsetTop' ));
+
+            function GetDomOffset( Obj, Prop ) {
+              var iVal = 0;
+              while (Obj && Obj.tagName != 'BODY') {
+                eval('iVal += Obj.' + Prop + ';');
+                Obj = Obj.offsetParent;
+              }
+              return iVal;
+            }
+
+
+
+
+
+          };
+          MaxId();
+        },false)
+
+
+          $(".draggable").draggable({
           revert: 'valide'
         });
 
@@ -450,15 +542,15 @@ body { background-color: #222; color: white;
           accept: ".draggable"
         });
 
-      $("#reset").click(function () {
-        $(".draggable").animate({
-          top: "0px",
-          left: "0px"
+        $("#reset").click(function () {
+          $(".draggable").animate({
+            top: "0px",
+            left: "0px"
+          });
+
         });
 
       });
-
-});
 
 
 
