@@ -213,7 +213,7 @@ dwv.gui.setup = function () {
 
 
 
-    $("#layerDialog").dialog({ width: "auto", resizable: false});
+    $("#layerDialog").dialog({ width: "auto", resizable: true});
 
    /* $(".drop").droppable({
         drop: function(event, ui){

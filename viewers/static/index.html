@@ -205,9 +205,17 @@
   <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"   /></p>
   <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000 "/></p>
   <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"   /></p>
-  <div class="drop" style="z-index: 1">
-    <canvas id="canvas" width=900 height=900 class="draggable2" style=" z-index: 500; position:absolute" ></canvas>
-  </div>
+  <p><select id="list" style="float: right">
+              <option>Sélectionnez votre implant</option>
+              <option>Implant test1</option>
+              <option>Implant test2</option>
+              <option>Implant test3</option>
+              <option>Implant test4</option>
+
+  </select>
+  </p>
+
+
   <div class="drag" style="float: right">
 
 
@@ -218,319 +226,342 @@
 
     <script>
 
+
+
       $(function() {
 
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        console.log(ctx);
-
-        var canvasOffset = $("#canvas").offset();
-        var offsetX = canvasOffset.left ;
-        var offsetY = canvasOffset.top   ;
-
-        var isDown = false;
-
-        var cx = canvas.width / 2;
-        var cy = canvas.height / 2;
-        var w;
-        var h;
-        var r = 0;
-
-        var img = new Image;
-        img.onload = function () {
-          w = img.width ;
-          h = img.height;
-          draw();
-        }
-        img.src = "images/implant_dimensionne.png";
-
-
-
-        function draw() {
-          ctx.clearRect(0, 0, canvas.width,canvas.height);
-          drawRotationHandle(false);
-          drawRect();
-        }
-
-        function drawRect() {
-          ctx.save();
-          ctx.translate(cx, 400);
-          ctx.rotate(r);
-          ctx.drawImage(img, 0, 0, img.width , img.height, -w / 2, -h / 2, w, h);
-          ctx.restore();
-        }
-
-        function drawRotationHandle(withFill) {
-          ctx.save();
-          ctx.translate(cx, cy);
-          ctx.rotate(r);
-          ctx.beginPath();
-          ctx.moveTo(0, -1);
-          ctx.lineTo(w / 2 + 20, -1);
-          ctx.lineTo(w / 2 + 20, -7);
-          ctx.lineTo(w / 2 + 30, -7);
-          ctx.lineTo(w / 2 + 30, 7);
-          ctx.lineTo(w / 2 + 20, 7);
-          ctx.lineTo(w / 2 + 20, 1);
-          ctx.lineTo(0, 1);
-          ctx.closePath();
-          if (withFill) {
-            ctx.fillStyle = "blue";
-            ctx.fill();
-          }
-          ctx.restore();
-        }
-
-
-
-        var element = document.getElementById("button1");
-        element.addEventListener('click', function(){
-
-
-          var canvasOffset = $("#canvas").offset();
-          var offsetX = canvasOffset.left ;
-          var offsetY = canvasOffset.top   ;
-          console.log(offsetX,"    ",offsetY);
-
-          $( ".draggable2" ).draggable({
-            disabled: false
-          });
-
-          $( ".draggable2" ).draggable( "option", "disabled", false );
-          $("body").droppable({
-            accept: ".draggable"
-          });
-          $(".draggable2").draggable({
-            revert: 'invalide'
-          });
-          $(".draggable").draggable({
-            revert: 'invalide'
-          });
-          $( ".draggable" ).draggable({
-            stop: function( event, ui ) {}
-          });
-
-
-        },false)
-
-
-        var element2 = document.getElementById("button2");
-        element2.addEventListener('click', function(){
-
-
-          $( ".draggable2" ).draggable({
-            disabled: true
-          });
-
-          $( ".draggable2" ).draggable( "option", "disabled", true );
-          $(".draggable").draggable({
-            revert: 'valide'
-          });
-
-          var canvas = document.getElementById("canvas");
-          var ctx = canvas.getContext("2d");
-          console.log(ctx);
-
-          var canvasOffset = $("#canvas").offset();
-          console.log("c :",cy);
-
-          var offsetX = canvasOffset.left;
-          var offsetY = canvasOffset.top;
-
-          var isDown = false;
-
-          var cx = canvas.width /2;
-
-          var cy = canvas.height / 2;
-
-          var w;
-          var h;
-          var r = 0;
-
-          var img = new Image;
-          img.onload = function () {
-
-            w = img.width;
-            h = img.height ;
-            draw();
-          }
-          img.src = "images/Implant_dimensionne.png";
-
-
-          function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawRotationHandle(true);
-            drawRect();
-          }
-
-          function drawRect() {
-            ctx.save();
-            ctx.translate(cx, 400);
-            ctx.rotate(r);
-            ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
-            ctx.restore();
-          }
-
-          function drawRotationHandle(withFill) {
-            ctx.save();
-            ctx.translate(cx, 400);
-            ctx.rotate(r);
-            ctx.beginPath();
-            ctx.moveTo(0, 1);
-            ctx.lineTo(w / 2 + 10, -1);
-            ctx.lineTo(w / 2 + 10, -7);
-            ctx.lineTo(w / 2 + 20, -7);
-            ctx.lineTo(w / 2 + 20, 7);
-            ctx.lineTo(w / 2 + 10, 7);
-            ctx.lineTo(w / 2 + 10, 1);
-            ctx.lineTo(0, 1);
-            ctx.closePath();
-            if (withFill) {
-              ctx.fillStyle = "blue";
-              ctx.fill();
-            }
-            ctx.restore();
-          }
-
-
-
-          function handleMouseDown(e) {
-            mouseX = parseInt(e.clientX - offsetX);
-            mouseY = parseInt(e.clientY - offsetY);
-            drawRotationHandle(false);
-            isDown = ctx.isPointInPath(mouseX, mouseY);
-            console.log(isDown);
-          }
-
-          function handleMouseUp(e) {
-            isDown = false;
-          }
-
-          function handleMouseOut(e) {
-            isDown = false;
-          }
-
-          function handleMouseMove(e) {
-            if (!isDown) {
-              return;
-            }
-
-            mouseX = parseInt(e.clientX - offsetX);
-            mouseY = parseInt(e.clientY - offsetY);
-            var dx = mouseX - cx;
-            var dy = mouseY - cy;
-            r = Math.atan2(dy, dx);
-            draw();
-          }
-
-          $("#canvas").mousedown(function (e) {
-            handleMouseDown(e);
-          });
-          $("#canvas").mousemove(function (e) {
-            handleMouseMove(e);
-          });
-          $("#canvas").mouseup(function (e) {
-            handleMouseUp(e);
-          });
-          $("#canvas").mouseout(function (e) {
-            handleMouseOut(e);
-          });
-          $("body").droppable({
-            accept: ".draggable"
-          });
-
-
-
-
-        },false)
-
-
-        var element = document.getElementById("button3");
-        element.addEventListener('click', function(){
-
-
-
-
-          $( ".draggable2" ).draggable({
-            disabled: false
-          });
-
-          $( ".draggable2" ).draggable( "option", "disabled", false );
-          $("body").droppable({
-            accept: ".draggable"
-          });
-          $(".draggable2").draggable({
-            revert: 'invalide'
-          });
-          $(".draggable").draggable({
-            revert: 'invalide'
-          });
-          $( ".draggable" ).draggable({
-            stop: function( event, ui ) {}
-          });
-
-
-
-          function MaxId()
-          {
-            var xhr;
-            var max;
-
-
-            if (window.XMLHttpRequest) {
-              xhr = new XMLHttpRequest();
-            }
-            else if (window.ActiveXObject)
-            {
-              xhr = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            //on définit l'appel de la fonction au retour serveur
-
-            xhr.open("GET", "getdata.php", false);
-            xhr.send(null);
-            xhr.responseText;
-            var docXML= xhr.responseXML;
-            var a = docXML.getElementsByTagName("x");
-            var b = docXML.getElementsByTagName("y");
-            var  X = a.item(0).firstChild.data;
-            var Y  = b.item(0).firstChild.data;
-
-            console.log(X,Y);
-            var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.translate(cx,cy+400);
-            ctx.drawImage(img,0,0,img.width,img.height,X,Y,w,h);
-            console.log("imgage taille ", img.width,"   ",img.height);
-            console.log("w et H ", w,h);
-          /*  console.log(document.getElementById("canvas").clientWidth);
-            console.log(document.getElementById("canvas").clientHeight);
-            console.log(document.body.clientWidth);
-           console.log(document.body.clientHeight);*/
-            console.log(GetDomOffset( document.getElementById('canvas'), 'offsetLeft' ));
-            console.log(GetDomOffset( document.getElementById('canvas'), 'offsetTop' ));
-
-            console.log(GetDomOffset( document.getElementById('dwv-dropBox'), 'offsetLeft' ));
-            console.log(GetDomOffset( document.getElementById('dwv-dropBox'), 'offsetTop' ));
-
-            function GetDomOffset( Obj, Prop ) {
-              var iVal = 0;
-              while (Obj && Obj.tagName != 'BODY') {
-                eval('iVal += Obj.' + Prop + ';');
-                Obj = Obj.offsetParent;
-              }
-              return iVal;
-            }
-
-
-
-
-
-          };
-          MaxId();
-        },false)
+
+
+        var list = document.getElementById('list');
+         list.addEventListener('change', function() {
+
+           var canvas1 = document.getElementById("canvas");
+           canvas1.style.zIndex = "500" ;
+           var canvas2 = document.getElementById("dwv-imageLayer") ;
+           canvas2.zIndex = 1 ;
+          var id_liste = list.selectedIndex ;
+          // On affiche le contenu de l'élément <option> ciblé par la propriété selectedIndex
+          console.log(list.options[list.selectedIndex].innerHTML);
+          console.log("id réelle liste ", id_liste);
+
+
+
+
+
+           function geturlimplant(){
+
+             var id = id_liste;
+             var xhr;
+             if (window.XMLHttpRequest) {
+               xhr = new XMLHttpRequest();
+             }
+             else if (window.ActiveXObject)
+             {
+               xhr = new ActiveXObject("Microsoft.XMLHTTP");
+             }
+             //on définit l'appel de la fonction au retour serveur
+             xhr.open("GET", "getimplant.php", false);
+             xhr.send(null);
+             xhr.responseText;
+             var docXML= xhr.responseXML;
+             var id_implant = docXML.getElementsByTagName("id");
+             var url = docXML.getElementsByTagName("url");
+
+             for ( var i = 0;i< id_implant.length; i++)
+             {
+               if (id == id_implant.item(i).firstChild.data)
+               {
+                 var url_ultime =  url.item(i).firstChild.data;
+               }
+             }
+             return url_ultime;
+           }
+
+           var canvas = document.getElementById("canvas");
+           var ctx = canvas.getContext("2d");
+           console.log(ctx);
+
+           var canvasOffset = $("#canvas").offset();
+           var offsetX = canvasOffset.left ;
+           var offsetY = canvasOffset.top   ;
+
+           var isDown = false;
+
+           var cx = canvas.width / 2;
+           var cy = canvas.height / 2;
+           var w;
+           var h;
+           var r = 0;
+           var img = new Image;
+           img.onload = function () {
+             w = img.width ;
+             h = img.height;
+             draw();
+           }
+           img.src = geturlimplant();
+
+
+           function draw() {
+             ctx.clearRect(0, 0, canvas.width,canvas.height);
+             drawRotationHandle(false);
+             drawRect();
+           }
+
+           function drawRect() {
+             ctx.save();
+             ctx.translate(0,0);
+             ctx.rotate(r);
+             ctx.drawImage(img, 0, 0, img.width, img.height);
+             ctx.restore();
+           }
+
+           function drawRotationHandle(withFill) {
+             ctx.save();
+             ctx.translate(0, 0);
+             ctx.rotate(r);
+             ctx.beginPath();
+             ctx.moveTo(0, -1);
+             ctx.lineTo(w / 2 + 20, -1);
+             ctx.lineTo(w / 2 + 20, -7);
+             ctx.lineTo(w / 2 + 30, -7);
+             ctx.lineTo(w / 2 + 30, 7);
+             ctx.lineTo(w / 2 + 20, 7);
+             ctx.lineTo(w / 2 + 20, 1);
+             ctx.lineTo(0, 1);
+             ctx.closePath();
+             if (withFill) {
+               ctx.fillStyle = "blue";
+               ctx.fill();
+             }
+             ctx.restore();
+           }
+
+
+
+           var element = document.getElementById("button1");
+           element.addEventListener('click', function(){
+
+
+             var canvasOffset = $("#canvas").offset();
+             var offsetX = canvasOffset.left ;
+             var offsetY = canvasOffset.top   ;
+             console.log(offsetX,"    ",offsetY);
+
+             $( ".draggable2" ).draggable({
+               disabled: false
+             });
+
+             $( ".draggable2" ).draggable( "option", "disabled", false );
+             $("body").droppable({
+               accept: ".draggable"
+             });
+             $(".draggable2").draggable({
+               revert: 'invalide'
+             });
+             $(".draggable").draggable({
+               revert: 'invalide'
+             });
+             $( ".draggable" ).draggable({
+               stop: function( event, ui ) {}
+             });
+
+
+           },false)
+
+
+           var element2 = document.getElementById("button2");
+           element2.addEventListener('click', function(){
+
+
+             $( ".draggable2" ).draggable({
+               disabled: true
+             });
+
+             $( ".draggable2" ).draggable( "option", "disabled", true );
+             $(".draggable").draggable({
+               revert: 'valide'
+             });
+
+             var canvas = document.getElementById("canvas");
+             var ctx = canvas.getContext("2d");
+
+             var canvasOffset = $("#canvas").offset();
+             var offsetX = canvasOffset.left;
+             var offsetY = canvasOffset.top;
+
+             var isDown = false;
+             var cx = canvas.width /2;
+             var cy = canvas.height / 2;
+             var w;
+             var h;
+             var r = 0;
+             var img = new Image;
+             img.onload = function () {
+               w = img.width;
+               h = img.height ;
+               draw();
+             }
+             img.src = geturlimplant();
+
+
+             function draw() {
+               ctx.clearRect(0, 0, canvas.width, canvas.height);
+               drawRotationHandle(true);
+               drawRect();
+             }
+             function drawRect() {
+               ctx.save();
+               ctx.translate(cx, 400);
+               ctx.rotate(r);
+               ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+               ctx.restore();
+             }
+             function drawRotationHandle(withFill) {
+               ctx.save();
+               ctx.translate(cx, 400);
+               ctx.rotate(r);
+               ctx.beginPath();
+               ctx.moveTo(0, 1);
+               ctx.lineTo(w / 2 + 10, -1);
+               ctx.lineTo(w / 2 + 10, -7);
+               ctx.lineTo(w / 2 + 20, -7);
+               ctx.lineTo(w / 2 + 20, 7);
+               ctx.lineTo(w / 2 + 10, 7);
+               ctx.lineTo(w / 2 + 10, 1);
+               ctx.lineTo(0, 1);
+               ctx.closePath();
+               if (withFill) {
+                 ctx.fillStyle = "blue";
+                 ctx.fill();
+               }
+               ctx.restore();
+             }
+             function handleMouseDown(e) {
+               mouseX = parseInt(e.clientX - offsetX);
+               mouseY = parseInt(e.clientY - offsetY);
+               drawRotationHandle(false);
+               isDown = ctx.isPointInPath(mouseX, mouseY);
+               console.log(isDown);
+             }
+             function handleMouseUp(e) {
+               isDown = false;
+             }
+             function handleMouseOut(e) {
+               isDown = false;
+             }
+             function handleMouseMove(e) {
+               if (!isDown) {
+                 return;
+               }
+               mouseX = parseInt(e.clientX - offsetX);
+               mouseY = parseInt(e.clientY - offsetY);
+               var dx = mouseX - cx;
+               var dy = mouseY - cy;
+               r = Math.atan2(dy, dx);
+               draw();
+             }
+
+             $("#canvas").mousedown(function (e) {
+               handleMouseDown(e);
+             });
+             $("#canvas").mousemove(function (e) {
+               handleMouseMove(e);
+             });
+             $("#canvas").mouseup(function (e) {
+               handleMouseUp(e);
+             });
+             $("#canvas").mouseout(function (e) {
+               handleMouseOut(e);
+             });
+             $("body").droppable({
+               accept: ".draggable"
+             });
+
+
+
+
+           },false)
+
+
+           var element = document.getElementById("button3");
+           element.addEventListener('click', function(){
+
+
+
+
+             $( ".draggable2" ).draggable({
+               disabled: false
+             });
+
+             $( ".draggable2" ).draggable( "option", "disabled", false );
+             $("body").droppable({
+               accept: ".draggable"
+             });
+             $(".draggable2").draggable({
+               revert: 'invalide'
+             });
+             $(".draggable").draggable({
+               revert: 'invalide'
+             });
+             $( ".draggable" ).draggable({
+               stop: function( event, ui ) {}
+             });
+
+
+
+             function MaxId()
+             {
+               var xhr;
+
+
+
+               if (window.XMLHttpRequest) {
+                 xhr = new XMLHttpRequest();
+               }
+               else if (window.ActiveXObject)
+               {
+                 xhr = new ActiveXObject("Microsoft.XMLHTTP");
+               }
+               //on définit l'appel de la fonction au retour serveur
+
+               xhr.open("GET", "getdata.php", false);
+               xhr.send(null);
+               xhr.responseText;
+               var docXML= xhr.responseXML;
+               var a = docXML.getElementsByTagName("x");
+               var b = docXML.getElementsByTagName("y");
+               var  X = a.item(0).firstChild.data;
+               var Y  = b.item(0).firstChild.data;
+
+               console.log(X,Y);
+               var canvas = document.getElementById("canvas");
+               var ctx = canvas.getContext("2d");
+
+
+               ctx.clearRect(0, 0, 2*canvas.width, 2*canvas.height);
+               ctx.translate(X,Y);
+
+               ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+               ctx.restore();
+
+               console.log("imgage taille ", img.width,"   ",img.height);
+               console.log("w et H ", w,h);
+
+
+
+
+
+             };
+             MaxId();
+           },false)
+
+
+
+
+        }, true);
+
+
+
 
 
           $(".draggable").draggable({
@@ -565,7 +596,11 @@
   <div id="layerDialog" title="Image" style="z-index: 10 ; position: static;">
     <div id="dwv-dropBox" class="dropBox"></div>
     <div id="dwv" class="layerContainer">
-      <canvas id="dwv-imageLayer" class="imageLayer">Only for HTML5 compatible browsers...</canvas>
+      <div class="drop" style="z-index: 1">
+        <canvas id="canvas"  class="draggable2" width="800" height="900" style="  position:absolute" ></canvas>
+        <canvas id="dwv-imageLayer" class="imageLayer">Only for HTML5 compatible browsers...</canvas>
+      </div>
+
       <div id="dwv-drawDiv" class="drawDiv"></div>
       <div id="dwv-infoLayer" class="infoLayer">
         <div id="dwv-infotl" class="infotl"></div>
