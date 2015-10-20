@@ -53,11 +53,14 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
 
                 arr.push( roi.getPoint(i).getX() );
                 arr.push( roi.getPoint(i).getY() );
+
                 if (arr.length >= 8 ) {
                     aide = false;
                 }
 
             }
+
+
     // draw shape
     var kshape = new Kinetic.Line({
         points: arr,
@@ -83,7 +86,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
 
        points: centre,
        stroke: "red",
-       strokeWidth: 1,
+       strokeWidth: 5,
        lineJoin: 'round',
        /*
         * line segments with a length of 33px
@@ -99,13 +102,9 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     var y = y1/ 2 + y2/2;
     var center_line = [];
 
+
     center_line.push(x);
     center_line.push(y);
-
-    console.log(center_line);
-
-
-
 
 
     var label = new Kinetic.Label({
@@ -114,6 +113,10 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
          draggable: true,
        name : "shape3"
     });
+
+
+    console.log("Avant    :  ", x   , "{}", y );
+   // console.log("ceci est les dfféretnes coord    :  ", x.getLayer()   , "{}", y.getY() );
 // add a tag to the label<br>
   /*  label.add(new Kinetic.Tag({
         fill: '#bbb',
@@ -247,7 +250,9 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
 
     kpoint.x = x1;
     kpoint.y = y1;
-    console.log("{", x1 , ", " ,y1," }");
+    console.log(" {", x1 , ", " ,y1," }");
+
+
 
 
 };

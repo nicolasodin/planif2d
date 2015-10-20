@@ -162,7 +162,7 @@
 
 </head>
 
-<body>
+<body id="body" ondblclick="showCoords(event)">
 
 <div id="pageHeader">
 
@@ -223,9 +223,29 @@
     <!--<img id ='img' src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
     <img src="images/Implant_dimensionne.png" class="draggable" style= " width:auto; height:auto ; z-index: 500" />-->
     <script type="text/javascript " src="rotate.js"> </script>
+    <script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js"></script>
 
     <script>
 
+
+      var body = document.getElementById('body');
+
+      console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
+      function showCoords(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        console.log(x,"^^",y);
+      }
+      YUI().use('node', 'event', function (Y) {
+        // The Node and Event modules are loaded and ready to use.
+        //
+
+        var corn = Y.one('#canvas');
+
+
+       // var width = corn.get('offsetBottom');
+         var width = corn.getX();
+        console.log("this is the width of element canvas", width , corn.getY());
 
 
       $(function() {
@@ -239,11 +259,28 @@
            canvas1.style.zIndex = "500" ;
            var canvas2 = document.getElementById("dwv-imageLayer") ;
            canvas2.zIndex = 1 ;
+
+           function readCookie(name) {
+             var nameEQ = name + "=";
+             var ca = document.cookie.split(';');
+             for(var i=0;i < ca.length;i++) {
+               var c = ca[i];
+               while (c.charAt(0)==' ') c = c.substring(1,c.length);
+               if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+             }
+             return null;
+           }
+
+          var width= parseInt(readCookie("width"));
+
+           var height= parseInt(readCookie("height"));
+
+           console.log("this the lol  image size : ", width,height);
+           console.log("this is the dimension of canvas 2 ",canvas2.width,canvas2.height);
           var id_liste = list.selectedIndex ;
           // On affiche le contenu de l'élément <option> ciblé par la propriété selectedIndex
           console.log(list.options[list.selectedIndex].innerHTML);
           console.log("id réelle liste ", id_liste);
-
 
 
 
@@ -289,6 +326,8 @@
 
            var cx = canvas.width / 2;
            var cy = canvas.height / 2;
+
+
            var w;
            var h;
            var r = 0;
@@ -382,7 +421,8 @@
                revert: 'valide'
              });
 
-             var canvas = document.getElementById("canvas");
+             var canvas = document.getElementById("canvas")
+
              var ctx = canvas.getContext("2d");
 
              var canvasOffset = $("#canvas").offset();
@@ -534,22 +574,63 @@
                var Y  = b.item(0).firstChild.data;
 
                console.log(X,Y);
+
+
+              // function showCoords(event) {
+                 var canvas = document.getElementById("canvas");
+                 canvas.width = canvas.width *2 ;
+               canvas.height = canvas.height *2 ;
+                 var ctx = canvas.getContext("2d");
+                 var x = event.clientX;
+                 var  y= event.clientY;
+
                var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");
 
 
-               ctx.clearRect(0, 0, 2*canvas.width, 2*canvas.height);
-               ctx.translate(X,Y);
 
+               var imagesize = document.getElementById("dwv-drawDiv");
+               var imagelayer = document.getElementById("dwv-imageLayer") ;
+
+               function readCookie(name) {
+                 var nameEQ = name + "=";
+                 var ca = document.cookie.split(';');
+                 for(var i=0;i < ca.length;i++) {
+                   var c = ca[i];
+                   while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                   if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                 }
+                 return null;
+               }
+
+               var width= readCookie("width");
+               var imagewidth = Number(width);
+
+               var height= readCookie("height");
+               var imageheight = Number(height);
+
+
+               var houss1 = ( X * imagelayer.width) /width ;
+               var houss2 = ( Y * imagelayer.height ) / height;
+
+
+           /*    var houss1 = ( X * 1078) /3264 ;
+               var houss2 = ( Y * 806) / 2448;*/
+
+               var canvas = document.getElementById("canvas");
+               var ctx = canvas.getContext("2d");
+               ctx.clearRect(0, 0, 2*canvas.width, 2*canvas.height);
+               ctx.translate(houss1,houss2);
                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
 
-               console.log("imgage taille ", img.width,"   ",img.height);
-               console.log("w et H ", w,h);
+
+                console.log("les cooordonéées " , houss1,houss2);
+
+                console.log("imgage taille", img.width, "   ", img.height);
 
 
-
-
+               //}
 
              };
              MaxId();
@@ -584,6 +665,7 @@
       });
 
 
+      });
 
 
     </script>
@@ -593,8 +675,8 @@
   </div>
 
   <!-- Layer Container -->
-  <div id="layerDialog" title="Image" style="z-index: 10 ; position: static;">
-    <div id="dwv-dropBox" class="dropBox"></div>
+  <div id="layerDialog" title="Image" style="z-index: 10 ">
+    <div id="dwv-dropBox" class="dropBox" ></div>
     <div id="dwv" class="layerContainer">
       <div class="drop" style="z-index: 1">
         <canvas id="canvas"  class="draggable2" width="800" height="900" style="  position:absolute" ></canvas>

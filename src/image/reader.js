@@ -6,8 +6,8 @@ var dwv = dwv || {};
 /**
  * Namespace for image related functions.
  * @class image
- * @namespace dwv
- * @static
+* @namespace dwv
+ *  @static
  */
 dwv.image = dwv.image || {};
 
@@ -23,7 +23,19 @@ dwv.image.getDataFromImage = function(image)
     // draw the image in the canvas in order to get its data
     var canvas = document.createElement('canvas');
     canvas.width = image.width;
-    canvas.height = image.height;
+    canvas.height = image.height
+    function createCookie(name,value) {
+
+            var date = new Date();
+            date.setTime(date.getTime()+(360*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        document.cookie = name+"="+value+expires+"; path=/"
+
+    }
+        createCookie("width",image.width);
+        createCookie("height",image.height);
+
+    console.log("dimension image", image.width,image.height);
     var ctx = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0, image.width, image.height);
     // get the image data
