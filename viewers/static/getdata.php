@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Utilisateur
+ * User: Karrach
  * Date: 14/10/2015
  * Time: 14:12
  */
@@ -16,14 +16,14 @@ $dbhost="localhost";
 $dbuser="root";
 $dbpass="";
 
-$nomScene = $_SESSION['nomScene'];
+
 
 $dblink=mysql_connect($dbhost,$dbuser,$dbpass);
 mysql_select_db("planif2d",$dblink);
 
 //on lance la requete
 
-$query = "SELECT * FROM coordonee WHERE id= '23'";
+$query = "SELECT * FROM coordonee WHERE id = ( SELECT MAX(id) FROM coordonee )";
 $result = mysql_query($query,$dblink) or die (mysql_error($dblink));
 
 //On boucle sur le resultat
