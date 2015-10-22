@@ -31,6 +31,10 @@
   <script type="text/javascript" src="../../ext/rii-mango/lossless-min.js"></script>
   <script type="text/javascript" src="../../ext/notmasteryet/jpg.js"></script>
   <script type="text/javascript" src="../../ext/kinetic/kinetic-v5.1.1-06.10.min.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/jspdf.debug.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/jspdf.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/jspdf.min.js"></script>
+  <script type="text/javascript" src="../../ext/Html2canvas/html2canvas.js"></script>
 
 
   <!-- Local -->
@@ -205,7 +209,7 @@
   <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"   /></p>
   <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000 "/></p>
   <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"   /></p>
-  <p><input type="button" id="button4" value = " exporter " style  ="float: right; z-index: 1000"   /></p>
+  <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"   /></p>
   <p><select id="list" style="float: right">
               <option>Sélectionnez votre implant</option>
               <option>Implant test1</option>
@@ -215,7 +219,12 @@
 
   </select>
   </p>
-
+  <p><select id="list2" style="float: right">
+              <option>Sélectionnez votre patient</option>
+              <option>DUPOND Jacques</option>
+              <option>CHARLES Adrien</option>
+  </select>
+  </p>
 
   <div class="drag" style="float: right">
 
@@ -257,6 +266,7 @@
 
         }
         // on séléctionne un immplant après on procède au traitement
+        var imageData;
 
         var list = document.getElementById('list');
          list.addEventListener('change', function() {
@@ -529,6 +539,7 @@
 
 
                var imagelayer = document.getElementById("dwv-imageLayer") ;
+               imageData=imagelayer.toDataURL("image/jpeg");
                function readCookie(name) {
                  var nameEQ = name + "=";
                  var ca = document.cookie.split(';');
@@ -564,6 +575,71 @@
              MaxId();
            },false)
         }, true);
+
+        var list2 = document.getElementById('list2');
+        list2.addEventListener('change',function()
+        {
+          var idListe2=list2.selectedIndex;
+
+          var element4=document.getElementById("button4");
+           element4.addEventListener('click',function()
+            {
+              function getPatient(idPatient)
+              {
+                console.log(idPatient);
+                var xhr;
+                if (window.XMLHttpRequest) 
+                  {
+                    xhr = new XMLHttpRequest();
+                  } 
+                else 
+                  if (window.ActiveXObject)
+                  {
+                    xhr=new ActiveXObject("Microsoft.XMLHTTP");
+                  }
+                xhr.open("GET", "GetPatient.php", false);
+                xhr.send(null);
+                xhr.responseText;
+                var docXML=xhr.responseXML;
+                var idPatientBDD=docXML.getElementsByTagName("ID");
+                var nomPatientBDD=docXML.getElementsByTagName("Nom");
+                var prenomPatientBDD=docXML.getElementsByTagName("Prenom");
+                var vitalePatientBDD=docXML.getElementsByTagName("NVitale");
+
+                for (var i = 0; i < idPatientBDD.length; i++) 
+                {
+                  if (idPatient==idPatientBDD.item(i).firstChild.data) 
+                    {
+                      var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
+                      var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
+                      var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
+                    };                    
+                };
+                return nomPatientFinal+"_"+prenomPatientFinal+"_"+vitalePatientFinal;
+              }
+
+              function ExportPDF()
+              {
+                var docPDF = new jsPDF();
+                var idPatientLocal = idListe2;
+                var patientBDD=getPatient(idPatientLocal);
+                var patient=patientBDD.split('_');
+                console.log(imageData);
+                docPDF.setFontSize(20);
+                docPDF.text(15,30,"Nom : "+patient[0]);
+                docPDF.text(15,40,"Pénom : "+patient[1]);
+                docPDF.text(15,50,"Numéro de carte vitale : "+patient[2]);
+                console.log("Nom : "+patient[0]);
+                console.log("Pénom : "+patient[1]);
+                console.log("Numéro de carte vitale : "+patient[2]);
+                docPDF.addImage(imageData,'JPEG', 15, 60, 180, 180);
+                docPDF.save(patient[0]);
+
+              };
+              ExportPDF();
+            },false)
+
+        },true)
 
       });
 
