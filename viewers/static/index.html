@@ -230,46 +230,31 @@
 
 
       var body = document.getElementById('body');
-
+      // taille de l'ecran
       console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
+      // coordonnée de la sourie
       function showCoords(event) {
         var x = event.clientX;
         var y = event.clientY;
         console.log(x,"^^",y);
+      // Début de la fonction principale
       }
-      YUI().use('node', 'event', function (Y) {
-        // The Node and Event modules are loaded and ready to use.
-        //
-
-        var corn = Y.one('#canvas');
-
-
-       // var width = corn.get('offsetBottom');
-         var width = corn.getX();
-        console.log("this is the width of element canvas", width , corn.getY());
-
-
       $(function() {
 
-        function dragger (){
-
+          // Fonction pour rendre un élément draggable
+        function dragger (value){
           $( ".draggable2" ).draggable({
-            disabled: false
+            disabled: value
           });
 
-          $( ".draggable2" ).draggable( "option", "disabled", false );
+          $( ".draggable2" ).draggable( "option", "disabled", value );
           $("body").droppable({
             accept: ".draggable"
           });
           $(".draggable2").draggable({
             revert: 'invalide'
           });
-          $(".draggable").draggable({
-            revert: 'invalide'
-          });
-          $( ".draggable" ).draggable({
-            stop: function( event, ui ) {}
-          });
+
         }
         // on séléctionne un immplant après on procède au traitement
 
@@ -279,8 +264,8 @@
            var canvas1 = document.getElementById("canvas");
            canvas1.style.zIndex = "500" ;
            var canvas2 = document.getElementById("dwv-imageLayer") ;
-           canvas2.zIndex = 80 ;
-
+           canvas2.zIndex = "80" ;
+///////////////////////////////////////////////////////////Test console ///////////////////////////////////////////////////////////////
            // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
            function readCookie(name) {
              var nameEQ = name + "=";
@@ -296,19 +281,14 @@
            var height= parseInt(readCookie("height"));
            console.log("this the lol  image size : ", width,height);
            console.log("this is the dimension of canvas 2 ",canvas2.width,canvas2.height);
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           var id_liste = list.selectedIndex ;
           // On affiche le contenu de l'élément <option> ciblé par la propriété selectedIndex
           console.log(list.options[list.selectedIndex].innerHTML);
           console.log("id réelle liste ", id_liste);
-
-
-
         // récupération de l'implant séléctionner via Ajax et getimplant.php
 
            function geturlimplant(){
-
              var id = id_liste;
              var xhr;
              if (window.XMLHttpRequest) {
@@ -383,44 +363,27 @@
              }
              ctx.restore();
            }
-                 dragger();
+                 dragger(false);
+      /////////////////////////////////////////////////////////////////////////////////Button 1 déplacer ///////////////////////////////////////////////////////
            /// Opération sur le button 1 déplacement
 
            var element = document.getElementById("button1");
            element.addEventListener('click', function(){
-
-
              var canvasOffset = $("#canvas").offset();
              var offsetX = canvasOffset.left ;
              var offsetY = canvasOffset.top   ;
              console.log(offsetX,"    ",offsetY);
-
-
-
-             dragger();
+             dragger(false);
              var canvas = document.getElementById("canvas");
              var ctx = canvas.getContext("2d");
              ctx.restore();
-
            },false)
-
-
+////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
            // opération sur le button 2 rotate
-
            var element2 = document.getElementById("button2");
            element2.addEventListener('click', function(){
-
-
              // désactiver le mode draggable
-
-             $( ".draggable2" ).draggable({
-               disabled: true
-             });
-            // $( ".draggable2" ).draggable( "option", "disabled", true );
-             $(".draggable").draggable({
-               revert: 'valide'
-             });
-
+             dragger(true);
              var canvas = document.getElementById("canvas")
              var ctx = canvas.getContext("2d");
              var canvasOffset = $("#canvas").offset();
@@ -429,23 +392,13 @@
              var isDown = false;
              var cx = canvas.width /2 ;
              var cy = canvas.height / 2;
-             var isDragging=false;
-
              var w;
              var h;
              var r = 0;
-             /*var img = new Image;
-             img.onload = function () {*/
                w = img.width;
                h = img.height ;
                draw();
-            /* }
-             img.src = geturlimplant();*/
-
               canvas.style.float = "right";
-
-             var newwidth = 2*canvas.width ;
-             var newheight = 2*canvas.height;
              function draw() {
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                drawRotationHandle(true);
@@ -461,8 +414,6 @@
              }
              function drawRotationHandle(withFill) {
                ctx.save();
-
-              // ctx.translate(img.width/2, img.height/2);
                ctx.translate(canvas.width/2 , canvas.height/2);
                ctx.rotate(r);
                ctx.beginPath();
@@ -482,8 +433,6 @@
                ctx.restore();
                ctx.save();
              }
-
-
              function handleMouseDown(e) {
                mouseX = parseInt(e.clientX - offsetX);
                mouseY = parseInt(e.clientY - offsetY);
@@ -508,7 +457,6 @@
                r = Math.atan2(dy, dx);
                draw();
              }
-
              $("#canvas").mousedown(function (e) {
                handleMouseDown(e);
              });
@@ -521,49 +469,16 @@
              $("#canvas").mouseout(function (e) {
                handleMouseOut(e);
              });
-             $("body").droppable({
-               accept: ".draggable"
-             });
-
-
-
-
            },false)
-
-
+///////////////////////////////////////////////////////// Button 3 Snap //////////////////////////////////////////////////////////////////////////////////
            ///  3eme button pour snap ( positionnement auto )
-
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
-
-            //   ctx.restore();
-
-             $( ".draggable2" ).draggable({
-               disabled: false
-             });
-
-             $( ".draggable2" ).draggable( "option", "disabled", false );
-             $("body").droppable({
-               accept: ".draggable"
-             });
-             $(".draggable2").draggable({
-               revert: 'invalide'
-             });
-             $(".draggable").draggable({
-               revert: 'invalide'
-             });
-             $( ".draggable" ).draggable({
-               stop: function( event, ui ) {}
-             });
-
-
+            dragger(false);
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x,y) du centre de l'axe du trapèze
              function MaxId()
              {
                var xhr;
-
-
-
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
@@ -581,20 +496,14 @@
                var b = docXML.getElementsByTagName("y");
                var  X = a.item(0).firstChild.data;
                var Y  = b.item(0).firstChild.data;
-
                console.log("this the max id coordonnée",X,Y);
               // function showCoords(event) {
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
 
-               //  Récupération des coord de la souris pour des tests
-                 var x = event.clientX;
-                 var  y= event.clientY;
                var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");
-
                var imagelayer = document.getElementById("dwv-imageLayer") ;
-
                function readCookie(name) {
                  var nameEQ = name + "=";
                  var ca = document.cookie.split(';');
@@ -605,52 +514,29 @@
                  }
                  return null;
                }
-
                var width= readCookie("width");
                var height= readCookie("height");
-               var houss1 = ( X * imagelayer.width) /width ;
-               var houss2 = ( Y * imagelayer.height ) / height;
-
+               var coord_global_x = ( X * imagelayer.width) /width ;
+               var coord_global_y = ( Y * imagelayer.height ) / height;
                // Démonstration
            /*    var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
-
                var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");
-
                ctx.save();
                ctx.clearRect(0, 0, canvas.width, canvas.height);
-               ctx.translate(houss1-90,houss2);
+               ctx.translate(coord_global_x-90,coord_global_y);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
-
-
-                console.log("les cooordonéées " , houss1,houss2);
-
+               //
+                console.log("les cooordonéées " , coord_global_x,coord_global_y);
                 console.log("imgage taille", img.width, "   ", img.height);
-
-
                //}
-
              };
              MaxId();
            },false)
         }, true);
 
-
-          $(".draggable").draggable({
-          revert: 'valide'
-        });
-        $("body").droppable({
-          accept: ".draggable"
-        });
-        $("#reset").click(function () {
-          $(".draggable").animate({
-            top: "0px",
-            left: "0px"
-          });
-        });
-      });
       });
 
 
