@@ -229,7 +229,7 @@
     <script>
 
 
-      var body = document.getElementById('body');
+
       // taille de l'ecran
       console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
       // coordonnée de la sourie
@@ -325,13 +325,18 @@
            img.onload = function () {
              w = img.width ;
              h = img.height;
-             draw();
+
+               ctx.save();
+               ctx.clearRect(0, 0, canvas.width,canvas.height);
+               ctx.translate(canvas.width/2,canvas.height/2);
+               ctx.drawImage(img, 0,0 , img.width, img.height, -w / 2, -h/2 , w, h);
+               ctx.restore();
            }
            img.src = geturlimplant();
 
     /// fonction pour le chargement de l'image et le dessin du petit rectangle bleu pour la rotation
 
-           function draw() {
+           /*function draw() {
              ctx.clearRect(0, 0, canvas.width,canvas.height);
              drawRotationHandle(false);
              drawRect();
@@ -345,7 +350,8 @@
            }
            function drawRotationHandle(withFill) {
              ctx.save();
-             ctx.translate(0, 0);
+             //ctx.translate(0, 0);
+             ctx.translate(canvas.width/2,canvas.height/2);
              ctx.rotate(r);
              ctx.beginPath();
              ctx.moveTo(0, -1);
@@ -360,22 +366,24 @@
              if (withFill) {
                ctx.fillStyle = "blue";
                ctx.fill();
-             }
+             }*/
              ctx.restore();
-           }
+
                  dragger(false);
       /////////////////////////////////////////////////////////////////////////////////Button 1 déplacer ///////////////////////////////////////////////////////
            /// Opération sur le button 1 déplacement
-
            var element = document.getElementById("button1");
            element.addEventListener('click', function(){
+               // Récupération de l'offset en jquery
+
              var canvasOffset = $("#canvas").offset();
+               // Offset permet d'enregistrer le déplacement
              var offsetX = canvasOffset.left ;
              var offsetY = canvasOffset.top   ;
-             console.log(offsetX,"    ",offsetY);
+             console.log(offsetX," je suis l'offset   ",offsetY);
              dragger(false);
-             var canvas = document.getElementById("canvas");
-             var ctx = canvas.getContext("2d");
+            /* var canvas = document.getElementById("canvas");
+             var ctx = canvas.getContext("2d");*/
              ctx.restore();
            },false)
 ////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
@@ -384,8 +392,8 @@
            element2.addEventListener('click', function(){
              // désactiver le mode draggable
              dragger(true);
-             var canvas = document.getElementById("canvas")
-             var ctx = canvas.getContext("2d");
+        /*     var canvas = document.getElementById("canvas");
+             var ctx = canvas.getContext("2d");*/
              var canvasOffset = $("#canvas").offset();
              var offsetX = canvasOffset.left;
              var offsetY = canvasOffset.top;
@@ -398,7 +406,10 @@
                w = img.width;
                h = img.height ;
                draw();
-              canvas.style.float = "right";
+               var canvasOffset = $("#canvas").offset();
+               // Offset permet d'enregistrer le déplacement
+               var offsetX = canvasOffset.left ;
+               var offsetY = canvasOffset.top   ;
              function draw() {
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                drawRotationHandle(true);
@@ -407,9 +418,10 @@
              function drawRect() {
                ctx.save();
               //ctx.translate(img.width/2, img.height/2);
-              ctx.translate(canvas.width/2 , canvas.height/2);
+              ctx.translate(canvas.width/2 , canvas.height/2)
+               //  ctx.translate( offsetX,offsetY);
                ctx.rotate(r);
-               ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h/2 , w, h);
+               ctx.drawImage(img, 0,0 , img.width, img.height, -w / 2, -h/2 , w, h);
                ctx.restore();
              }
              function drawRotationHandle(withFill) {
@@ -474,7 +486,7 @@
            ///  3eme button pour snap ( positionnement auto )
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
-            dragger(false);
+
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x,y) du centre de l'axe du trapèze
              function MaxId()
              {
@@ -501,8 +513,7 @@
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
 
-               var canvas = document.getElementById("canvas");
-               var ctx = canvas.getContext("2d");
+
                var imagelayer = document.getElementById("dwv-imageLayer") ;
                function readCookie(name) {
                  var nameEQ = name + "=";
@@ -521,8 +532,8 @@
                // Démonstration
            /*    var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
-               var canvas = document.getElementById("canvas");
-               var ctx = canvas.getContext("2d");
+              /* var canvas = document.getElementById("canvas");
+               var ctx = canvas.getContext("2d");*/
                ctx.save();
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
@@ -531,6 +542,7 @@
                //
                 console.log("les cooordonéées " , coord_global_x,coord_global_y);
                 console.log("imgage taille", img.width, "   ", img.height);
+                 dragger(false);
                //}
              };
              MaxId();

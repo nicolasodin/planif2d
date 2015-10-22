@@ -5,7 +5,6 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 .imageLayer { position: absolute; }
 .drawDiv { position: absolute; pointer-events: none; }
 .dropBox { border: 5px dashed #ccc; }
-.dropBox.hover { border: 5px dashed #cc0; }
 
 /* Info */
 .infotl { position: absolute; top: 0; left: 0; text-align: left; }
@@ -17,8 +16,7 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 .infoLayer canvas { margin: 0; padding: 2px; }
 
 /* Tag list */
-table.tagList { border-collapse: collapse; }
 table.tagList thead td { font-weight: bold; }
 table.tagList td { border: 1px solid grey; padding: 2px; }
-#tags .highlighted { background: #f87217; }
+
 #tags form { width: 50%; }
