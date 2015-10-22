@@ -266,7 +266,7 @@
 
         }
         // on séléctionne un immplant après on procède au traitement
-        var imageData;
+        
 
         var list = document.getElementById('list');
          list.addEventListener('change', function() {
@@ -539,7 +539,6 @@
 
 
                var imagelayer = document.getElementById("dwv-imageLayer") ;
-               imageData=imagelayer.toDataURL("image/jpeg");
                function readCookie(name) {
                  var nameEQ = name + "=";
                  var ca = document.cookie.split(';');
@@ -620,6 +619,8 @@
 
               function ExportPDF()
               {
+                var imagelayer = document.getElementById("dwv-imageLayer") ;
+                var imageData=imagelayer.toDataURL("image/jpeg");
                 var docPDF = new jsPDF();
                 var idPatientLocal = idListe2;
                 var patientBDD=getPatient(idPatientLocal);
