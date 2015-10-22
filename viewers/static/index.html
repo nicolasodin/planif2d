@@ -315,6 +315,10 @@
              return url_ultime;
            }
            var canvas = document.getElementById("canvas");
+             var canvasWidth = 900;
+             var canvasHeight = 800;
+             canvas.width = canvasWidth;
+             canvas.height = canvasHeight;
            var ctx = canvas.getContext("2d");
            console.log(ctx);
 
@@ -381,10 +385,16 @@
              var offsetX = canvasOffset.left ;
              var offsetY = canvasOffset.top   ;
              console.log(offsetX," je suis l'offset   ",offsetY);
+              /* canvas.width = canvasWidth;
+               canvas.height= canvasHeight;*/
              dragger(false);
             /* var canvas = document.getElementById("canvas");
              var ctx = canvas.getContext("2d");*/
              ctx.restore();
+
+
+
+
            },false)
 ////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
            // opération sur le button 2 rotate
@@ -392,6 +402,8 @@
            element2.addEventListener('click', function(){
              // désactiver le mode draggable
              dragger(true);
+               canvas.width = canvasWidth;
+               canvas.height= canvasHeight;
         /*     var canvas = document.getElementById("canvas");
              var ctx = canvas.getContext("2d");*/
              var canvasOffset = $("#canvas").offset();
@@ -491,6 +503,8 @@
              function MaxId()
              {
                var xhr;
+                 canvas.width = canvasWidth;
+                 canvas.height= canvasHeight;
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
@@ -535,6 +549,8 @@
               /* var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");*/
                ctx.save();
+                 canvas.widh = canvas.width * 2;
+                 canvas.height= canvas.height*2;
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
