@@ -34,6 +34,10 @@
   <script type="text/javascript" src="../../ext/jsPDF/jspdf.debug.js"></script>
   <script type="text/javascript" src="../../ext/jsPDF/jspdf.js"></script>
   <script type="text/javascript" src="../../ext/jsPDF/jspdf.min.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/libs/png_support/png.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/libs/png_support/zlib.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/plugins/addimage.js"></script>
+  <script type="text/javascript" src="../../ext/jsPDF/plugins/png_support.js"></script>
   <script type="text/javascript" src="../../ext/Html2canvas/html2canvas.js"></script>
 
 
@@ -574,12 +578,12 @@
              MaxId();
            },false)
         }, true);
-
+///////////////////////////////////////////////////////////////Select Patients////////////////////////////////////////////
         var list2 = document.getElementById('list2');
         list2.addEventListener('change',function()
         {
           var idListe2=list2.selectedIndex;
-
+//////////////////////////////////////////////////////////////Button 4 "Export PDF"//////////////////////////////////////
           var element4=document.getElementById("button4");
            element4.addEventListener('click',function()
             {
@@ -619,8 +623,20 @@
 
               function ExportPDF()
               {
-                var imagelayer = document.getElementById("dwv-imageLayer") ;
-                var imageData=imagelayer.toDataURL("image/jpeg");
+                var imageLayer = document.getElementById("dwv-imageLayer");
+                var canvasLayer = document.getElementById("canvas");
+
+                var wImageLayer=imageLayer.width;
+                var hImageLayer=imageLayer.height;
+                console.log("image size ",wImageLayer,"   ",hImageLayer);
+
+                var wCanvasLayer=canvasLayer.width;
+                var hCanvasLayer=canvasLayer.height;
+                console.log("Canvas size ",wCanvasLayer,"   ",hCanvasLayer);
+
+                var imageData=imageLayer.toDataURL("image/jpeg");
+                var canvasData=canvasLayer.toDataURL("image/png");
+
                 var docPDF = new jsPDF();
                 var idPatientLocal = idListe2;
                 var patientBDD=getPatient(idPatientLocal);
@@ -633,7 +649,10 @@
                 console.log("Nom : "+patient[0]);
                 console.log("Pénom : "+patient[1]);
                 console.log("Numéro de carte vitale : "+patient[2]);
-                docPDF.addImage(imageData,'JPEG', 15, 60, 180, 180);
+                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
+                docPDF.addPage();
+                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
+                docPDF.addImage(canvasData,'PNG', 15, 60, 180, ((180*hCanvasLayer)/wCanvasLayer));
                 docPDF.save(patient[0]);
 
               };
