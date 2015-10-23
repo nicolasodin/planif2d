@@ -653,6 +653,7 @@
                 docPDF.addPage();
                 docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
                 docPDF.addImage(canvasData,'PNG', 15, 60, 180, ((180*hCanvasLayer)/wCanvasLayer));
+                //docPDF.addImage(canvasData,'PNG', (15-(((wCanvasLayer-wImageLayer)*180)/wImageLayer)), (60-(((wCanvasLayer-wImageLayer)*((180*hCanvasLayer)/wCanvasLayer)))/wImageLayer), 180, ((180*hCanvasLayer)/wCanvasLayer));
                 docPDF.save(patient[0]);
 
               };
