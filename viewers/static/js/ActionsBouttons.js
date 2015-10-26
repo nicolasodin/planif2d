@@ -1,4 +1,4 @@
-<script>
+//<script>
       // taille de l'ecran
       console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
       // coordonnée de la sourie
@@ -319,7 +319,7 @@
               /* var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");*/
                ctx.save();
-                 canvas.widh = canvas.width * 2;
+                 canvas.width = canvas.width * 2;
                  canvas.height= canvas.height*2;
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
@@ -419,4 +419,4 @@
         },true)
 
       });
-</script>
+//</script>

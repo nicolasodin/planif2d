@@ -19,7 +19,7 @@ $(document).ready( function()
         "fitToWindow": true,
         "tools": ["Scroll", "Window/Level", "Zoom/Pan", "Draw", "Livewire", "Filter"],
         "filters": ["Threshold", "Sharpen", "Sobel"],
-        "shapes": ["Line", "Protractor", "Rectangle", "Roi", "Ellipse"],
+        "shapes": ["Line", "Protractor", "Rectangle", "Roi", "Ellipse", "Circle"],
         "gui": ["tool", "load", "help", "undo", "version", "tags"],
         "isMobile": false
     });
