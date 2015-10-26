@@ -24,16 +24,15 @@ dwv.image.getDataFromImage = function(image)
     var canvas = document.createElement('canvas');
     canvas.width = image.width;
     canvas.height = image.height
-    function createCookie(name,value) {
-
-            var date = new Date();
-            date.setTime(date.getTime()+(360*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
+    function createCookie(name, value) {
+        var date = new Date();
+        date.setTime(date.getTime()+(360*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
         document.cookie = name+"="+value+expires+"; path=/"
-
     }
-        createCookie("width",image.width);
-        createCookie("height",image.height);
+    
+    createCookie("width",image.width);
+    createCookie("height",image.height);
 
     console.log("dimension image", image.width,image.height);
     var ctx = canvas.getContext('2d');
