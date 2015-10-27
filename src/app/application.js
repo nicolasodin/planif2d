@@ -270,6 +270,9 @@ dwv.App = function ()
                             case "Ellipse":
                                 shapeList.Ellipse = dwv.tool.EllipseFactory;
                                 break;
+                            case "Circle":
+                                shapeList.Circle = dwv.tool.CircleFactory;
+                                break;
                             }
                         }
                         toolList.Draw = new dwv.tool.Draw(this, shapeList);

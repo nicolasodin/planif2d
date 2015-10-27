@@ -301,6 +301,10 @@
               /* var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");*/
                ctx.save();
+
+                 canvas.width = canvas.width;
+                 canvas.height= canvas.height;
+
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
@@ -399,3 +403,4 @@
         },true)
 
       });
+

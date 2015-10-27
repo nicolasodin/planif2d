@@ -7,12 +7,12 @@ dwv.tool = dwv.tool || {};
 var Kinetic = Kinetic || {};
 
 /** 
- * Ellipse factory.
- * @class EllipseFactory
+ * Circle factory.
+ * @class CircleFactory
  * @namespace dwv.tool
  * @constructor
  */
-dwv.tool.EllipseFactory = function ()
+dwv.tool.CircleFactory = function ()
 {
     /** 
      * Get the number of points needed to build the shape.
@@ -29,36 +29,36 @@ dwv.tool.EllipseFactory = function ()
 };  
 
 /**
- * Create an ellipse shape to be displayed.
+ * Create a cercle shape to be displayed.
  * @method create
- * @param {Array} points The points from which to extract the ellipse.
+ * @param {Array} points The points from which to extract the cercle.
  * @param {Object} style The drawing style.
  * @param {Object} image The associated image.
  */ 
-dwv.tool.EllipseFactory.prototype.create = function (points, style, image)
+ dwv.tool.CircleFactory.prototype.create = function (points, style, image)
 {
+    console.log("CircleFactory OK")
     // calculate radius
-    var a = Math.abs(points[0].getX() - points[1].getX());
-    var b = Math.abs(points[0].getY() - points[1].getY());
+    var radiusCircle = Math.sqrt(Math.pow(points[1].getX()-points[0].getX(),2)+Math.pow(points[1].getY()-points[0].getY(),2));
     // physical shape
-    var ellipse = new dwv.math.Ellipse(points[0], a, b);
+    var circle = new dwv.math.Circle(points[0], radiusCircle);
     // draw shape
-    var kshape = new Kinetic.Ellipse({
-        x: ellipse.getCenter().getX(),
-        y: ellipse.getCenter().getY(),
-        radius: { x: ellipse.getA(), y: ellipse.getB() },
+    var kshape = new Kinetic.Circle({
+        x: circle.getCenter().getX(),
+        y: circle.getCenter().getY(),
+        radius: circle.getRadius(),
         stroke: style.getLineColour(),
         strokeWidth: style.getScaledStrokeWidth(),
         name: "shape"
     });
     // quantification
-    var quant = image.quantifyEllipse( ellipse );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
+    //var quant = image.quantifyCircle( circle );
+    //var cm2 = quant.surface / 100;
+    var str = radiusCircle + " mm";//cm2.toPrecision(4) + " cm2";
     // quantification text
     var ktext = new Kinetic.Text({
-        x: ellipse.getCenter().getX(),
-        y: ellipse.getCenter().getY(),
+        x: circle.getCenter().getX(),
+        y: circle.getCenter().getY(),
         text: str,
         fontSize: style.getScaledFontSize(),
         fontFamily: style.getFontFamily(),
@@ -67,26 +67,19 @@ dwv.tool.EllipseFactory.prototype.create = function (points, style, image)
     });
     // return group
     var group = new Kinetic.Group();
-    group.name("ellipse-group");
+    group.name("circle-group");
     group.add(kshape);
     group.add(ktext);
     return group;
 };
 
-/**
- * Update an ellipse shape.
- * @method UpdateEllipse
- * @static
- * @param {Object} anchor The active anchor.
- * @param {Object} image The associated image.
- */ 
-dwv.tool.UpdateEllipse = function (anchor, image)
+dwv.tool.UpdateCircle = function (anchor, image)
 {
-    console.log("UpdateEllipse OK");
+    console.log("UpdateCircle OK")
     // parent group
     var group = anchor.getParent();
     // associated shape
-    var kellipse = group.getChildren( function (node) {
+    var kcircle = group.getChildren( function (node) {
         return node.name() === 'shape';
     })[0];
     // associated text
@@ -137,20 +130,24 @@ dwv.tool.UpdateEllipse = function (anchor, image)
         break;
     }
     // update shape
-    var radiusX = ( topRight.x() - topLeft.x() ) / 2;
-    var radiusY = ( bottomRight.y() - topRight.y() ) / 2;
-    var center = { 'x': topLeft.x() + radiusX, 'y': topRight.y() + radiusY };
-    kellipse.position( center );
-    var radiusAbs = { 'x': Math.abs(radiusX), 'y': Math.abs(radiusY) };
-    if ( radiusAbs ) {
-        kellipse.radius( radiusAbs );
-    }
+    var radiusCircle = ( topRight.x() - topLeft.x() ) / 2; //Math.sqrt(Math.pow(topRight.x()-topLeft.x())+Math.pow(bottomRight.y()-topRight.y()));
+    var centerCircle = dwv.math.Point2D(topLeft.x()+radiusCircle, topLeft.y()+radiusCircle);
+    // physical shape
+    //var circle = new dwv.math.Circle(points[0], radiusCircle);
+    //var radiusX = ( topRight.x() - topLeft.x() ) / 2;
+    //var radiusY = ( bottomRight.y() - topRight.y() ) / 2;
+    //var center = { 'x': topLeft.x() + radiusCircle, 'y': topRight.y() + radiusCircle };
+    kcircle.position( centerCircle );
+    var radiusCircleAbs = Math.abs(radiusCircle);
+    kcircle.radius( radiusCircleAbs );
+    
     // update text
-    var ellipse = new dwv.math.Ellipse(center, radiusX, radiusY);
-    var quant = image.quantifyEllipse( ellipse );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
-    var textPos = { 'x': center.x, 'y': center.y };
+    var circle = new dwv.math.Circle(centerCircle, radiusCircleAbs);
+    //var quant = image.quantifyCircle( circle );
+    //var cm2 = quant.surface / 100;
+    var str = radiusCircleAbs  + " mm";
+    var textPos = centerCircle;
     ktext.position(textPos);
     ktext.text(str);
 };
+

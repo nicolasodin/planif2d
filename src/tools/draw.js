@@ -662,6 +662,9 @@ dwv.tool.Draw = function (app, shapeFactoryList)
         else if ( shape instanceof Kinetic.Ellipse ) {
             cmdName = "ellipse";
         }
+        else if ( shape instanceof Kinetic.Circle ) {
+            cmdName = "circle";
+        }
         
         // shape colour
         var colour = shape.stroke();
