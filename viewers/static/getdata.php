@@ -27,10 +27,9 @@ $query = "SELECT * FROM coordonee WHERE id = ( SELECT MAX(id) FROM coordonee )";
 $result = mysql_query($query,$dblink) or die (mysql_error($dblink));
 
 //On boucle sur le resultat
-while ($row = mysql_fetch_array($result, MYSQL_NUM))
-{
-    echo "<x>" . $row[1] . "</x>\n";
-    echo "<y>" . $row[2] . "</y>\n";
+while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
+	echo "<x>" . $row[1] . "</x>\n";
+	echo "<y>" . $row[2] . "</y>\n";
 }
 echo "</exemple>\n";
 mysql_close($dblink);

@@ -1,5 +1,5 @@
-<script>
-      // taille de l'ecran
+
+      // Taille de l'ecran
       console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
       // coordonnée de la sourie
       function showCoords(event) {
@@ -9,8 +9,7 @@
       // Début de la fonction principale
       }
       $(function() {
-
-          // Fonction pour rendre un élément draggable
+        // Fonction pour rendre un élément draggable
         function dragger (value){
           $( ".draggable2" ).draggable({
             disabled: value
@@ -25,60 +24,49 @@
           });
 
         }
-        // on séléctionne un immplant après on procède au traitement
+        // on séléctionne un implant après on procède au traitement
         
 
-        var list = document.getElementById('list');
+         var list = document.getElementById('list');
          list.addEventListener('change', function() {
 
            var canvas1 = document.getElementById("canvas");
            canvas1.style.zIndex = "500" ;
            var canvas2 = document.getElementById("dwv-imageLayer") ;
            canvas2.zIndex = "80" ;
-///////////////////////////////////////////////////////////Test console ///////////////////////////////////////////////////////////////
-           // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
-           function readCookie(name) {
-             var nameEQ = name + "=";
-             var ca = document.cookie.split(';');
-             for(var i=0;i < ca.length;i++) {
-               var c = ca[i];
-               while (c.charAt(0)==' ') c = c.substring(1,c.length);
-               if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-             }
-             return null;
-           }
-           var width= parseInt(readCookie("width"));
-           var height= parseInt(readCookie("height"));
-           console.log("this the lol  image size : ", width,height);
-           console.log("this is the dimension of canvas 2 ",canvas2.width,canvas2.height);
+///////////////////////////////////////////////////////////Test console /////////////////////////////////////////////////////////////////////////
+          
+          // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
+          var width= parseInt(readCookie("width"));
+          var height= parseInt(readCookie("height"));
+          console.log("this the lol image size : ", width,height);
+          console.log("this is the dimension of canvas 2 ",canvas2.width,canvas2.height);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           var id_liste = list.selectedIndex ;
           // On affiche le contenu de l'élément <option> ciblé par la propriété selectedIndex
           console.log(list.options[list.selectedIndex].innerHTML);
           console.log("id réelle liste ", id_liste);
-        // récupération de l'implant séléctionner via Ajax et getimplant.php
+          // Récupération de l'implant séléctionner via Ajax et getimplant.php
 
-           function geturlimplant(){
+           function geturlimplant() {
              var id = id_liste;
              var xhr;
              if (window.XMLHttpRequest) {
                xhr = new XMLHttpRequest();
              }
-             else if (window.ActiveXObject)
-             {
+             else if (window.ActiveXObject) {
                xhr = new ActiveXObject("Microsoft.XMLHTTP");
              }
-             //on définit l'appel de la fonction au retour serveur
+
+             // On définit l'appel de la fonction au retour serveur
              xhr.open("GET", "getimplant.php", false);
              xhr.send(null);
              xhr.responseText;
              var docXML= xhr.responseXML;
              var id_implant = docXML.getElementsByTagName("id");
              var url = docXML.getElementsByTagName("url");
-             for ( var i = 0;i< id_implant.length; i++)
-             {
-               if (id == id_implant.item(i).firstChild.data)
-               {
+             for (var i = 0;i< id_implant.length; i++) {
+               if (id == id_implant.item(i).firstChild.data) {
                  var url_ultime =  url.item(i).firstChild.data;
                }
              }
@@ -92,13 +80,19 @@
            var ctx = canvas.getContext("2d");
            console.log(ctx);
 
-           var w;
-           var h;
+           var w, h;
            var r = 0;
            var img = new Image;
+
+           // On récupère le coefficient réducteur de l'image pour l'appliquer sur l'implant
+           var coef = facteurRedimensionnementImage();
+
            img.onload = function () {
-             w = img.width ;
-             h = img.height;
+             /*w = img.width * coef.coefWidth * 2.2;
+             h = img.height * coef.coefHeight * 2.2;*/
+
+             w = img.width * coef.coefWidth * 0.51;
+             h = img.height * coef.coefHeight * 0.51;
 
                ctx.save();
                ctx.clearRect(0, 0, canvas.width,canvas.height);
@@ -278,8 +272,7 @@
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
-               else if (window.ActiveXObject)
-               {
+               else if (window.ActiveXObject) {
                  xhr = new ActiveXObject("Microsoft.XMLHTTP");
                }
                //on définit l'appel de la fonction au retour serveur
@@ -297,37 +290,24 @@
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
 
-
-               var imagelayer = document.getElementById("dwv-imageLayer") ;
-               function readCookie(name) {
-                 var nameEQ = name + "=";
-                 var ca = document.cookie.split(';');
-                 for(var i=0;i < ca.length;i++) {
-                   var c = ca[i];
-                   while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                   if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-                 }
-                 return null;
-               }
+               var imagelayer = document.getElementById("dwv-imageLayer");
                var width= readCookie("width");
                var height= readCookie("height");
-               var coord_global_x = ( X * imagelayer.width) /width ;
+               var coord_global_x = ( X * imagelayer.width) / width;
                var coord_global_y = ( Y * imagelayer.height ) / height;
                // Démonstration
-           /*    var houss1 = ( X * 1078) /3264 ;
+               /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
               /* var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");*/
                ctx.save();
-                 canvas.widh = canvas.width * 2;
-                 canvas.height= canvas.height*2;
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
-                console.log("les cooordonéées " , coord_global_x,coord_global_y);
-                console.log("imgage taille", img.width, "   ", img.height);
+                console.log("les cooordonnées " , coord_global_x,coord_global_y);
+                console.log("image taille", img.width, "   ", img.height);
                  dragger(false);
                //}
              };
@@ -419,4 +399,3 @@
         },true)
 
       });
-</script>

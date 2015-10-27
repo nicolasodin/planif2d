@@ -80,6 +80,9 @@
   <!-- Launch the app -->
   <script type="text/javascript" src="appgui.js"></script>
   <script type="text/javascript" src="applauncher.js"></script>
+
+  <!-- Fonctions -->
+  <script src="js/functions.js"></script>
 </head>
 
 <body id="body" ondblclick="showCoords(event)">
@@ -120,10 +123,10 @@
 
     <p><input type="button" id="reset" value="reset" style  ="float: right"  /></p>
 
-    <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"   /></p>
-    <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000 "/></p>
-    <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"   /></p>
-    <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"   /></p>
+    <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"></p>
+    <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000"></p>
+    <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"></p>
+    <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"></p>
     <p>
       <select id="list" style="float: right">
         <option>Sélectionnez votre implant</option>
@@ -153,12 +156,13 @@
     </div>
 
     <!-- Layer Container -->
-    <div id="layerDialog" title="Image" style="z-index: 10 ">
+    <div id="layerDialog" title="Image" style="z-index: 10">
       <div id="dwv-dropBox" class="dropBox" ></div>
       <div id="dwv" class="layerContainer">
         <div class="drop" style="z-index: 1">
-          <canvas id="canvas"  class="draggable2" width= 900px height= 800px  style="  position : absolute" ></canvas>
-          <canvas id="dwv-imageLayer" class="imageLayer" style="position: absolute">Only for HTML5 compatible browsers...</canvas>
+          <canvas id="canvas" class="draggable2" width=900px height=800px style="position: absolute;"></canvas>
+          <!-- Only for HTML5 compatible browsers... -->
+          <canvas id="dwv-imageLayer" class="imageLayer" style="position: absolute"></canvas>
         </div>
 
         <div id="dwv-drawDiv" class="drawDiv"></div>
