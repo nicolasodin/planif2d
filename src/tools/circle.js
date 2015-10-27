@@ -35,10 +35,11 @@ dwv.tool.CircleFactory = function ()
  * @param {Object} style The drawing style.
  * @param {Object} image The associated image.
  */ 
- dwv.tool.CircleFactory.prototype.create = function (points, style)
+ dwv.tool.CircleFactory.prototype.create = function (points, style, image)
 {
+    console.log("CircleFactory OK")
     // calculate radius
-    var radiusCircle = Math.sqrt(Math.pow(points[1].getX()-points[0].getX())+Math.pow(points[1].getY()-points[0].getY()));
+    var radiusCircle = Math.sqrt(Math.pow(points[1].getX()-points[0].getX(),2)+Math.pow(points[1].getY()-points[0].getY(),2));
     // physical shape
     var circle = new dwv.math.Circle(points[0], radiusCircle);
     // draw shape
@@ -51,9 +52,9 @@ dwv.tool.CircleFactory = function ()
         name: "shape"
     });
     // quantification
-    var quant = image.quantifyCircle( circle );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
+    //var quant = image.quantifyCircle( circle );
+    //var cm2 = quant.surface / 100;
+    var str = radiusCircle;//cm2.toPrecision(4) + " cm2";
     // quantification text
     var ktext = new Kinetic.Text({
         x: circle.getCenter().getX(),
@@ -72,8 +73,9 @@ dwv.tool.CircleFactory = function ()
     return group;
 };
 
-dwv.tool.UpdateCircle = function (anchor)
+dwv.tool.UpdateCircle = function (anchor, image)
 {
+    console.log("UpdateCircle OK")
     // parent group
     var group = anchor.getParent();
     // associated shape
@@ -135,16 +137,16 @@ dwv.tool.UpdateCircle = function (anchor)
     //var radiusX = ( topRight.x() - topLeft.x() ) / 2;
     //var radiusY = ( bottomRight.y() - topRight.y() ) / 2;
     //var center = { 'x': topLeft.x() + radiusCircle, 'y': topRight.y() + radiusCircle };
-    kcircle.position( center );
+    kcircle.position( centerCircle );
     var radiusCircleAbs = Math.abs(radiusCircle);
-    kcircle.radius( radiusAbs );
+    kcircle.radius( radiusCircleAbs );
     
     // update text
-    var circle = new dwv.math.Circle(center, radiusCircle);
-    var quant = image.quantifyCircle( circle );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
-    var textPos = { 'x': center.x, 'y': center.y };
+    var circle = new dwv.math.Circle(centerCircle, radiusCircleAbs);
+    //var quant = image.quantifyCircle( circle );
+    //var cm2 = quant.surface / 100;
+    var str = radiusCircle;
+    var textPos = centerCircle;
     ktext.position(textPos);
     ktext.text(str);
 };
