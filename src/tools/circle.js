@@ -54,7 +54,7 @@ dwv.tool.CircleFactory = function ()
     // quantification
     //var quant = image.quantifyCircle( circle );
     //var cm2 = quant.surface / 100;
-    var str = radiusCircle;//cm2.toPrecision(4) + " cm2";
+    var str = radiusCircle + " mm";//cm2.toPrecision(4) + " cm2";
     // quantification text
     var ktext = new Kinetic.Text({
         x: circle.getCenter().getX(),
@@ -145,7 +145,7 @@ dwv.tool.UpdateCircle = function (anchor, image)
     var circle = new dwv.math.Circle(centerCircle, radiusCircleAbs);
     //var quant = image.quantifyCircle( circle );
     //var cm2 = quant.surface / 100;
-    var str = radiusCircle;
+    var str = radiusCircleAbs  + " mm";
     var textPos = centerCircle;
     ktext.position(textPos);
     ktext.text(str);
