@@ -361,21 +361,42 @@
                 return nomPatientFinal+"_"+prenomPatientFinal+"_"+vitalePatientFinal;
               }
 
+
+              function screenShot2 (div)
+              {
+                return screenShot(div);
+              };
+
+              function screenShot(div, data) 
+              {
+                setTimeout(function(){
+                  html2canvas(div, {
+                    onrendered: function(canvas) {
+                      data = canvas.toDataURL("image/jpeg");
+                      console.log("divData1 = "+divData);
+                    }
+                  });
+                }, 1500);
+              };
+              
               function ExportPDF()
               {
                 var imageLayer = document.getElementById("dwv-imageLayer");
-                var canvasLayer = document.getElementById("canvas");
-
+                var divLayer = document.getElementById("layerDialog");
+                
                 var wImageLayer=imageLayer.width;
                 var hImageLayer=imageLayer.height;
                 console.log("image size ",wImageLayer,"   ",hImageLayer);
 
-                var wCanvasLayer=canvasLayer.width;
-                var hCanvasLayer=canvasLayer.height;
-                console.log("Canvas size ",wCanvasLayer,"   ",hCanvasLayer);
+                var wDivLayer=divLayer.width;
+                var hDivLayer=divLayer.height;
+                console.log("Canvas size ",wDivLayer,"   ",hDivLayer);
 
                 var imageData=imageLayer.toDataURL("image/jpeg");
-                var canvasData=canvasLayer.toDataURL("image/png");
+                var divData; 
+                screenShot(divLayer,divData);
+                
+                console.log("divData2 = "+divData);
 
                 var docPDF = new jsPDF();
                 var idPatientLocal = idListe2;
@@ -384,15 +405,15 @@
                 console.log(imageData);
                 docPDF.setFontSize(20);
                 docPDF.text(15,30,"Nom : "+patient[0]);
-                docPDF.text(15,40,"Pénom : "+patient[1]);
+                docPDF.text(15,40,"Prénom : "+patient[1]);
                 docPDF.text(15,50,"Numéro de carte vitale : "+patient[2]);
                 console.log("Nom : "+patient[0]);
                 console.log("Pénom : "+patient[1]);
                 console.log("Numéro de carte vitale : "+patient[2]);
                 docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
                 docPDF.addPage();
-                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
-                docPDF.addImage(canvasData,'PNG', 15, 60, 180, ((180*hCanvasLayer)/wCanvasLayer));
+                //docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
+                docPDF.addImage(divData,'JPEG', 15, 60, 180, ((180*hDivLayer)/wDivLayer));
                 //docPDF.addImage(canvasData,'PNG', (15-(((wCanvasLayer-wImageLayer)*180)/wImageLayer)), (60-(((wCanvasLayer-wImageLayer)*((180*hCanvasLayer)/wCanvasLayer)))/wImageLayer), 180, ((180*hCanvasLayer)/wCanvasLayer));
                 docPDF.save(patient[0]);
 
