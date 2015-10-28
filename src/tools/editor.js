@@ -263,7 +263,6 @@ dwv.tool.ShapeEditor = function (app)
             var circleX = shape.x();
             var circleY = shape.y();
             var radiusCircle = shape.radius();
-            console.log("Creation des ancres par rapport a la shape : radiusCircle = "+radiusCircle);
             addAnchor(group, circleX, circleY, 'centerCircleAnchor');
             addAnchor(group, circleX+radiusCircle, circleY, 'radiusPoint');
             //addAnchor(group, circleX+radiusCircle, circleY+radiusCircle, 'bottomRight');
@@ -283,11 +282,6 @@ dwv.tool.ShapeEditor = function (app)
      */
     function addAnchor(group, x, y, id) {
         // anchor shape
-        console.log("Creation des ancres");
-        console.log("Creation des ancres : x : " + x);
-        console.log("Creation des ancres : y : " + y);
-        console.log("Creation des ancres : id : " + id);
-
         var anchor = new Kinetic.Circle({
             x: x,
             y: y,

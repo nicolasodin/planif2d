@@ -5,7 +5,7 @@
 var dwv = dwv || {};
 dwv.tool = dwv.tool || {};
 var Kinetic = Kinetic || {};
-
+var lastCenterPos
 /** 
  * Circle factory.
  * @class CircleFactory
@@ -37,6 +37,7 @@ dwv.tool.CircleFactory = function ()
  */ 
  dwv.tool.CircleFactory.prototype.create = function (points, style, image)
 {
+    lastCenterPos = { 'x': points[0].getX(), 'y': points[0].getY()};
     console.log("CircleFactory OK")
     // calculate radius
     var radiusCircle = Math.sqrt(Math.pow(points[1].getX()-points[0].getX(),2)+Math.pow(points[1].getY()-points[0].getY(),2));
@@ -95,7 +96,7 @@ dwv.tool.UpdateCircle = function (anchor, image)
     })[0];
     
     // update 'self' (undo case) and special points
-    var radiusCircle = ( centerCircleAnchor.x() -  radiusPoint.x());
+    var radiusCircle = ( radiusPoint.x() - centerCircleAnchor.x() );
     console.log(radiusCircle)
     var radiusCircleAbs = Math.abs(radiusCircle);
     switch ( anchor.id() ) {
@@ -106,7 +107,7 @@ dwv.tool.UpdateCircle = function (anchor, image)
     case 'centerCircleAnchor':
         centerCircleAnchor.x(centerCircleAnchor.x());
         centerCircleAnchor.y(centerCircleAnchor.y());
-        radiusPoint.x(anchor.x()+radiusCircle);
+        radiusPoint.x(radiusPoint.x()+(anchor.x()-lastCenterPos.x));
         radiusPoint.y(centerCircleAnchor.y());
         break;
 
@@ -117,19 +118,17 @@ dwv.tool.UpdateCircle = function (anchor, image)
     // update shape
 
     //var radiusCircle = ( topRight.x() - topLeft.x() ) / 2; //Math.sqrt(Math.pow(topRight.x()-topLeft.x())+Math.pow(bottomRight.y()-topRight.y()));
-    var centerCircle = { 'x': centerCircleAnchor.x(), 'y': centerCircleAnchor.y()};//dwv.math.Point2D(topLeft.x()+radiusCircle, topLeft.y()+radiusCircle);
+    var centerCircle = { 'x': centerCircleAnchor.x(), 'y': centerCircleAnchor.y()};
+    lastCenterPos=centerCircle;
+    //dwv.math.Point2D(topLeft.x()+radiusCircle, topLeft.y()+radiusCircle);
     // physical shape
     //var circle = new dwv.math.Circle(points[0], radiusCircle);
     //var radiusX = ( topRight.x() - topLeft.x() ) / 2;
     //var radiusY = ( bottomRight.y() - topRight.y() ) / 2;
     //var center = { 'x': topLeft.x() + radiusCircle, 'y': topRight.y() + radiusCircle };
-    console.log("circle.js : centerCircle = "+centerCircle);
     kcircle.position( centerCircle );
-    console.log("circle.js : kcircle.position = "+kcircle.position());
-    
-    console.log("circle.js : radiusCircleAbs = "+radiusCircleAbs);
     kcircle.radius( radiusCircleAbs );
-    console.log("circle.js : kcircle.radius = "+kcircle.radius());
+    
     // update text
     var circle = new dwv.math.Circle(centerCircle, radiusCircle);
     //var quant = image.quantifyCircle( circle );
