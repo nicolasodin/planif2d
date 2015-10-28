@@ -87,62 +87,51 @@ dwv.tool.UpdateCircle = function (anchor, image)
         return node.name() === 'text';
     })[0];
     // find special points
-    var topLeft = group.getChildren( function (node) {
-        return node.id() === 'topLeft';
+    var centerCircleAnchor = group.getChildren( function (node) {
+        return node.id() === 'centerCircleAnchor';
     })[0];
-    var topRight = group.getChildren( function (node) {
-        return node.id() === 'topRight';
+    var radiusPoint = group.getChildren( function (node) {
+        return node.id() === 'radiusPoint';
     })[0];
-    var bottomRight = group.getChildren( function (node) {
-        return node.id() === 'bottomRight';
-    })[0];
-    var bottomLeft = group.getChildren( function (node) {
-        return node.id() === 'bottomLeft';
-    })[0];
+    
     // update 'self' (undo case) and special points
+    var radiusCircle = ( centerCircleAnchor.x() -  radiusPoint.x());
+    console.log(radiusCircle)
+    var radiusCircleAbs = Math.abs(radiusCircle);
     switch ( anchor.id() ) {
-    case 'topLeft':
-        topLeft.x( anchor.x() );
-        topLeft.y( anchor.y() );
-        topRight.y( anchor.y() );
-        bottomLeft.x( anchor.x() );
+    case 'radiusPoint':
+        radiusPoint.x(anchor.x());
+        radiusPoint.y(centerCircleAnchor.y())
         break;
-    case 'topRight':
-        topRight.x( anchor.x() );
-        topRight.y( anchor.y() );
-        topLeft.y( anchor.y() );
-        bottomRight.x( anchor.x() );
+    case 'centerCircleAnchor':
+        centerCircleAnchor.x(centerCircleAnchor.x());
+        centerCircleAnchor.y(centerCircleAnchor.y());
+        radiusPoint.x(anchor.x()+radiusCircle);
+        radiusPoint.y(centerCircleAnchor.y());
         break;
-    case 'bottomRight':
-        bottomRight.x( anchor.x() );
-        bottomRight.y( anchor.y() );
-        bottomLeft.y( anchor.y() );
-        topRight.x( anchor.x() ); 
-        break;
-    case 'bottomLeft':
-        bottomLeft.x( anchor.x() );
-        bottomLeft.y( anchor.y() );
-        bottomRight.y( anchor.y() );
-        topLeft.x( anchor.x() ); 
-        break;
+
     default :
         console.error('Unhandled anchor id: '+anchor.id());
         break;
     }
     // update shape
-    var radiusCircle = ( topRight.x() - topLeft.x() ) / 2; //Math.sqrt(Math.pow(topRight.x()-topLeft.x())+Math.pow(bottomRight.y()-topRight.y()));
-    var centerCircle = dwv.math.Point2D(topLeft.x()+radiusCircle, topLeft.y()+radiusCircle);
+
+    //var radiusCircle = ( topRight.x() - topLeft.x() ) / 2; //Math.sqrt(Math.pow(topRight.x()-topLeft.x())+Math.pow(bottomRight.y()-topRight.y()));
+    var centerCircle = { 'x': centerCircleAnchor.x(), 'y': centerCircleAnchor.y()};//dwv.math.Point2D(topLeft.x()+radiusCircle, topLeft.y()+radiusCircle);
     // physical shape
     //var circle = new dwv.math.Circle(points[0], radiusCircle);
     //var radiusX = ( topRight.x() - topLeft.x() ) / 2;
     //var radiusY = ( bottomRight.y() - topRight.y() ) / 2;
     //var center = { 'x': topLeft.x() + radiusCircle, 'y': topRight.y() + radiusCircle };
+    console.log("circle.js : centerCircle = "+centerCircle);
     kcircle.position( centerCircle );
-    var radiusCircleAbs = Math.abs(radiusCircle);
-    kcircle.radius( radiusCircleAbs );
+    console.log("circle.js : kcircle.position = "+kcircle.position());
     
+    console.log("circle.js : radiusCircleAbs = "+radiusCircleAbs);
+    kcircle.radius( radiusCircleAbs );
+    console.log("circle.js : kcircle.radius = "+kcircle.radius());
     // update text
-    var circle = new dwv.math.Circle(centerCircle, radiusCircleAbs);
+    var circle = new dwv.math.Circle(centerCircle, radiusCircle);
     //var quant = image.quantifyCircle( circle );
     //var cm2 = quant.surface / 100;
     var str = radiusCircleAbs  + " mm";
