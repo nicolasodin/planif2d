@@ -92,7 +92,7 @@ function CoefRedimensionnementImplant(id, diametreBillemm) {
     else if (window.ActiveXObject) {
 		xhr = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-
+	
     xhr.open("GET", 'php/getimplantId.php?idImp='+ idImplant +'', false);
     xhr.send(null);
     xhr.responseText;
@@ -113,8 +113,6 @@ function CoefRedimensionnementImplant(id, diametreBillemm) {
 		    var heightCmImplant = heightCmImplantBDD.item(i).firstChild.data;
 		};
     };
-
-    alert(widthPxImplant);
 
     var unCmEgalCbPxWidthImp = widthPxImplant / widthCmImplant;
 	var unCmEgalCbPxHeightImp = heightPxImplant / heightCmImplant;

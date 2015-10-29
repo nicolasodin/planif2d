@@ -24,9 +24,8 @@
           });
 
         }
-        // on séléctionne un implant après on procède au traitement
+        // On séléctionne un implant après on procède au traitement
         
-
          var list = document.getElementById('list');
          list.addEventListener('change', function() {
 
@@ -34,7 +33,7 @@
            canvas1.style.zIndex = "500" ;
            var canvas2 = document.getElementById("dwv-imageLayer") ;
            canvas2.zIndex = "80" ;
-///////////////////////////////////////////////////////////Test console /////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////Test console//////////////////////////////////////////////////////////////////////////
           
           // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
           var width= parseInt(readCookie("width"));
@@ -154,16 +153,13 @@
                // Offset permet d'enregistrer le déplacement
              var offsetX = canvasOffset.left ;
              var offsetY = canvasOffset.top   ;
-             console.log(offsetX," je suis l'offset   ",offsetY);
+             console.log(offsetX," je suis l'offset ",offsetY);
               /* canvas.width = canvasWidth;
                canvas.height= canvasHeight;*/
              dragger(false);
             /* var canvas = document.getElementById("canvas");
              var ctx = canvas.getContext("2d");*/
              ctx.restore();
-
-
-
 
            },false)
 ////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
@@ -174,24 +170,25 @@
              dragger(true);
                canvas.width = canvasWidth;
                canvas.height= canvasHeight;
-        /*     var canvas = document.getElementById("canvas");
-             var ctx = canvas.getContext("2d");*/
-             var canvasOffset = $("#canvas").offset();
-             var offsetX = canvasOffset.left;
-             var offsetY = canvasOffset.top;
-             var isDown = false;
-             var cx = canvas.width /2 ;
-             var cy = canvas.height / 2;
-             var w;
-             var h;
-             var r = 0;
-               w = img.width;
-               h = img.height ;
+              /*var canvas = document.getElementById("canvas");
+              var ctx = canvas.getContext("2d");*/
+              var canvasOffset = $("#canvas").offset();
+              var offsetX = canvasOffset.left;
+              var offsetY = canvasOffset.top;
+              var isDown = false;
+              var cx = canvas.width /2 ;
+              var cy = canvas.height / 2;
+              var w;
+              var h;
+              var r = 0;
+
+               w = img.width * coefImage.coefWidth * coefImplant;
+               h = img.height * coefImage.coefHeight * coefImplant;
                draw();
                var canvasOffset = $("#canvas").offset();
                // Offset permet d'enregistrer le déplacement
-               var offsetX = canvasOffset.left ;
-               var offsetY = canvasOffset.top   ;
+               var offsetX = canvasOffset.left;
+               var offsetY = canvasOffset.top;
              function draw() {
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                drawRotationHandle(true);
@@ -367,11 +364,11 @@
 
                 var wImageLayer=imageLayer.width;
                 var hImageLayer=imageLayer.height;
-                console.log("image size ",wImageLayer,"   ",hImageLayer);
+                console.log("image size ",wImageLayer,"   ", hImageLayer);
 
                 var wCanvasLayer=canvasLayer.width;
                 var hCanvasLayer=canvasLayer.height;
-                console.log("Canvas size ",wCanvasLayer,"   ",hCanvasLayer);
+                console.log("Canvas size ",wCanvasLayer,"   ", hCanvasLayer);
 
                 var imageData = imageLayer.toDataURL("image/jpeg");
                 var canvasData = canvasLayer.toDataURL("image/png");
