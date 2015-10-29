@@ -5,21 +5,14 @@
 	echo "<?xml version=\"1.0\"?>\n";
 	echo "<exemple>\n";
 
+	$id = $_GET["idImp"];
 	include('connexion.php');
 
 	// On lance la requête
 	// Si le GET est vide, on récupère toutes les données de tous les implants
 	// Sinon si on a un GET on récupère les données de l'id définit dans le GET
-	if (isset($_GET['id'])) {
-		$query = "SELECT * FROM implant";
-		$result = mysql_query($query,$dblink) or die (mysql_error($dblink));
-	}
-	else {
-		$id = $_GET['id'];
-		$query = "SELECT * FROM implant WHERE id=".$id."";
-		$result = mysql_query($query,$dblink) or die (mysql_error($dblink));
-		echo "<script>alert(\"Sortie\")</script>"; 
-	}
+	$query = "SELECT * FROM implant WHERE id=".$id."";
+	$result = mysql_query($query, $dblink) or die (mysql_error($dblink));
 	
 	// On boucle sur le résultat
 	while ($row = mysql_fetch_array($result, MYSQL_NUM)) {

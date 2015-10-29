@@ -56,13 +56,69 @@ function facteurRedimensionnementImage() {
 	};
 }
 
-function CoefRedimensionnementImplant() {
+////////////////////////////////////////////////////////////////Permet d'exporter un PDF///////////////////////////////////////////////////////////////
+// A ajouter mais problème avec les cookies
+
+// Ajouter un paramètre bille
+function CoefRedimensionnementImplant(id) {
+	var idImplant = id;
+
 	// On récupère les valeurs de l'image affichée et de l'image réelle
 	var image = getValeursImage();
 
 	// On a la valeur de la bille sur l'image dicom.jpg. Après, il faudra demander à l'utilisateur de renseigner le diamètre de la bille en cm et nous on déduira le diamètre en px.
 	var diametreBilleMm = 2.8; var diametreBillePx = 170;
 
-	
+	var widthReelleImageCm = (image.widthImageReelle * diametreBilleMm) / diametreBillePx;
+	var heightReelleImageCm = (image.heightImageReelle * diametreBilleMm) / diametreBillePx;
+
+	unCmEgalCbPxWidthImage = image.widthImageReelle / widthReelleImageCm;
+	unCmEgalCbPxHeightImage = image.heightImageReelle / heightReelleImageCm;
+
+	// On récupère dans la BDD la largeur et la hauteur en px et cm des implants
+	var xhr;
+	if (window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest();
+	}
+	else if (window.ActiveXObject) {
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	// On définit l'appel de la fonction au retour serveur
+    var xhr;
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+    xhr.open("GET", 'php/getimplantId.php?idImp='+ idImplant +'', false);
+    xhr.send(null);
+    xhr.responseText;
+    var docXML = xhr.responseXML;
+
+    var widthPxImplant = docXML.getElementsByTagName("widthPx");
+    var widthCmImplant = docXML.getElementsByTagName("widthCm");
+	var heightPxImplant = docXML.getElementsByTagName("heightPx");
+    var heightCmImplant = docXML.getElementsByTagName("heightCm");
+    // Est ce qu'on récupère vraiment les données ???
+
+     /*for (var i = 0; i < idPatientBDD.length; i++) {
+		if (idPatient == idPatientBDD.item(i).firstChild.data) {
+			var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
+			var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
+			var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
+		};
+    };*/
+
+    var unCmEgalCbPxWidthImp = widthPxImplant / widthCmImplant;
+	var unCmEgalCbPxHeightImp = heightPxImplant / heightCmImplant;
+	// Faut-il faire la moyenne des deux ? Non, il faut prendre l'équivalent en cm pour la largeur et la longueur
+
+	// tailleImplant * X = tailleImage
+	// On prend pour le moment la largeur mais après on prendra la largeur et la hauteur
+	var coef = unCmEgalCbPxWidthImage / unCmEgalCbPxWidthImp;
+    return coef;
 }
 

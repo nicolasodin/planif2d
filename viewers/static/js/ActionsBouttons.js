@@ -59,19 +59,20 @@
              }
 
              // On définit l'appel de la fonction au retour serveur
-             xhr.open("GET", "getimplant.php", false);
+             xhr.open("GET", "php/getimplant.php", false);
              xhr.send(null);
              xhr.responseText;
              var docXML= xhr.responseXML;
              var id_implant = docXML.getElementsByTagName("id");
              var url = docXML.getElementsByTagName("url");
-             for (var i = 0;i< id_implant.length; i++) {
+             for (var i = 0; i< id_implant.length; i++) {
                if (id == id_implant.item(i).firstChild.data) {
                  var url_ultime =  url.item(i).firstChild.data;
                }
              }
              return url_ultime;
            }
+
            var canvas = document.getElementById("canvas");
              var canvasWidth = 900;
              var canvasHeight = 800;
@@ -85,19 +86,23 @@
            var img = new Image;
 
            // On récupère le coefficient réducteur de l'image pour l'appliquer sur l'implant
-           var coef = facteurRedimensionnementImage();
+           var coefImage = facteurRedimensionnementImage();
+           var coefImplant = CoefRedimensionnementImplant(id_implant);
 
            img.onload = function () {
              /*w = img.width * coef.coefWidth * 2.2;
              h = img.height * coef.coefHeight * 2.2;*/
 
-             w = img.width * coef.coefWidth * 0.51;
-             h = img.height * coef.coefHeight * 0.51;
+             /*w = img.width * coefImage.coefWidth * 0.51;
+             h = img.height * coefImage.coefHeight * 0.51;*/
+
+             w = img.width * coefImage.coefWidth * coefImplant;
+             h = img.height * coefImage.coefHeight * coefImplant;
 
                ctx.save();
                ctx.clearRect(0, 0, canvas.width,canvas.height);
                ctx.translate(canvas.width/2,canvas.height/2);
-               ctx.drawImage(img, 0,0 , img.width, img.height, -w / 2, -h/2 , w, h);
+               ctx.drawImage(img, 0,0 , img.width, img.height, -w/2, -h/2 , w, h);
                ctx.restore();
            }
            img.src = geturlimplant();
@@ -277,7 +282,7 @@
                }
                //on définit l'appel de la fonction au retour serveur
 
-               xhr.open("GET", "getdata.php", false);
+               xhr.open("GET", "php/getdata.php", false);
                xhr.send(null);
                xhr.responseText;
                var docXML= xhr.responseXML;
@@ -320,27 +325,23 @@
         }, true);
 ///////////////////////////////////////////////////////////////Select Patients////////////////////////////////////////////
         var list2 = document.getElementById('list2');
-        list2.addEventListener('change',function()
-        {
-          var idListe2=list2.selectedIndex;
+
+        list2.addEventListener('change',function() {
+          var idListe2 = list2.selectedIndex;
 //////////////////////////////////////////////////////////////Button 4 "Export PDF"//////////////////////////////////////
           var element4=document.getElementById("button4");
-           element4.addEventListener('click',function()
-            {
-              function getPatient(idPatient)
-              {
+          element4.addEventListener('click', function() {
+              function getPatient(idPatient) {
                 console.log(idPatient);
                 var xhr;
-                if (window.XMLHttpRequest) 
-                  {
-                    xhr = new XMLHttpRequest();
-                  } 
-                else 
-                  if (window.ActiveXObject)
-                  {
-                    xhr=new ActiveXObject("Microsoft.XMLHTTP");
-                  }
-                xhr.open("GET", "GetPatient.php", false);
+                if (window.XMLHttpRequest) {
+                  xhr = new XMLHttpRequest();
+                } 
+                else if (window.ActiveXObject) {
+                  xhr=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xhr.open("GET", "php/getPatient.php", false);
                 xhr.send(null);
                 xhr.responseText;
                 var docXML=xhr.responseXML;
@@ -349,20 +350,17 @@
                 var prenomPatientBDD=docXML.getElementsByTagName("Prenom");
                 var vitalePatientBDD=docXML.getElementsByTagName("NVitale");
 
-                for (var i = 0; i < idPatientBDD.length; i++) 
-                {
-                  if (idPatient==idPatientBDD.item(i).firstChild.data) 
-                    {
-                      var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
-                      var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
-                      var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
-                    };                    
+                for (var i = 0; i < idPatientBDD.length; i++) {
+                  if (idPatient==idPatientBDD.item(i).firstChild.data) {
+                    var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
+                    var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
+                    var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
+                  };                    
                 };
                 return nomPatientFinal+"_"+prenomPatientFinal+"_"+vitalePatientFinal;
               }
-
-              function ExportPDF()
-              {
+              
+              function ExportPDF() {
                 var imageLayer = document.getElementById("dwv-imageLayer");
                 var canvasLayer = document.getElementById("canvas");
 
@@ -374,33 +372,31 @@
                 var hCanvasLayer=canvasLayer.height;
                 console.log("Canvas size ",wCanvasLayer,"   ",hCanvasLayer);
 
-                var imageData=imageLayer.toDataURL("image/jpeg");
-                var canvasData=canvasLayer.toDataURL("image/png");
+                var imageData = imageLayer.toDataURL("image/jpeg");
+                var canvasData = canvasLayer.toDataURL("image/png");
 
                 var docPDF = new jsPDF();
                 var idPatientLocal = idListe2;
-                var patientBDD=getPatient(idPatientLocal);
-                var patient=patientBDD.split('_');
+                var patientBDD = getPatient(idPatientLocal);
+                var patient = patientBDD.split('_');
                 console.log(imageData);
                 docPDF.setFontSize(20);
-                docPDF.text(15,30,"Nom : "+patient[0]);
-                docPDF.text(15,40,"Pénom : "+patient[1]);
-                docPDF.text(15,50,"Numéro de carte vitale : "+patient[2]);
-                console.log("Nom : "+patient[0]);
-                console.log("Pénom : "+patient[1]);
-                console.log("Numéro de carte vitale : "+patient[2]);
-                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
+                docPDF.text(15,30,"Nom : " + patient[0]);
+                docPDF.text(15,40,"Prénom : " + patient[1]);
+                docPDF.text(15,50,"Numéro de carte vitale : " + patient[2]);
+                console.log("Nom : " + patient[0]);
+                console.log("Prénom : " + patient[1]);
+                console.log("Numéro de carte vitale : " + patient[2]);
+                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer) / wImageLayer));
                 docPDF.addPage();
-                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
-                docPDF.addImage(canvasData,'PNG', 15, 60, 180, ((180*hCanvasLayer)/wCanvasLayer));
+                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer) / wImageLayer));
+                docPDF.addImage(canvasData,'PNG', 15, 60, 180, ((180*hCanvasLayer) / wCanvasLayer));
                 //docPDF.addImage(canvasData,'PNG', (15-(((wCanvasLayer-wImageLayer)*180)/wImageLayer)), (60-(((wCanvasLayer-wImageLayer)*((180*hCanvasLayer)/wCanvasLayer)))/wImageLayer), 180, ((180*hCanvasLayer)/wCanvasLayer));
                 docPDF.save(patient[0]);
-
               };
+
               ExportPDF();
-            },false)
-
+          },false)
         },true)
-
       });
 
