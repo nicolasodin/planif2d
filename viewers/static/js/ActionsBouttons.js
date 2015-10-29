@@ -1,6 +1,7 @@
 
       // Taille de l'ecran
       console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
+
       // coordonnée de la sourie
       function showCoords(event) {
         var x = event.clientX;
@@ -37,9 +38,9 @@
 ///////////////////////////////////////////////////////////Test console /////////////////////////////////////////////////////////////////////////
           
           // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
-          var width= parseInt(readCookie("width"));
-          var height= parseInt(readCookie("height"));
-          console.log("this the lol image size : ", width,height);
+          var widthImg= parseInt(readCookie("width"));
+          var heightImg= parseInt(readCookie("height"));
+          console.log("this the lol image size : ", widthImg,heightImg);
           console.log("this is the dimension of canvas 2 ",canvas2.width,canvas2.height);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           var id_liste = list.selectedIndex ;
@@ -291,10 +292,10 @@
                canvas.height = canvas.height *2 ;*/
 
                var imagelayer = document.getElementById("dwv-imageLayer");
-               var width= readCookie("width");
-               var height= readCookie("height");
-               var coord_global_x = ( X * imagelayer.width) / width;
-               var coord_global_y = ( Y * imagelayer.height ) / height;
+               var widthImg= readCookie("width");
+               var heightImg= readCookie("height");
+               var coord_global_x = ( X * imagelayer.width) / widthImg;
+               var coord_global_y = ( Y * imagelayer.height ) / heightImg;
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
@@ -382,21 +383,38 @@
               function ExportPDF()
               {
                 var imageLayer = document.getElementById("dwv-imageLayer");
-                var divLayer = document.getElementById("layerDialog");
+                var divt = document.getElementById("layerDialog");
                 
                 var wImageLayer=imageLayer.width;
                 var hImageLayer=imageLayer.height;
                 console.log("image size ",wImageLayer,"   ",hImageLayer);
 
-                var wDivLayer=divLayer.width;
-                var hDivLayer=divLayer.height;
-                console.log("Canvas size ",wDivLayer,"   ",hDivLayer);
+                //var wDivLayer=divLayer.width;
+                //var hDivLayer=divLayer.height;
+                //console.log("Canvas size ",wDivLayer,"   ",hDivLayer);
 
                 var imageData=imageLayer.toDataURL("image/jpeg");
-                var divData; 
-                screenShot(divLayer,divData);
+                //var divData; 
+                  /*html2canvas(divLayer, {
+                    onrendered: function(canvas) {
+                      document.body.appendChild(canvas);
+                      console.log("draw canvas");
+                      //divData = canvas.toDataURL("image/jpeg");
+                      //console.log("divData1 = "+divData);
+                    },
+                    id: "toto"
+                  });*/
+                var divDataOk = false;
                 
-                console.log("divData2 = "+divData);
+                
+                //console.log("divData2 = "+divData);
+                var divLayer = document.getElementById("layerDialog");
+                //var divLayer = document.getElementById("toto");
+                var div=html2canvas(divLayer, {id: "toto"});
+                console.log(div);
+                var divData = div.toDataURL("image/jpeg");
+                var wDivLayer=divLayer.width;
+                var hDivLayer=divLayer.height;
 
                 var docPDF = new jsPDF();
                 var idPatientLocal = idListe2;
