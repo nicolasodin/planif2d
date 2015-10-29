@@ -48,38 +48,38 @@
           console.log("id réelle liste ", id_liste);
           // Récupération de l'implant séléctionner via Ajax et getimplant.php
 
-           function geturlimplant() {
-             var id = id_liste;
-             var xhr;
-             if (window.XMLHttpRequest) {
-               xhr = new XMLHttpRequest();
-             }
-             else if (window.ActiveXObject) {
-               xhr = new ActiveXObject("Microsoft.XMLHTTP");
-             }
+          function geturlimplant() {
+            var id = id_liste;
+            var xhr;
+            if (window.XMLHttpRequest) {
+              xhr = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+              xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
-             // On définit l'appel de la fonction au retour serveur
-             xhr.open("GET", "php/getimplant.php", false);
-             xhr.send(null);
-             xhr.responseText;
-             var docXML= xhr.responseXML;
-             var id_implant = docXML.getElementsByTagName("id");
-             var url = docXML.getElementsByTagName("url");
-             for (var i = 0; i< id_implant.length; i++) {
-               if (id == id_implant.item(i).firstChild.data) {
-                 var url_ultime =  url.item(i).firstChild.data;
-               }
-             }
-             return url_ultime;
-           }
+            // On définit l'appel de la fonction au retour serveur
+            xhr.open("GET", "php/getimplant.php", false);
+            xhr.send(null);
+            xhr.responseText;
+            var docXML= xhr.responseXML;
+            var id_implant = docXML.getElementsByTagName("id");
+            var url = docXML.getElementsByTagName("url");
+            for (var i = 0; i < id_implant.length; i++) {
+              if (id == id_implant.item(i).firstChild.data) {
+                var url_ultime =  url.item(i).firstChild.data;
+              }
+            }
+            return url_ultime;
+          }
 
-           var canvas = document.getElementById("canvas");
-             var canvasWidth = 900;
-             var canvasHeight = 800;
-             canvas.width = canvasWidth;
-             canvas.height = canvasHeight;
-           var ctx = canvas.getContext("2d");
-           console.log(ctx);
+          var canvas = document.getElementById("canvas");
+          var canvasWidth = 900;
+          var canvasHeight = 800;
+          canvas.width = canvasWidth;
+          canvas.height = canvasHeight;
+          var ctx = canvas.getContext("2d");
+          console.log(ctx);
 
            var w, h;
            var r = 0;
@@ -87,7 +87,8 @@
 
            // On récupère le coefficient réducteur de l'image pour l'appliquer sur l'implant
            var coefImage = facteurRedimensionnementImage();
-           var coefImplant = CoefRedimensionnementImplant(id_implant);
+
+           var coefImplant = CoefRedimensionnementImplant(id_liste, "2.8");
 
            img.onload = function () {
              /*w = img.width * coef.coefWidth * 2.2;

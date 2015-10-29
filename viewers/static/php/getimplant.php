@@ -7,7 +7,6 @@
 
 	include('connexion.php');
 
-
 	$query = "SELECT * FROM implant";
 	$result = mysql_query($query,$dblink) or die (mysql_error($dblink));
 	

@@ -59,15 +59,15 @@ function facteurRedimensionnementImage() {
 ////////////////////////////////////////////////////////////////Permet d'exporter un PDF///////////////////////////////////////////////////////////////
 // A ajouter mais problème avec les cookies
 
-// Ajouter un paramètre bille
-function CoefRedimensionnementImplant(id) {
+function CoefRedimensionnementImplant(id, diametreBillemm) {
 	var idImplant = id;
 
 	// On récupère les valeurs de l'image affichée et de l'image réelle
 	var image = getValeursImage();
 
 	// On a la valeur de la bille sur l'image dicom.jpg. Après, il faudra demander à l'utilisateur de renseigner le diamètre de la bille en cm et nous on déduira le diamètre en px.
-	var diametreBilleMm = 2.8; var diametreBillePx = 170;
+	var diametreBilleMm = diametreBillemm;
+	var diametreBillePx = 170;
 
 	var widthReelleImageCm = (image.widthImageReelle * diametreBilleMm) / diametreBillePx;
 	var heightReelleImageCm = (image.heightImageReelle * diametreBilleMm) / diametreBillePx;
@@ -98,19 +98,23 @@ function CoefRedimensionnementImplant(id) {
     xhr.responseText;
     var docXML = xhr.responseXML;
 
-    var widthPxImplant = docXML.getElementsByTagName("widthPx");
-    var widthCmImplant = docXML.getElementsByTagName("widthCm");
-	var heightPxImplant = docXML.getElementsByTagName("heightPx");
-    var heightCmImplant = docXML.getElementsByTagName("heightCm");
+    var idImplantBDD = docXML.getElementsByTagName("id");
+    var widthPxImplantBDD = docXML.getElementsByTagName("widthPx");
+    var widthCmImplantBDD = docXML.getElementsByTagName("widthCm");
+	var heightPxImplantBDD = docXML.getElementsByTagName("heightPx");
+    var heightCmImplantBDD = docXML.getElementsByTagName("heightCm");
     // Est ce qu'on récupère vraiment les données ???
 
-     /*for (var i = 0; i < idPatientBDD.length; i++) {
-		if (idPatient == idPatientBDD.item(i).firstChild.data) {
-			var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
-			var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
-			var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
+     for (var i = 0; i < idImplantBDD.length; i++) {
+		if (idImplant == idImplantBDD.item(i).firstChild.data) {
+			var widthPxImplant = widthPxImplantBDD.item(i).firstChild.data;
+		    var widthCmImplant = widthCmImplantBDD.item(i).firstChild.data;
+			var heightPxImplant = heightPxImplantBDD.item(i).firstChild.data;
+		    var heightCmImplant = heightCmImplantBDD.item(i).firstChild.data;
 		};
-    };*/
+    };
+
+    alert(widthPxImplant);
 
     var unCmEgalCbPxWidthImp = widthPxImplant / widthCmImplant;
 	var unCmEgalCbPxHeightImp = heightPxImplant / heightCmImplant;
