@@ -108,6 +108,27 @@
       <div id="progressbar"></div>
     </div>
 
+    <div id="implantPatient" title="Implants et patients">
+      <p>
+        <select id="list" style="float: right">
+          <option>Sélectionnez votre implant</option>
+          <option>Implant test1</option>
+          <option>Implant test2</option>
+          <option>Implant T5</option>
+        </select>
+      </p>
+
+      <p>
+        <select id="list2" style="float: right">
+          <option>Sélectionnez votre patient</option>
+          <option>DUPOND Jacques</option>
+          <option>CHARLES Adrien</option>
+        </select>
+      </p>
+      <!-- Bouton qui permet d'exporter les données patients et l'image DICOM -->
+      <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"></p>
+    </div>
+
     <!-- Toolbox -->
     <div id="toolbox" title="Toolbox">
       <ul id="toolList"></ul>
@@ -127,23 +148,7 @@
     <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"></p>
     <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000"></p>
     <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"></p>
-    <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"></p>
-    <p>
-      <select id="list" style="float: right">
-        <option>Sélectionnez votre implant</option>
-        <option>Implant test1</option>
-        <option>Implant test2</option>
-        <option>Implant T5</option>
-      </select>
-    </p>
-
-    <p>
-      <select id="list2" style="float: right">
-        <option>Sélectionnez votre patient</option>
-        <option>DUPOND Jacques</option>
-        <option>CHARLES Adrien</option>
-      </select>
-    </p>
+    
 
     <div class="drag" style="float: right">
       <!--<img id ='img' src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />

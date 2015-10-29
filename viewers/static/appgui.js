@@ -98,6 +98,10 @@ dwv.gui.Toolbox = function (app)
         open.appendChild(document.createTextNode("File"));
         open.onclick = function() { toggle("#openData"); };
         
+        var implantPatient = document.createElement("button");
+        implantPatient.appendChild(document.createTextNode("implantPatient"));
+        implantPatient.onclick = function() { toggle("#implantPatient"); };
+
         var toolbox = document.createElement("button");
         toolbox.appendChild(document.createTextNode("Toolbox"));
         toolbox.onclick = function() { toggle("#toolbox"); };
@@ -127,6 +131,7 @@ dwv.gui.Toolbox = function (app)
     
         var node = document.getElementById("toolbar");
         node.appendChild(open);
+        node.appendChild(implantPatient);
         node.appendChild(toolbox);
         node.appendChild(history);
         node.appendChild(tags);
@@ -195,10 +200,13 @@ dwv.gui.setup = function () {
     // create dialogs
     $("#openData").dialog({ position: 
         {my: "left top", at: "left top", of: "#pageMain"} });
-    $("#toolbox").dialog({ position: 
+    // Ajout d'une fenêtre pour intégrer les patients et les implants
+    $("#implantPatient").dialog({ position: 
         {my: "left top+160", at: "left top", of: "#pageMain"} });
+    $("#toolbox").dialog({ position: 
+        {my: "left top+320", at: "left top", of: "#pageMain"} });
     $("#history").dialog({ position: 
-        {my: "left top+350", at: "left top", of: "#pageMain"} });
+        {my: "left top+480", at: "left top", of: "#pageMain"} });
     $("#tags").dialog({ position: 
         {my: "right top", at: "right top", of: "#pageMain"},
         autoOpen: false, width: 500, height: 590 });
@@ -210,8 +218,6 @@ dwv.gui.setup = function () {
     $("#layerDialog").dialog({ position: 
         {my: "left+320 top", at: "left top", of: "#pageMain"}});
     // default size
-
-
 
     $("#layerDialog").dialog({ width: "auto", resizable: true});
 
