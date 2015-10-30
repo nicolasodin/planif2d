@@ -9,19 +9,21 @@ header('Content-Type: text/xml');
 echo "<?xml version=\"1.0\"?>\n";
 echo "<exemple>\n";
 
-include('connexion.php');
+//on connecte a la BDD
+$dbhost="localhost";
+$dbuser="root";
+$dbpass="";
 
 $x = $_POST['x'];
 $y = $_POST['y'];
+
+$dblink = @mysql_connect($dbhost,$dbuser,$dbpass);
+mysql_select_db("planif2d",$dblink);
 
 //on lance la requete
 $query = "INSERT INTO coordonnee VALUES ('$id','$x','$y')";
 $result = mysql_query($query,$dblink) or die (mysql_error($dblink));
 
 echo "</exemple>\n";
-
-include('deconnexion.php');
+mysql_close($dblink);
 ?>
-
-645px 240px
-645px 2000px

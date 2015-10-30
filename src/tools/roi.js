@@ -45,21 +45,18 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     var arr = [];
     var aide = true;
 
-            for( var i = 0;  aide && i < roi.getLength(); ++i )
-            {
-                /*console.log("valeur roi",roi.getLength());
-                console.log("valeur i ",i);
-                console.log("vlauer taille tableau",arr.length)*/
+    for (var i = 0;  aide && i < roi.getLength(); ++i) {
+        /*console.log("valeur roi",roi.getLength());
+        console.log("valeur i ",i);
+        console.log("vlauer taille tableau",arr.length)*/
 
-                arr.push( roi.getPoint(i).getX() );
-                arr.push( roi.getPoint(i).getY() );
+        arr.push( roi.getPoint(i).getX() );
+        arr.push( roi.getPoint(i).getY() );
 
-                if (arr.length >= 8 ) {
-                    aide = false;
-                }
-
-            }
-
+        if (arr.length >= 8 ) {
+            aide = false;
+        }
+    }
 
     // draw shape
     var kshape = new Kinetic.Line({
@@ -70,20 +67,17 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         closed: true
     });
 
+    var centre = [] ;
+    var x1 = arr[0] / 2 + arr[2] / 2 ;
+    var y1 = arr[1] / 2 + arr[3] / 2 ;
+    var x2 = arr[4] / 2 + arr[6] / 2 ;
+    var y2 = arr[5] / 2 + arr[7] / 2 ;
+    centre.push(x1);
+    centre.push(y1);
+    centre.push(x2);
+    centre.push(y2);
 
-
-        var centre = [] ;
-        var x1 = arr[0] / 2 + arr[2] / 2 ;
-        var y1 = arr[1] / 2 + arr[3] / 2 ;
-        var x2 = arr[4] / 2 + arr[6] / 2 ;
-        var y2 = arr[5] / 2 + arr[7] / 2 ;
-        centre.push(x1);
-        centre.push(y1);
-        centre.push(x2);
-        centre.push(y2);
-
-   var kshape2 = new Kinetic.Line({
-
+    var kshape2 = new Kinetic.Line({
        points: centre,
        stroke: "red",
        strokeWidth: 5,
@@ -93,27 +87,23 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         * with a gap of 10px
         */
        name: "shape2"
-   })
+    })
+    // Ligne en pointillé
     kshape2.dashArray([10,2]);
 
-
-
-    var x = x1 / 2  + x2 /2 ;
-    var y = y1/ 2 + y2/2;
+    var x = x1 / 2  + x2/2;
+    var y = y1 / 2 + y2/2;
     var center_line = [];
-
 
     center_line.push(x);
     center_line.push(y);
 
-
     var label = new Kinetic.Label({
-        x : x,
-        y : y,
-         draggable: true,
-       name : "shape3"
+        x: x,
+        y: y,
+        draggable: true,
+        name: "shape3"
     });
-
 
     console.log("Avant    :  ", x   , "{}", y );
    // console.log("ceci est les dfféretnes coord    :  ", x.getLayer()   , "{}", y.getY() );
@@ -141,26 +131,19 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
             fill: 'green'
         }));*/
 
-
-    function post(x,y)
-    {
-
-
-
-
+    function post(x,y) {
         var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
         }
-        else
-        {// code for IE6, IE5
+        else { // code for IE6, IE5
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
+
         if (arr.length == 8){
-        xmlhttp.open("POST","insertdata.php",true);
-        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xmlhttp.send("x=" + x + "&y=" + y );
+            xmlhttp.open("POST","php/insertdata.php",true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("x=" + x + "&y=" + y );
         }
     };
     post(x,y);
@@ -204,7 +187,6 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
 
     kroi.points( points );
 
-
     var kline = group.getChildren( function (node) {
         return node.name() === 'shape2';
     })[0];
@@ -217,7 +199,6 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     // update the roi point and compensate for possible drag
     // (the anchor id is the index of the point in the list)
 
-
     var kpoint = group.getChildren( function (node) {
         return node.name() === 'shape3';
     })[0];
@@ -225,34 +206,21 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     var x1 = x / 2 + a / 2 ;
     var y1 = y / 2 + b / 2 ;
 
-    function post(x,y)
-    {
-
-
-
-
+    function post(x,y) {
         var xmlhttp;
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp=new XMLHttpRequest();
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
         }
-        else
-        {// code for IE6, IE5
-            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-
-            xmlhttp.open("POST","insertdata.php",true);
-            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            xmlhttp.send("x=" + x + "&y=" + y );
-
+        xmlhttp.open("POST", "php/insertdata.php", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("x=" + x + "&y=" + y );
     };
     post(x1,y1);
 
     kpoint.x = x1;
     kpoint.y = y1;
     console.log(" {", x1 , ", " ,y1," }");
-
-
-
-
 };

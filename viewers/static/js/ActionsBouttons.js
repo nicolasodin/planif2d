@@ -286,16 +286,16 @@
                var docXML= xhr.responseXML;
                var a = docXML.getElementsByTagName("x");
                var b = docXML.getElementsByTagName("y");
-               var  X = a.item(0).firstChild.data;
-               var Y  = b.item(0).firstChild.data;
-               console.log("this the max id coordonnée",X,Y);
+               var X = a.item(0).firstChild.data;
+               var Y = b.item(0).firstChild.data;
+               console.log("this the max id coordonnée", X, Y);
               // function showCoords(event) {
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
 
                var imagelayer = document.getElementById("dwv-imageLayer");
-               var width= readCookie("width");
-               var height= readCookie("height");
+               var width = readCookie("width");
+               var height = readCookie("height");
                var coord_global_x = ( X * imagelayer.width) / width;
                var coord_global_y = ( Y * imagelayer.height ) / height;
                // Démonstration
@@ -306,16 +306,16 @@
                ctx.save();
 
                  canvas.width = canvas.width;
-                 canvas.height= canvas.height;
+                 canvas.height = canvas.height;
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
-                console.log("les cooordonnées " , coord_global_x,coord_global_y);
+                console.log("les cooordonnées " , coord_global_x, coord_global_y);
                 console.log("image taille", img.width, "   ", img.height);
-                 dragger(false);
+                dragger(false);
                //}
              };
              MaxId();
@@ -334,7 +334,7 @@
                 var xhr;
                 if (window.XMLHttpRequest) {
                   xhr = new XMLHttpRequest();
-                } 
+                }
                 else if (window.ActiveXObject) {
                   xhr=new ActiveXObject("Microsoft.XMLHTTP");
                 }
@@ -342,20 +342,20 @@
                 xhr.open("GET", "php/getPatient.php", false);
                 xhr.send(null);
                 xhr.responseText;
-                var docXML=xhr.responseXML;
-                var idPatientBDD=docXML.getElementsByTagName("ID");
-                var nomPatientBDD=docXML.getElementsByTagName("Nom");
-                var prenomPatientBDD=docXML.getElementsByTagName("Prenom");
-                var vitalePatientBDD=docXML.getElementsByTagName("NVitale");
+                var docXML = xhr.responseXML;
+                var idPatientBDD = docXML.getElementsByTagName("ID");
+                var nomPatientBDD = docXML.getElementsByTagName("Nom");
+                var prenomPatientBDD = docXML.getElementsByTagName("Prenom");
+                var vitalePatientBDD = docXML.getElementsByTagName("NVitale");
 
                 for (var i = 0; i < idPatientBDD.length; i++) {
-                  if (idPatient==idPatientBDD.item(i).firstChild.data) {
+                  if (idPatient == idPatientBDD.item(i).firstChild.data) {
                     var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
                     var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
                     var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
-                  };                    
+                  };
                 };
-                return nomPatientFinal+"_"+prenomPatientFinal+"_"+vitalePatientFinal;
+                return nomPatientFinal + "_" + prenomPatientFinal + "_" + vitalePatientFinal;
               }
               
               function ExportPDF() {
