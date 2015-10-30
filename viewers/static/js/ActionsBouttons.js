@@ -265,13 +265,11 @@
            ///  3eme button pour snap ( positionnement auto )
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
-
-            // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x,y) du centre de l'axe du trapèze
-             function MaxId()
-             {
+            // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x, y) du centre de l'axe du trapèze
+             function MaxId() {
                var xhr;
-                 canvas.width = canvasWidth;
-                 canvas.height= canvasHeight;
+               canvas.width = canvasWidth;
+               canvas.height= canvasHeight;
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
@@ -305,8 +303,8 @@
                var ctx = canvas.getContext("2d");*/
                ctx.save();
 
-                 canvas.width = canvas.width;
-                 canvas.height = canvas.height;
+               canvas.width = canvas.width;
+               canvas.height = canvas.height;
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x-90,coord_global_y);

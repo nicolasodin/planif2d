@@ -140,8 +140,8 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
             xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        if (arr.length == 8){
-            xmlhttp.open("POST","php/insertdata.php",true);
+        if (arr.length == 8) {
+            xmlhttp.open("POST","php/insertdata.php", true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("x=" + x + "&y=" + y );
         }
@@ -206,7 +206,7 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     var x1 = x / 2 + a / 2 ;
     var y1 = y / 2 + b / 2 ;
 
-    function post(x,y) {
+    function post(x, y) {
         var xmlhttp;
         if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
