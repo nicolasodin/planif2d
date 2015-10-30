@@ -282,16 +282,18 @@
                xhr.send(null);
                xhr.responseText;
                var docXML= xhr.responseXML;
-               var a = docXML.getElementsByTagName("x1");
-               var b = docXML.getElementsByTagName("y1");
+               var x1 = docXML.getElementsByTagName("x1");
+               var y1 = docXML.getElementsByTagName("y1");
                // On ajoute x2, y2
-               var c = docXML.getElementsByTagName("x2");
-               var d = docXML.getElementsByTagName("y2");
+               var x2 = docXML.getElementsByTagName("x2");
+               var y2 = docXML.getElementsByTagName("y2");
 
                // Il faut changer le nom des variables !!!
-               var X = a.item(0).firstChild.data;
-               var Y = b.item(0).firstChild.data;
-               console.log("this the max id coordonnée", X, Y);
+               var X1 = x1.item(0).firstChild.data;
+               var Y1 = y1.item(0).firstChild.data;
+               var X2 = x2.item(0).firstChild.data;
+               var Y2 = y2.item(0).firstChild.data;
+               console.log("this the max id coordonnée "+X1+","+Y1+" et "+X2+","+Y2);
               // function showCoords(event) {
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
@@ -299,8 +301,8 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x = ( X * imagelayer.width) / width;
-               var coord_global_y = ( Y * imagelayer.height ) / height;
+               var coord_global_x1 = ( X1 * 645) / width;
+               var coord_global_y1 = ( Y1 * 2000 ) / height;
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
@@ -308,15 +310,15 @@
                var ctx = canvas.getContext("2d");*/
                ctx.save();
 
-               canvas.width = canvas.width;
-               canvas.height = canvas.height;
+               //canvas.width = canvas.width;
+               //canvas.height = canvas.height;
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
-               ctx.translate(coord_global_x-90,coord_global_y);
+               ctx.translate(coord_global_x1,coord_global_y1);
                ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
-                console.log("les cooordonnées " , coord_global_x, coord_global_y);
+                console.log("les cooordonnées " , coord_global_x1, coord_global_y1);
                 console.log("image taille", img.width, "   ", img.height);
                 dragger(false);
                //}
