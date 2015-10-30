@@ -282,8 +282,13 @@
                xhr.send(null);
                xhr.responseText;
                var docXML= xhr.responseXML;
-               var a = docXML.getElementsByTagName("x");
-               var b = docXML.getElementsByTagName("y");
+               var a = docXML.getElementsByTagName("x1");
+               var b = docXML.getElementsByTagName("y1");
+               // On ajoute x2, y2
+               var c = docXML.getElementsByTagName("x2");
+               var d = docXML.getElementsByTagName("y2");
+
+               // Il faut changer le nom des variables !!!
                var X = a.item(0).firstChild.data;
                var Y = b.item(0).firstChild.data;
                console.log("this the max id coordonnée", X, Y);
