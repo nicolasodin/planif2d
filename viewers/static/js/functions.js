@@ -103,9 +103,8 @@ function CoefRedimensionnementImplant(id, diametreBillemm) {
     var widthCmImplantBDD = docXML.getElementsByTagName("widthCm");
 	var heightPxImplantBDD = docXML.getElementsByTagName("heightPx");
     var heightCmImplantBDD = docXML.getElementsByTagName("heightCm");
-    // Est ce qu'on récupère vraiment les données ???
 
-     for (var i = 0; i < idImplantBDD.length; i++) {
+    for (var i = 0; i < idImplantBDD.length; i++) {
 		if (idImplant == idImplantBDD.item(i).firstChild.data) {
 			var widthPxImplant = widthPxImplantBDD.item(i).firstChild.data;
 		    var widthCmImplant = widthCmImplantBDD.item(i).firstChild.data;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 30 Octobre 2015 à 14:30
+-- Généré le :  Ven 30 Octobre 2015 à 17:02
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -1689,16 +1689,21 @@ CREATE TABLE IF NOT EXISTS `implant` (
   `axeTeteHancheBasPxX` int(11) NOT NULL,
   `axeTeteHancheBasPxY` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Contenu de la table `implant`
 --
 
 INSERT INTO `implant` (`id`, `nom`, `url`, `widthPx`, `widthCm`, `heightPx`, `heightCm`, `axeFemurHautPxX`, `axeFemurHautPxY`, `axeFemurBasPxX`, `axeFemurBasPxY`, `axeTeteHancheHautPxX`, `axeTeteHancheHautPxY`, `axeTeteHancheBasPxX`, `axeTeteHancheBasPxY`) VALUES
-(1, 'implantT5', 'images/implant_dimensionne.png', 239, 0, 654, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 'test1', 'images/test1.jpg', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 'implantT5Mesure', 'images/implant.png', 745, 6.3, 2040, 17.3, 0, 0, 0, 0, 0, 0, 0, 0);
+(1, 'HypeT2', 'images/HypeT2.png', 867, 7.35, 2284, 19.33, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, 'HypeT3', 'images/HypeT3.png', 896, 7.6, 2441, 20.7, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 'HypeT4', 'images/HypeT4.png', 920, 7.8, 2511, 21.3, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 'HypeT5', 'images/HypeT5.png', 745, 6.3, 2040, 17.3, 0, 0, 0, 0, 0, 0, 0, 0),
+(5, 'HypeT6', 'images/HypeT6.png', 969, 25.6, 2649, 70.1, 0, 0, 0, 0, 0, 0, 0, 0),
+(6, 'HypeT7', 'images/HypeT7.png', 992, 0, 2716, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(7, 'HypeT8', 'images/HypeT8.png', 1018, 0, 2799, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(8, 'HypeT9', 'images/HypeT9.png', 1042, 0, 2888, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
