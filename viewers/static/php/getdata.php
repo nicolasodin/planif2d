@@ -14,7 +14,7 @@
 	include('connexion.php');
 
 	// On lance la requête
-	$query = "SELECT * FROM coordonee WHERE id = ( SELECT MAX(id) FROM coordonnee)";
+	$query = "SELECT * FROM coordonnee WHERE id = (SELECT MAX(id) FROM coordonnee)";
 	$result = mysql_query($query,$dblink) or die (mysql_error($dblink));
 
 	// On boucle sur le resultat

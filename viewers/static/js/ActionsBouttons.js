@@ -278,7 +278,7 @@
                else if (window.ActiveXObject) {
                  xhr = new ActiveXObject("Microsoft.XMLHTTP");
                }
-               //on définit l'appel de la fonction au retour serveur
+               // On définit l'appel de la fonction au retour serveur
 
                xhr.open("GET", "php/getdata.php", false);
                xhr.send(null);
