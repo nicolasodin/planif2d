@@ -91,7 +91,8 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     // Ligne en pointillé
     kshape2.dashArray([10,2]);
 
-    /*var x = x1 / 2  + x2/2;
+    /**/
+    var x = x1 / 2  + x2/2;
     var y = y1 / 2 + y2/2;
     var center_line = [];
 
@@ -105,7 +106,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         name: "shape3"
     });
 
-    console.log("Avant    :  ", x   , "{}", y );*/
+    console.log("Avant    :  ", x1   , "{}", y1 );
    // console.log("ceci est les dfféretnes coord    :  ", x.getLayer()   , "{}", y.getY() );
 // add a tag to the label<br>
   /*  label.add(new Kinetic.Tag({
@@ -153,7 +154,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     group.name("roi-group");
     group.add(kshape);
     group.add(kshape2);
-    //group.add(label);
+    group.add(label);
 
     return group;
 }; 
@@ -203,8 +204,8 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
         return node.name() === 'shape3';
     })[0];
     // update self
-    //var x1 = x / 2 + a / 2 ;
-    //var y1 = y / 2 + b / 2 ;
+    var x = x1 / 2 + x2 / 2 ;
+    var y = y1 / 2 + y2 / 2 ;
 
     function post(x1,y1,x2,y2) {
         var xmlhttp;
@@ -220,7 +221,7 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     };
     post(x1,y1,x2,y2);
 
-    kpoint.x = x1;
-    kpoint.y = y1;
-    console.log(" {", x1 , ", " ,y1," }");
+    kpoint.x = x;
+    kpoint.y = y;
+    console.log(" {", x , ", " ,y," }");
 };
