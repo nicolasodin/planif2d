@@ -157,7 +157,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     group.add(label);
 
     return group;
-}; 
+};
 
 /**
  * Update a roi shape.

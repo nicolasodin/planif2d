@@ -318,7 +318,6 @@
                     this._cnv.scale(this._aspectW,this._aspectH); // SCALE - if needed ;)
                     this._cnv.drawImage(this._img, 0, 0);							// First - we draw image
                 }
-
         })()
     }
 

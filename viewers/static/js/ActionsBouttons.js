@@ -80,9 +80,9 @@
           var ctx = canvas.getContext("2d");
           console.log(ctx);
 
-           var w, h;
-           var r = 0;
-           var img = new Image;
+          var w, h;
+          var r = 0;
+          var img = new Image;
 
            // On récupère le coefficient réducteur de l'image pour l'appliquer sur l'implant
            var coefImage = facteurRedimensionnementImage();
@@ -99,11 +99,11 @@
              w = img.width * coefImage.coefWidth * coefImplant;
              h = img.height * coefImage.coefHeight * coefImplant;
 
-               ctx.save();
-               ctx.clearRect(0, 0, canvas.width,canvas.height);
-               ctx.translate(canvas.width/2,canvas.height/2);
-               ctx.drawImage(img, 0,0 , img.width, img.height, -w/2, -h/2 , w, h);
-               ctx.restore();
+            ctx.save();
+            ctx.clearRect(0, 0, canvas.width,canvas.height);
+            ctx.translate(canvas.width/2,canvas.height/2);
+            ctx.drawImage(img, 0,0 , img.width, img.height, -w/2, -h/2 , w, h);
+            ctx.restore();
            }
            img.src = geturlimplant();
 
@@ -151,8 +151,8 @@
 
              var canvasOffset = $("#canvas").offset();
                // Offset permet d'enregistrer le déplacement
-             var offsetX = canvasOffset.left ;
-             var offsetY = canvasOffset.top   ;
+             var offsetX = canvasOffset.left;
+             var offsetY = canvasOffset.top;
              console.log(offsetX," je suis l'offset ",offsetY);
               /* canvas.width = canvasWidth;
                canvas.height= canvasHeight;*/
@@ -160,24 +160,23 @@
             /* var canvas = document.getElementById("canvas");
              var ctx = canvas.getContext("2d");*/
              ctx.restore();
-
            },false)
 ////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
-           // opération sur le button 2 rotate
-           var element2 = document.getElementById("button2");
-           element2.addEventListener('click', function(){
-             // désactiver le mode draggable
-             dragger(true);
-               canvas.width = canvasWidth;
-               canvas.height= canvasHeight;
+          // Opération sur le button 2 rotate
+          var element2 = document.getElementById("button2");
+          element2.addEventListener('click', function() {
+              // désactiver le mode draggable
+              dragger(true);
+              canvas.width = canvasWidth;
+              canvas.height= canvasHeight;
               /*var canvas = document.getElementById("canvas");
               var ctx = canvas.getContext("2d");*/
               var canvasOffset = $("#canvas").offset();
               var offsetX = canvasOffset.left;
               var offsetY = canvasOffset.top;
               var isDown = false;
-              var cx = canvas.width /2 ;
-              var cy = canvas.height / 2;
+              var cx = canvas.width/2;
+              var cy = canvas.height/2;
               var w;
               var h;
               var r = 0;
@@ -262,7 +261,7 @@
              });
            },false)
 ///////////////////////////////////////////////////////// Button 3 Snap //////////////////////////////////////////////////////////////////////////////////
-           ///  3eme button pour snap ( positionnement auto )
+           /// 3ème button pour snap ( positionnement auto )
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x, y) du centre de l'axe du trapèze
@@ -284,7 +283,6 @@
                var docXML= xhr.responseXML;
                var x1 = docXML.getElementsByTagName("x1");
                var y1 = docXML.getElementsByTagName("y1");
-               // On ajoute x2, y2
                var x2 = docXML.getElementsByTagName("x2");
                var y2 = docXML.getElementsByTagName("y2");
 
@@ -301,8 +299,8 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x1 = ( X1 * 645); // width;
-               var coord_global_y1 = ( Y1 * 2000 ); // height;
+               var coord_global_x1 = (X1 * 645); // width;
+               var coord_global_y1 = (Y1 * 2000); // height;
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
@@ -315,10 +313,10 @@
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x1,coord_global_y1);
-               ctx.drawImage(img, 0,0, img.width, img.height, -w / 2, -h / 2, w, h);
+               ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
-                console.log("les cooordonnées " , coord_global_x1, coord_global_y1);
+                console.log("Les cooordonnées ", coord_global_x1, coord_global_y1);
                 console.log("image taille", img.width, "   ", img.height);
                 dragger(false);
                //}
@@ -329,7 +327,8 @@
 ///////////////////////////////////////////////////////////////Select Patients////////////////////////////////////////////
         var list2 = document.getElementById('list2');
 
-        list2.addEventListener('change',function() {
+        // Créer un message d'erreur si le patient n'est pas séléctionné ! 
+        list2.addEventListener('change', function() {
           var idListe2 = list2.selectedIndex;
 //////////////////////////////////////////////////////////////Button 4 "Export PDF"//////////////////////////////////////
           var element4=document.getElementById("button4");
@@ -373,7 +372,7 @@
 
                 var wCanvasLayer=canvasLayer.width;
                 var hCanvasLayer=canvasLayer.height;
-                console.log("Canvas size ",wCanvasLayer,"   ", hCanvasLayer);
+                console.log("Canvas size ", wCanvasLayer,"   ", hCanvasLayer);
 
                 var imageData = imageLayer.toDataURL("image/jpeg");
                 var canvasData = canvasLayer.toDataURL("image/png");

@@ -110,8 +110,9 @@
 
     <div id="implantPatient" title="Implants et patients">
       <p>
-        <select id="list" style="float: right">
+        <select id="list" style="float: left;">
           <option>Sélectionnez votre implant</option>
+          <!-- Il faut aller récupérer dans la BDD -->
           <option>Hype T2</option>
           <option>Hype T3</option>
           <option>Hype T4</option>
@@ -124,14 +125,15 @@
       </p>
 
       <p>
-        <select id="list2" style="float: right">
+        <select id="list2" style="float: left;">
           <option>Sélectionnez votre patient</option>
+          <!-- Il faut aller récupérer dans la BDD -->
           <option>DUPOND Jacques</option>
           <option>CHARLES Adrien</option>
         </select>
       </p>
       <!-- Bouton qui permet d'exporter les données patients et l'image DICOM -->
-      <p><input type="button" id="button4" value = "Export PDF" style  ="float: right; z-index: 1000"></p>
+      <p><input type="button" id="button4" value="Export PDF" style="float: left; z-index: 1000"></p>
     </div>
 
     <!-- Toolbox -->
@@ -148,13 +150,12 @@
     <!-- Help -->
     <div id="help" title="Help"></div>
 
-    <p><input type="button" id="reset" value="reset" style  ="float: right"  /></p>
+    <p><input type="button" id="reset" value="reset" style  ="float: right" /></p>
 
-    <p><input type="button" id="button1" value = "deplacement " style  ="float: right; z-index: 1000"></p>
-    <p><input type="button" id="button2" value = "rotate" style  ="float: right; z-index: 1000"></p>
-    <p><input type="button" id="button3" value = "snap " style  ="float: right; z-index: 1000"></p>
-    
-
+    <p><input type="button" id="button1" value="deplacement" style="float: right; z-index: 1000"></p>
+    <p><input type="button" id="button2" value="rotate" style="float: right; z-index: 1000"></p>
+    <p><input type="button" id="button3" value="snap" style="float: right; z-index: 1000"></p>
+  
     <div class="drag" style="float: right">
       <!--<img id ='img' src="images/test.jpg" class="draggable" style="width:80px; height:40px; z-index: 500" />
       <img src="images/Implant_dimensionne.png" class="draggable" style= " width:auto; height:auto ; z-index: 500" />-->
