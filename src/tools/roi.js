@@ -87,11 +87,11 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         * with a gap of 10px
         */
        name: "shape2"
-    })
+    });
     // Ligne en pointillé
     kshape2.dashArray([10,2]);
-
-    /**/
+    
+    
     var x = x1 / 2  + x2/2;
     var y = y1 / 2 + y2/2;
     var center_line = [];
@@ -196,7 +196,9 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     var y1 = points[1] / 2 + points[3] / 2 ;
     var x2 = points[4] / 2 + points[6] / 2 ;
     var y2 = points[5] / 2 + points[7] / 2 ;
-    kline.points( [x1,y2,x2,y2] );
+
+    kline.points( [x1,y1,x2,y2] );
+   
     // update the roi point and compensate for possible drag
     // (the anchor id is the index of the point in the list)
 
@@ -221,7 +223,8 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
     };
     post(x1,y1,x2,y2);
 
-    kpoint.x = x;
-    kpoint.y = y;
-    console.log(" {", x , ", " ,y," }");
+    
+    //kpoint.x = x;
+    //kpoint.y = y;
+    //console.log(" {", x , ", " ,y," }");
 };
