@@ -299,8 +299,9 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x1 = (X1 * 645); // width;
-               var coord_global_y1 = (Y1 * 2000); // height;
+               var coord_global_x1 = (((X1*imagelayer.width) / width)-((645*coefImplant*coefImage.coefWidth)-(canvasWidth/2)));
+               var coord_global_y1 = ((Y1*imagelayer.height) / height); // height;
+
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
