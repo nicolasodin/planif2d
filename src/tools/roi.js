@@ -91,7 +91,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     // Ligne en pointillé
     kshape2.dashArray([10,2]);
 
-    /*var x = x1 / 2  + x2/2;
+    var x = x1 / 2  + x2/2;
     var y = y1 / 2 + y2/2;
     var center_line = [];
 
@@ -131,7 +131,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
             fill: 'green'
         }));*/
 
-    function post(x1,y1,x2,y2) {
+    function post(x,y) {
         var xmlhttp;
         if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp=new XMLHttpRequest();
@@ -143,17 +143,17 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         if (arr.length == 8) {
             xmlhttp.open("POST","php/insertdata.php", true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("x1=" + x1 + "&y1=" + y1 + "&x2=" + x2 + "&y2=" + y2);
+            xmlhttp.send("x=" + x + "&y=" + y );
         }
     };
-    post(x1,y1,x2,y2);
+    post(x,y);
 
     // return group
     var group = new Kinetic.Group();
     group.name("roi-group");
     group.add(kshape);
     group.add(kshape2);
-    //group.add(label);
+    group.add(label);
 
     return group;
 }; 
@@ -191,11 +191,11 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
         return node.name() === 'shape2';
     })[0];
     // update self
-    var x1 = points[0] / 2 + points[2] / 2 ;
-    var y1 = points[1] / 2 + points[3] / 2 ;
-    var x2 = points[4] / 2 + points[6] / 2 ;
-    var y2 = points[5] / 2 + points[7] / 2 ;
-    kline.points( [x1,y2,x2,y2] );
+    var x = points[0] / 2 + points[2] / 2 ;
+    var y = points[1] / 2 + points[3] / 2 ;
+    var a = points[4] / 2 + points[6] / 2 ;
+    var b = points[5] / 2 + points[7] / 2 ;
+    kline.points( [x,y,a,b] );
     // update the roi point and compensate for possible drag
     // (the anchor id is the index of the point in the list)
 
@@ -203,10 +203,10 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
         return node.name() === 'shape3';
     })[0];
     // update self
-    //var x1 = x / 2 + a / 2 ;
-    //var y1 = y / 2 + b / 2 ;
+    var x1 = x / 2 + a / 2 ;
+    var y1 = y / 2 + b / 2 ;
 
-    function post(x1,y1,x2,y2) {
+    function post(x, y) {
         var xmlhttp;
         if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -216,9 +216,9 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
         }
         xmlhttp.open("POST", "php/insertdata.php", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("x1=" + x1 + "&y1=" + y1 + "&x2=" + x2 + "&y2=" + y2);
+        xmlhttp.send("x=" + x + "&y=" + y );
     };
-    post(x1,y1,x2,y2);
+    post(x1,y1);
 
     kpoint.x = x1;
     kpoint.y = y1;
