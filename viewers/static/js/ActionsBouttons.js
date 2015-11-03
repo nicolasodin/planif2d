@@ -299,8 +299,16 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x1 = (((X1*imagelayer.width) / width)-((645*coefImplant*coefImage.coefWidth)-(canvasWidth/2)));
-               var coord_global_y1 = ((Y1*imagelayer.height) / height); // height;
+               var coord_global_x1 = (((X1*imagelayer.width) / width)-45);//-((645)-(canvasWidth/2)));
+               var coord_global_y1 = ((Y1*imagelayer.height) / height); 
+               var deltaY = Y2-Y1;
+               console.log("deltaY ",deltaY);
+               var hypotenus = Math.sqrt(Math.pow(X2-X1,2)+Math.pow(Y2-Y1,2));
+               console.log("hypotenus ",hypotenus);
+               var sinus = deltaY/hypotenus
+               console.log("sinus ",sinus);
+               var asinus = Math.asin(sinus);
+               console.log("asinus ",asinus);
 
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
@@ -314,6 +322,7 @@
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                ctx.translate(coord_global_x1,coord_global_y1);
+               ctx.rotate(asinus);
                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
