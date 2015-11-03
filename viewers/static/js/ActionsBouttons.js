@@ -276,7 +276,7 @@
                else if (window.ActiveXObject) {
                  xhr = new ActiveXObject("Microsoft.XMLHTTP");
                }
-               //on définit l'appel de la fonction au retour serveur
+               // On définit l'appel de la fonction au retour serveur
 
                xhr.open("GET", "getdata.php", false);
                xhr.send(null);
@@ -319,9 +319,10 @@
              MaxId();
            },false)
         }, true);
+
 ///////////////////////////////////////////////////////////////Select Patients////////////////////////////////////////////
         var list2 = document.getElementById('list2');
-        list2.addEventListener('change',function()
+        list2.addEventListener('change', function()
         {
           var idListe2=list2.selectedIndex;
 //////////////////////////////////////////////////////////////Button 4 "Export PDF"//////////////////////////////////////
@@ -332,16 +333,14 @@
               {
                 console.log(idPatient);
                 var xhr;
-                if (window.XMLHttpRequest) 
-                  {
-                    xhr = new XMLHttpRequest();
-                  } 
-                else 
-                  if (window.ActiveXObject)
-                  {
+                if (window.XMLHttpRequest) {
+                  xhr = new XMLHttpRequest();
+                } 
+                else
+                  if (window.ActiveXObject) {
                     xhr=new ActiveXObject("Microsoft.XMLHTTP");
                   }
-                xhr.open("GET", "GetPatient.php", false);
+                xhr.open("GET", "getPatient.php", false);
                 xhr.send(null);
                 xhr.responseText;
                 var docXML=xhr.responseXML;
@@ -350,38 +349,17 @@
                 var prenomPatientBDD=docXML.getElementsByTagName("Prenom");
                 var vitalePatientBDD=docXML.getElementsByTagName("NVitale");
 
-                for (var i = 0; i < idPatientBDD.length; i++) 
-                {
-                  if (idPatient==idPatientBDD.item(i).firstChild.data) 
-                    {
+                for (var i = 0; i < idPatientBDD.length; i++) {
+                  if (idPatient==idPatientBDD.item(i).firstChild.data) {
                       var nomPatientFinal = nomPatientBDD.item(i).firstChild.data;
                       var prenomPatientFinal = prenomPatientBDD.item(i).firstChild.data;
                       var vitalePatientFinal = vitalePatientBDD.item(i).firstChild.data;
-                    };                    
+                  };                    
                 };
                 return nomPatientFinal+"_"+prenomPatientFinal+"_"+vitalePatientFinal;
               }
-
-
-              function screenShot2 (div)
-              {
-                return screenShot(div);
-              };
-
-              function screenShot(div, data) 
-              {
-                setTimeout(function(){
-                  html2canvas(div, {
-                    onrendered: function(canvas) {
-                      data = canvas.toDataURL("image/jpeg");
-                      console.log("divData1 = "+divData);
-                    }
-                  });
-                }, 1500);
-              };
               
-              function ExportPDF()
-              {
+              function ExportPDF() {
                 var imageLayer = document.getElementById("dwv-imageLayer");
                 var divt = document.getElementById("layerDialog");
                 
@@ -389,56 +367,51 @@
                 var hImageLayer=imageLayer.height;
                 console.log("image size ",wImageLayer,"   ",hImageLayer);
 
-                //var wDivLayer=divLayer.width;
-                //var hDivLayer=divLayer.height;
-                //console.log("Canvas size ",wDivLayer,"   ",hDivLayer);
-
-                var imageData=imageLayer.toDataURL("image/jpeg");
-                //var divData; 
-                  /*html2canvas(divLayer, {
-                    onrendered: function(canvas) {
-                      document.body.appendChild(canvas);
-                      console.log("draw canvas");
-                      //divData = canvas.toDataURL("image/jpeg");
-                      //console.log("divData1 = "+divData);
-                    },
-                    id: "toto"
-                  });*/
-                var divDataOk = false;
-                
-                
-                //console.log("divData2 = "+divData);
                 var divLayer = document.getElementById("layerDialog");
-                //var divLayer = document.getElementById("toto");
-                var div=html2canvas(divLayer, {id: "toto"});
-                console.log(div);
-                var divData = div.toDataURL("image/jpeg");
-                var wDivLayer=divLayer.width;
-                var hDivLayer=divLayer.height;
+                /*var wDivLayer = divLayer.width;
+                var hDivLayer = divLayer.height;*/
+                var wDivLayer = 1008;
+                var hDivLayer = 826;
+                console.log(hDivLayer + "  " + wDivLayer);
 
-                var docPDF = new jsPDF();
-                var idPatientLocal = idListe2;
-                var patientBDD=getPatient(idPatientLocal);
-                var patient=patientBDD.split('_');
-                console.log(imageData);
-                docPDF.setFontSize(20);
-                docPDF.text(15,30,"Nom : "+patient[0]);
-                docPDF.text(15,40,"Prénom : "+patient[1]);
-                docPDF.text(15,50,"Numéro de carte vitale : "+patient[2]);
-                console.log("Nom : "+patient[0]);
-                console.log("Pénom : "+patient[1]);
-                console.log("Numéro de carte vitale : "+patient[2]);
-                docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
-                docPDF.addPage();
-                //docPDF.addImage(imageData,'JPEG', 15, 60, 180, ((180*hImageLayer)/wImageLayer));
-                docPDF.addImage(divData,'JPEG', 15, 60, 180, ((180*hDivLayer)/wDivLayer));
-                //docPDF.addImage(canvasData,'PNG', (15-(((wCanvasLayer-wImageLayer)*180)/wImageLayer)), (60-(((wCanvasLayer-wImageLayer)*((180*hCanvasLayer)/wCanvasLayer)))/wImageLayer), 180, ((180*hCanvasLayer)/wCanvasLayer));
-                docPDF.save(patient[0]);
+                var imageData = imageLayer.toDataURL("image/jpeg");
+                var divData;
+                html2canvas(divLayer, {
+                  onrendered: function(canvas) {
+                    document.body.appendChild(canvas);
+                    console.log("draw canvas");
+                    divData = canvas.toDataURL("image/jpeg");
+                    console.log("divData1 = " + divData);
+                    //docPDF.addImage(,'JPEG', 15, 90, 180, ((180*)/));
+                    var docPDF = new jsPDF();
+                    var idPatientLocal = idListe2;
+                    var patientBDD=getPatient(idPatientLocal);
+                    var patient=patientBDD.split('_');
+                    console.log("imgData ="+imageData);
+                    docPDF.setFontSize(12);
 
+                    docPDF.text(15,20,"Nom : "+patient[0]);
+                    docPDF.text(15,30,"Prénom : "+patient[1]);
+                    docPDF.text(15,40,"Numéro de carte vitale : "+ patient[2]);
+                    console.log("Nom : "+patient[0]);
+                    console.log("Prénom : "+patient[1]);
+                    console.log("Numéro de carte vitale : "+ patient[2]);
+
+                    docPDF.text(15,80,"Votre image DICOM d'origine :");
+                    docPDF.addImage(imageData,'JPEG', 15, 90, 180, ((180*hImageLayer)/wImageLayer));
+                    console.log(hImageLayer + "  " + wImageLayer);
+                    docPDF.addPage();
+                    docPDF.text(15,20,"Votre planification :");
+                    docPDF.addImage(divData,'JPEG', 15, 30, 180, ((180*hDivLayer)/wDivLayer));
+                    console.log(hDivLayer + "  " + wDivLayer);
+                    docPDF.save(patient[0]);
+                  },
+                  id: "toto"
+                });
+                var divDataOk = false;
               };
               ExportPDF();
             },false)
-
         },true)
 
       });
