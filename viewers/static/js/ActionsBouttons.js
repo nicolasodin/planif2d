@@ -13,6 +13,10 @@
         var final_coord_global_y1;
         var coefDirecteur;
         var angleAlignement;
+        var weSnap=false;
+        var mvtOffset=0;
+        var mvtOffsetB=false;
+        
         // Fonction pour rendre un élément draggable
         function dragger (value){
           $( ".draggable2" ).draggable({
@@ -107,6 +111,21 @@
             ctx.translate(canvas.width/2,canvas.height/2);
             ctx.drawImage(img, 0,0 , img.width, img.height, -w/2, -h/2 , w, h);
             ctx.restore();
+            if (weSnap===true)
+            {
+              MaxId();
+              if(mvtOffset>=0)
+              {
+                MoveDown(mvtOffset);
+                mvtOffsetB=true;
+              }
+              else
+              {
+                MoveUP(mvtOffset);
+                mvtOffsetB=true;
+              }
+            }
+              
            }
            img.src = geturlimplant();
 
@@ -302,6 +321,7 @@
               return distOffsetXFinal;
             }
              function MaxId() {
+               weSnap=true;
                var xhr;
                canvas.width = canvasWidth;
                canvas.height = canvasHeight;
@@ -378,10 +398,16 @@
            },false)
           var PlusImplant = document.getElementById("+Implant");
           PlusImplant.addEventListener('click', function() {
-              function MoveUP(){
+              function MoveUP(value){
 
-                final_coord_global_x1-=(5/coefDirecteur);
-                final_coord_global_y1-=5;
+                final_coord_global_x1-=(value/coefDirecteur);
+                final_coord_global_y1-=value;
+
+                if(mvtOffsetB===false)
+                {
+                  mvtOffset-=5;
+                  mvtOffsetB=false;
+                }
                 
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -391,16 +417,22 @@
                 ctx.restore();
               
               };
-             MoveUP();
+             MoveUP(5);
            },false)
 
           var MoinsImplant = document.getElementById("-Implant");
           MoinsImplant.addEventListener('click', function() {
-              function MoveDown(){
+              function MoveDown(value){
         
-                final_coord_global_x1+=(5/coefDirecteur);
-                final_coord_global_y1+=5;
-                
+                final_coord_global_x1+=(value/coefDirecteur);
+                final_coord_global_y1+=value;
+
+                if(mvtOffsetB===false)
+                {
+                  mvtOffset+=5;
+                  mvtOffsetB=false;
+                }
+                                
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.translate(final_coord_global_x1,final_coord_global_y1);
@@ -409,7 +441,7 @@
                 ctx.restore();
               
               };
-             MoveDown();
+             MoveDown(5);
            },false)
 
         }, true);
