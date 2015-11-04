@@ -380,8 +380,8 @@
           PlusImplant.addEventListener('click', function() {
               function MoveUP(){
 
-                final_coord_global_x1-=(10/coefDirecteur);
-                final_coord_global_y1-=10;
+                final_coord_global_x1-=(5/coefDirecteur);
+                final_coord_global_y1-=5;
                 
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -398,8 +398,8 @@
           MoinsImplant.addEventListener('click', function() {
               function MoveDown(){
         
-                final_coord_global_x1+=(10/coefDirecteur);
-                final_coord_global_y1+=10;
+                final_coord_global_x1+=(5/coefDirecteur);
+                final_coord_global_y1+=5;
                 
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
