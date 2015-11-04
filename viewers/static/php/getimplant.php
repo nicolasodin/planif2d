@@ -19,6 +19,7 @@
 	    echo "<widthCm>" . $row[4] . "</widthCm>\n";
 	    echo "<heightPx>" . $row[5] . "</heightPx>\n";
 	    echo "<heightCm>" . $row[6] . "</heightCm>\n";
+	    echo "<distOffsetX>" . $row[15] . "</distOffsetX>\n";
 	}
 	echo "</exemple>\n";
 	

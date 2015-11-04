@@ -271,6 +271,32 @@
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x, y) du centre de l'axe du trapèze
+            function getImplantOffsetX() {
+              var id = id_liste;
+              console.log("id : ", id);
+              var xhr;
+              if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+              }
+              else if (window.ActiveXObject) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+              }
+
+              // On définit l'appel de la fonction au retour serveur
+              xhr.open("GET", "php/getimplant.php", false);
+              xhr.send(null);
+              xhr.responseText;
+              var docXML= xhr.responseXML;
+              var id_implant = docXML.getElementsByTagName("id");
+              var distOffsetXBDD = docXML.getElementsByTagName("distOffsetX");
+              for (var i = 0; i < id_implant.length; i++) {
+                if (id == id_implant.item(i).firstChild.data) {
+                  var distOffsetXFinal =  distOffsetXBDD.item(i).firstChild.data;
+                }
+              }
+              console.log("distOffsetXFinal : ", distOffsetXFinal);
+              return distOffsetXFinal;
+            }
              function MaxId() {
                var xhr;
                canvas.width = canvasWidth;
@@ -300,12 +326,11 @@
               // function showCoords(event) {
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
-
+               var distOffsetX = getImplantOffsetX();
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-
-               var coord_global_x1 = (((X1*imagelayer.width) / width)-44);//-((645)-(canvasWidth/2)));
+               var coord_global_x1 = (((X1*imagelayer.width) / width));//-((645)-(canvasWidth/2)));
                var coord_global_y1 = ((Y1*imagelayer.height) / height); 
                var deltaY = Y2-Y1;
                console.log("deltaY ",deltaY);
@@ -318,17 +343,6 @@
                var atan = Math.atan(tan)*-1;
                console.log("atan ",atan);
 
-               var coord_global_x1 = (((X1*imagelayer.width) / width)-45);//-((645)-(canvasWidth/2)));
-               var coord_global_y1 = ((Y1*imagelayer.height) / height);
-               var deltaY = Y2-Y1;
-               console.log("deltaY ",deltaY);
-               var hypotenus = Math.sqrt(Math.pow(X2-X1,2)+Math.pow(Y2-Y1,2));
-               console.log("hypotenus ",hypotenus);
-               var sinus = deltaY/hypotenus;
-               console.log("sinus ",sinus);
-               var asinus = Math.asin(sinus);
-               console.log("asinus ",asinus);
-
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
@@ -340,7 +354,11 @@
                //canvas.height = canvas.height;
 
                ctx.clearRect(0, 0, canvas.width, canvas.height);
-               ctx.translate(coord_global_x1,coord_global_y1);
+               console.log("coefImplant : ",coefImplant," coefImage.coefWidth : ", coefImage.coefWidth, " distOffsetX : ", distOffsetX, " distOffsetX*coefImplant*coefImage.coefWidth : ", distOffsetX*coefImplant*coefImage.coefWidth);
+               console.log("coord_global_x1 : ",coord_global_x1," coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth) : ", coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth));
+
+
+               ctx.translate(coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth),coord_global_y1);
                ctx.rotate(atan);
                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
