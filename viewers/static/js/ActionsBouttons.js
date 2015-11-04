@@ -9,6 +9,10 @@
       // Début de la fonction principale
       }
       $(function() {
+        var final_coord_global_x1;
+        var final_coord_global_y1;
+        var coefDirecteur;
+        var angleAlignement;
         // Fonction pour rendre un élément draggable
         function dragger (value){
           $( ".draggable2" ).draggable({
@@ -342,7 +346,7 @@
                console.log("tan ",tan);
                var atan = Math.atan(tan)*-1;
                console.log("atan ",atan);
-
+               angleAlignement=atan
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
                var houss2 = ( Y * 806) / 2448;*/
@@ -356,10 +360,12 @@
                ctx.clearRect(0, 0, canvas.width, canvas.height);
                console.log("coefImplant : ",coefImplant," coefImage.coefWidth : ", coefImage.coefWidth, " distOffsetX : ", distOffsetX, " distOffsetX*coefImplant*coefImage.coefWidth : ", distOffsetX*coefImplant*coefImage.coefWidth);
                console.log("coord_global_x1 : ",coord_global_x1," coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth) : ", coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth));
+               final_coord_global_x1=coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth);
+               final_coord_global_y1=coord_global_y1;
+               coefDirecteur=deltaY/deltaX;
 
-
-               ctx.translate(coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth),coord_global_y1);
-               ctx.rotate(atan);
+               ctx.translate(final_coord_global_x1,final_coord_global_y1);
+               ctx.rotate(angleAlignement);
                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
                ctx.restore();
                //
@@ -370,6 +376,42 @@
              };
              MaxId();
            },false)
+          var PlusImplant = document.getElementById("+Implant");
+          PlusImplant.addEventListener('click', function() {
+              function MoveUP(){
+
+                final_coord_global_x1-=(10/coefDirecteur);
+                final_coord_global_y1-=10;
+                
+                ctx.save();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(final_coord_global_x1,final_coord_global_y1);
+                ctx.rotate(angleAlignement);
+                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+                ctx.restore();
+              
+              };
+             MoveUP();
+           },false)
+
+          var MoinsImplant = document.getElementById("-Implant");
+          MoinsImplant.addEventListener('click', function() {
+              function MoveDown(){
+        
+                final_coord_global_x1+=(10/coefDirecteur);
+                final_coord_global_y1+=10;
+                
+                ctx.save();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(final_coord_global_x1,final_coord_global_y1);
+                ctx.rotate(angleAlignement);
+                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+                ctx.restore();
+              
+              };
+             MoveDown();
+           },false)
+
         }, true);
 ///////////////////////////////////////////////////////////////Selection des patients////////////////////////////////////////////
         var list2 = document.getElementById('list2');
