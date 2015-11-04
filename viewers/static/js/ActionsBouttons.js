@@ -1,6 +1,6 @@
 
       // Taille de l'ecran
-      console.log("Body taille ",window.innerWidth  ,window.innerHeight  );
+      console.log("Body taille ",window.innerWidth  ,window.innerHeight);
       // coordonnée de la sourie
       function showCoords(event) {
         var x = event.clientX;
@@ -28,11 +28,10 @@
         
          var list = document.getElementById('list');
          list.addEventListener('change', function() {
-
            var canvas1 = document.getElementById("canvas");
-           canvas1.style.zIndex = "500" ;
-           var canvas2 = document.getElementById("dwv-imageLayer") ;
-           canvas2.zIndex = "80" ;
+           canvas1.style.zIndex = "500";
+           var canvas2 = document.getElementById("dwv-imageLayer");
+           canvas2.zIndex = "80";
 ///////////////////////////////////////////////////////////Test console//////////////////////////////////////////////////////////////////////////
           
           // Fonction pour tester le bon fonctionnement des cookies afin de recuperer width and height de l'image
@@ -107,6 +106,11 @@
            }
            img.src = geturlimplant();
 
+           // On ajoute un z-index pour avoir différentes couches et pour pouvoir tracer sur un implant
+           document.getElementById("layerDialog").style.zIndex = "2";
+            document.getElementById("canvas").style.zIndex = "2";
+            document.getElementById("dwv-drawDiv").style.zIndex = "10";
+
     /// fonction pour le chargement de l'image et le dessin du petit rectangle bleu pour la rotation
 
            /*function draw() {
@@ -143,7 +147,7 @@
              ctx.restore();
 
                  dragger(false);
-      /////////////////////////////////////////////////////////////////////////////////Button 1 déplacer ///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////Button 1 déplacer////////////////////////////////////////////////////////////
            /// Opération sur le button 1 déplacement
            var element = document.getElementById("button1");
            element.addEventListener('click', function(){
@@ -161,7 +165,8 @@
              var ctx = canvas.getContext("2d");*/
              ctx.restore();
            },false)
-////////////////////////////////////////////////////////////////////////////////////Button2 rotate//////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////Button 2 rotate///////////////////////////////////////////////////////////
           // Opération sur le button 2 rotate
           var element2 = document.getElementById("button2");
           element2.addEventListener('click', function() {
@@ -260,7 +265,8 @@
                handleMouseOut(e);
              });
            },false)
-///////////////////////////////////////////////////////// Button 3 Snap //////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////Button 3 Snap/////////////////////////////////////////////////////////////////
            /// 3ème button pour snap ( positionnement auto )
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
@@ -268,7 +274,7 @@
              function MaxId() {
                var xhr;
                canvas.width = canvasWidth;
-               canvas.height= canvasHeight;
+               canvas.height = canvasHeight;
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
@@ -286,7 +292,6 @@
                var x2 = docXML.getElementsByTagName("x2");
                var y2 = docXML.getElementsByTagName("y2");
 
-               // Il faut changer le nom des variables !!!
                var X1 = x1.item(0).firstChild.data;
                var Y1 = y1.item(0).firstChild.data;
                var X2 = x2.item(0).firstChild.data;
@@ -299,6 +304,7 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
+
                var coord_global_x1 = (((X1*imagelayer.width) / width)-44);//-((645)-(canvasWidth/2)));
                var coord_global_y1 = ((Y1*imagelayer.height) / height); 
                var deltaY = Y2-Y1;
@@ -311,6 +317,17 @@
                console.log("tan ",tan);
                var atan = Math.atan(tan)*-1;
                console.log("atan ",atan);
+
+               var coord_global_x1 = (((X1*imagelayer.width) / width)-45);//-((645)-(canvasWidth/2)));
+               var coord_global_y1 = ((Y1*imagelayer.height) / height);
+               var deltaY = Y2-Y1;
+               console.log("deltaY ",deltaY);
+               var hypotenus = Math.sqrt(Math.pow(X2-X1,2)+Math.pow(Y2-Y1,2));
+               console.log("hypotenus ",hypotenus);
+               var sinus = deltaY/hypotenus;
+               console.log("sinus ",sinus);
+               var asinus = Math.asin(sinus);
+               console.log("asinus ",asinus);
 
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264 ;
@@ -438,6 +455,7 @@
               ExportPDF();
             },false)
         },true)
+
 
     });
 
