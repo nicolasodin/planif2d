@@ -99,7 +99,7 @@ dwv.gui.Toolbox = function (app)
         open.onclick = function() { toggle("#openData"); };
         
         var implantPatient = document.createElement("button");
-        implantPatient.appendChild(document.createTextNode("implantPatient"));
+        implantPatient.appendChild(document.createTextNode("Implants et Patients"));
         implantPatient.onclick = function() { toggle("#implantPatient"); };
 
         var toolbox = document.createElement("button");
@@ -117,9 +117,6 @@ dwv.gui.Toolbox = function (app)
         var image = document.createElement("button");
         image.appendChild(document.createTextNode("Image"));
         image.onclick = function() { toggle("#layerDialog"); };
-        var image2 = document.createElement("button");
-        image2.appendChild(document.createTextNode("Image"));
-        image2.onclick = function() { toggle("#layerDialog"); };
 
         var info = document.createElement("button");
         info.appendChild(document.createTextNode("Info"));
@@ -136,7 +133,6 @@ dwv.gui.Toolbox = function (app)
         node.appendChild(history);
         node.appendChild(tags);
         node.appendChild(image);
-        node.appendChild(image2);
         node.appendChild(info);
         node.appendChild(help);
         

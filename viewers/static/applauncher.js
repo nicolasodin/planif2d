@@ -14,10 +14,12 @@ $(document).ready( function()
     // main application
     var myapp = new dwv.App();
     // initialise the application
+
+    // "tools": ["Scroll", "Window/Level", "Zoom/Pan", "Draw", "Livewire", "Filter"],
     myapp.init({
         "containerDivId": "dwv",
         "fitToWindow": true,
-        "tools": ["Scroll", "Window/Level", "Zoom/Pan", "Draw", "Livewire", "Filter"],
+        "tools": ["Scroll", "Window/Level", "Zoom/Pan", "Draw", "Filter"],
         "filters": ["Threshold", "Sharpen", "Sobel"],
         "shapes": ["Line", "Protractor", "Rectangle", "Roi", "Ellipse", "Circle"],
         "gui": ["tool", "load", "help", "undo", "version", "tags"],

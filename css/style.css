@@ -1,13 +1,10 @@
 
 body { 
-	background-color: #222; 
+	background-color: white; 
 	color: white;
 	margin: 10px; 
 	padding: 0;
-	float: right;
 	font-size: 80%;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 
 	-moz-transition: all 200ms linear;
@@ -35,26 +32,35 @@ body {
 table.tagList thead td { 
 	font-weight: bold; 
 }
-table.tagList td { 
-	border: 1px solid grey; 
+table.tagList td {
+	border: 1px solid grey;
 	padding: 2px; 
 }
 #tags form { 
 	width: 50%; 
 }
 
-
-#pageHeader h1 { 
-	display: inline-block; margin: 0; color: #fff; 
-}
 #pageHeader a { 
 	color: #ddf; 
 }
 #pageHeader #toolbar {
  	display: inline-block; float: right;
 }
+#logo {
+	background: url(../viewers/static/images/serf.jpg) no-repeat;
+	width: 170px;
+	height: 45px;
+	float: left;
+	margin-left: 40px;
+}
+#toolbar {
+	float: right;
+}
+
 #toolbox li:first-child {
- 	list-style-type: none; padding-bottom: 10px; margin-left: -20px; 
+ 	list-style-type: none; 
+ 	padding-bottom: 10px; 
+ 	margin-left: -20px; 
 }
 #pageMain {
 	position: absolute; 
@@ -62,7 +68,7 @@ table.tagList td {
 	width: 99%; 
 	bottom: 5px; 
 	left: 5px; 
-	background-color: #333; 
+	background-color: #000; 
 }
 #infotl { 
 	color: #333; 

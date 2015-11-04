@@ -241,10 +241,10 @@ dwv.App = function ()
             for ( var t = 0; t < config.tools.length; ++t ) {
                 switch( config.tools[t] ) {
                 case "Window/Level":
-                    toolList["Window/Level"] = new dwv.tool.WindowLevel(this);
+                    toolList["Implant"] = new dwv.tool.WindowLevel(this);
                     break;
                 case "Zoom/Pan":
-                    toolList["Zoom/Pan"] = new dwv.tool.ZoomAndPan(this);
+                    toolList["Zoom"] = new dwv.tool.ZoomAndPan(this);
                     break;
                 case "Scroll":
                     toolList.Scroll = new dwv.tool.Scroll(this);
