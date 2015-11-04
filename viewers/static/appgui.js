@@ -109,7 +109,11 @@ dwv.gui.Toolbox = function (app)
         var history = document.createElement("button");
         history.appendChild(document.createTextNode("History"));
         history.onclick = function() { toggle("#history"); };
-    
+        
+        var actionsImplant = document.createElement("button");
+        actionsImplant.appendChild(document.createTextNode("Actions implant"));
+        actionsImplant.onclick = function() { toggle("#actionsImplant"); };
+
         var tags = document.createElement("button");
         tags.appendChild(document.createTextNode("Tags"));
         tags.onclick = function() { toggle("#tags"); };
@@ -131,6 +135,7 @@ dwv.gui.Toolbox = function (app)
         node.appendChild(implantPatient);
         node.appendChild(toolbox);
         node.appendChild(history);
+        node.appendChild(actionsImplant);
         node.appendChild(tags);
         node.appendChild(image);
         node.appendChild(info);
@@ -195,14 +200,16 @@ dwv.gui.setup = function () {
         { primary: "ui-icon-comment" }, text: false });
     // create dialogs
     $("#openData").dialog({ position: 
-        {my: "left top", at: "left top", of: "#pageMain"} });
+        {my: "left top+10", at: "left top", of: "#pageMain"} });
     // Ajout d'une fenêtre pour intégrer les patients et les implants
     $("#implantPatient").dialog({ position: 
-        {my: "left top+160", at: "left top", of: "#pageMain"} });
+        {my: "left top+170", at: "left top", of: "#pageMain"} });
     $("#toolbox").dialog({ position: 
-        {my: "left top+320", at: "left top", of: "#pageMain"} });
+        {my: "left top+330", at: "left top", of: "#pageMain"} });
     $("#history").dialog({ position: 
-        {my: "left top+480", at: "left top", of: "#pageMain"} });
+        {my: "left top+490", at: "left top", of: "#pageMain"} });
+    $("#actionsImplant").dialog({ position: 
+        {my: "right top+10", at: "right top", of: "#pageMain"} });
     $("#tags").dialog({ position: 
         {my: "right top", at: "right top", of: "#pageMain"},
         autoOpen: false, width: 500, height: 590 });

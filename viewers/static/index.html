@@ -132,7 +132,7 @@
         </select>
       </p>
       <!-- Bouton qui permet d'exporter les données patients et l'image DICOM -->
-      <p><input type="button" id="button4" value="Export PDF" style="float: left;"></p>
+      <p><input type="button" id="button4" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Export PDF" style="float: left;"></p>
     </div>
 
     <!-- Toolbox -->
@@ -143,20 +143,21 @@
     <!-- History -->
     <div id="history" title="History"></div>
 
+    <!-- Actions implant -->
+    <div id="actionsImplant" title="Actions implant">
+      <p><input type="button" id="button3" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Snap" style="float: left; margin-right: 104px;"></p>
+      <p><input type="button" id="+Implant" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="+" style="float: left; margin-right: 12px;"></p>
+      <p><input type="button" id="-Implant" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="-" style="float: left;"></p><br>
+      <p><input type="button" id="button1" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Déplacement" style="float: left; margin-right: 50px; margin-top: 20px;"></p>
+      <p><input type="button" id="button2" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Rotation" style="float: left; margin-top: 20px;"></p><br>
+      <!-- <p><input type="button" id="reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="Reset" style="float: left"></p> -->
+    </div>
+
     <!-- Tags -->
     <div id="tags" title="Tags"></div>
 
     <!-- Help -->
     <div id="help" title="Help"></div>
-
-    <p><input type="button" id="reset" value="reset" style  ="float: right" /></p>
-
-    <p><input type="button" id="button1" value="deplacement" style="float: right; z-index: 1000"></p>
-    <p><input type="button" id="button2" value="rotate" style="float: right; z-index: 1000"></p>
-    <p><input type="button" id="button3" value="snap" style="float: right; z-index: 1000"></p>
-    <p><input type="button" id="+Implant" value="Monter l'implant" style="float: right; z-index: 1000"></p>
-    <p><input type="button" id="-Implant" value="Descendre l'implant" style="float: right; z-index: 1000"></p>
-
 
   
     <div class="drag" style="float: right">
