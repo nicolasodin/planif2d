@@ -79,6 +79,33 @@
             return url_ultime;
           }
 
+          function getImplantOffsetX() {
+            var id = id_liste;
+            console.log("id : ", id);
+            var xhr;
+            if (window.XMLHttpRequest) {
+              xhr = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+              xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            // On définit l'appel de la fonction au retour serveur
+            xhr.open("GET", "php/getimplant.php", false);
+            xhr.send(null);
+            xhr.responseText;
+            var docXML= xhr.responseXML;
+            var id_implant = docXML.getElementsByTagName("id");
+            var distOffsetXBDD = docXML.getElementsByTagName("distOffsetX");
+            for (var i = 0; i < id_implant.length; i++) {
+              if (id == id_implant.item(i).firstChild.data) {
+                var distOffsetXFinal =  distOffsetXBDD.item(i).firstChild.data;
+              }
+            }
+            console.log("distOffsetXFinal : ", distOffsetXFinal);
+            return distOffsetXFinal;
+          }
+
           var canvas = document.getElementById("canvas");
           var canvasWidth = 900;
           var canvasHeight = 800;
@@ -95,6 +122,96 @@
            var coefImage = facteurRedimensionnementImage();
 
            var coefImplant = CoefRedimensionnementImplant(id_liste, "2.8");
+
+           function MaxIdBis()
+           {
+            var xhr;
+             canvas.width = canvasWidth;
+             canvas.height = canvasHeight;
+             if (window.XMLHttpRequest) {
+               xhr = new XMLHttpRequest();
+             }
+             else if (window.ActiveXObject) {
+               xhr = new ActiveXObject("Microsoft.XMLHTTP");
+             }
+             // On définit l'appel de la fonction au retour serveur
+
+             xhr.open("GET", "php/getdata.php", false);
+             xhr.send(null);
+             xhr.responseText;
+             var docXML= xhr.responseXML;
+             var x1 = docXML.getElementsByTagName("x1");
+             var y1 = docXML.getElementsByTagName("y1");
+             var x2 = docXML.getElementsByTagName("x2");
+             var y2 = docXML.getElementsByTagName("y2");
+
+             var X1 = x1.item(0).firstChild.data;
+             var Y1 = y1.item(0).firstChild.data;
+             var X2 = x2.item(0).firstChild.data;
+             var Y2 = y2.item(0).firstChild.data;
+             console.log("this the max id coordonnée "+X1+","+Y1+" et "+X2+","+Y2);
+           
+             var distOffsetX = getImplantOffsetX();
+             var imagelayer = document.getElementById("dwv-imageLayer");
+             var width = readCookie("width");
+             var height = readCookie("height");
+             var coord_global_x1 = (((X1*imagelayer.width) / width));//-((645)-(canvasWidth/2)));
+             var coord_global_y1 = ((Y1*imagelayer.height) / height); 
+             var deltaY = Y2-Y1;
+             console.log("deltaY ",deltaY);
+             var deltaX = X2-X1;
+             console.log("deltaX ",deltaX);
+             
+             var tan = deltaX/deltaY
+             console.log("tan ",tan);
+             var atan = Math.atan(tan)*-1;
+             console.log("atan ",atan);
+             angleAlignement=atan
+             
+             ctx.save();
+
+             ctx.clearRect(0, 0, canvas.width, canvas.height);
+             console.log("coefImplant : ",coefImplant," coefImage.coefWidth : ", coefImage.coefWidth, " distOffsetX : ", distOffsetX, " distOffsetX*coefImplant*coefImage.coefWidth : ", distOffsetX*coefImplant*coefImage.coefWidth);
+             console.log("coord_global_x1 : ",coord_global_x1," coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth) : ", coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth));
+             final_coord_global_x1=coord_global_x1-(distOffsetX*coefImplant*coefImage.coefWidth);
+             final_coord_global_y1=coord_global_y1;
+             coefDirecteur=deltaY/deltaX;
+
+             ctx.translate(final_coord_global_x1,final_coord_global_y1);
+             ctx.rotate(angleAlignement);
+             ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+             ctx.restore();
+             //
+              console.log("Les cooordonnées ", coord_global_x1, coord_global_y1);
+              console.log("Image taille", img.width, "   ", img.height);
+              dragger(false);
+           }
+
+           function MoveUpBis(value)
+           {
+                final_coord_global_x1-=(value/coefDirecteur);
+                final_coord_global_y1-=value;
+                
+                ctx.save();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(final_coord_global_x1,final_coord_global_y1);
+                ctx.rotate(angleAlignement);
+                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+                ctx.restore();              
+           }
+
+           function MoveDownBis(value)
+           {
+                final_coord_global_x1+=(value/coefDirecteur);
+                final_coord_global_y1+=value;
+                
+                ctx.save();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(final_coord_global_x1,final_coord_global_y1);
+                ctx.rotate(angleAlignement);
+                ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+                ctx.restore();              
+           }
 
            img.onload = function () {
              /*w = img.width * coef.coefWidth * 2.2;
@@ -113,16 +230,14 @@
             ctx.restore();
             if (weSnap===true)
             {
-              MaxId();
+              MaxIdBis();
               if(mvtOffset>=0)
               {
-                MoveDown(mvtOffset);
-                mvtOffsetB=true;
+                MoveUpBis(mvtOffset);
               }
               else
               {
-                MoveUP(mvtOffset);
-                mvtOffsetB=true;
+                MoveDownBis(mvtOffset);
               }
             }
               
@@ -294,32 +409,7 @@
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x, y) du centre de l'axe du trapèze
-            function getImplantOffsetX() {
-              var id = id_liste;
-              console.log("id : ", id);
-              var xhr;
-              if (window.XMLHttpRequest) {
-                xhr = new XMLHttpRequest();
-              }
-              else if (window.ActiveXObject) {
-                xhr = new ActiveXObject("Microsoft.XMLHTTP");
-              }
-
-              // On définit l'appel de la fonction au retour serveur
-              xhr.open("GET", "php/getimplant.php", false);
-              xhr.send(null);
-              xhr.responseText;
-              var docXML= xhr.responseXML;
-              var id_implant = docXML.getElementsByTagName("id");
-              var distOffsetXBDD = docXML.getElementsByTagName("distOffsetX");
-              for (var i = 0; i < id_implant.length; i++) {
-                if (id == id_implant.item(i).firstChild.data) {
-                  var distOffsetXFinal =  distOffsetXBDD.item(i).firstChild.data;
-                }
-              }
-              console.log("distOffsetXFinal : ", distOffsetXFinal);
-              return distOffsetXFinal;
-            }
+            
              function MaxId() {
                weSnap=true;
                var xhr;
@@ -396,6 +486,8 @@
              };
              MaxId();
            },false)
+
+          // Déplace la prothèse suivant l'axe centrale du trapèze vers le haut
           var PlusImplant = document.getElementById("+Implant");
           PlusImplant.addEventListener('click', function() {
               function MoveUP(value){
@@ -403,12 +495,8 @@
                 final_coord_global_x1-=(value/coefDirecteur);
                 final_coord_global_y1-=value;
 
-                if(mvtOffsetB===false)
-                {
-                  mvtOffset-=5;
-                  mvtOffsetB=false;
-                }
-                
+                mvtOffset-=5;
+                                
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.translate(final_coord_global_x1,final_coord_global_y1);
@@ -420,18 +508,15 @@
              MoveUP(5);
            },false)
 
+          // Déplace la prothèse suivant l'axe centrale du trapèze vers le bas
           var MoinsImplant = document.getElementById("-Implant");
           MoinsImplant.addEventListener('click', function() {
               function MoveDown(value){
         
                 final_coord_global_x1+=(value/coefDirecteur);
                 final_coord_global_y1+=value;
-
-                if(mvtOffsetB===false)
-                {
-                  mvtOffset+=5;
-                  mvtOffsetB=false;
-                }
+                
+                mvtOffset+=5;
                                 
                 ctx.save();
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
