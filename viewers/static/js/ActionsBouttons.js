@@ -444,7 +444,7 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x1 = (((X1*imagelayer.width) / width));//-((645)-(canvasWidth/2)));
+               var coord_global_x1 = (((X1*imagelayer.width) / width)); //-((645)-(canvasWidth/2)));
                var coord_global_y1 = ((Y1*imagelayer.height) / height); 
                var deltaY = Y2-Y1;
                console.log("deltaY ",deltaY);
@@ -458,7 +458,7 @@
                console.log("atan ",atan);
                angleAlignement=atan
                // Démonstration
-               /*  var houss1 = ( X * 1078) /3264 ;
+               /*  var houss1 = ( X * 1078) /3264;
                var houss2 = ( Y * 806) / 2448;*/
               /* var canvas = document.getElementById("canvas");
                var ctx = canvas.getContext("2d");*/
@@ -505,10 +505,9 @@
                 ctx.restore();
               
               };
-             MoveUP(5);
+             MoveUP(5)
            },false)
 
-          // Déplace la prothèse suivant l'axe centrale du trapèze vers le bas
           var MoinsImplant = document.getElementById("-Implant");
           MoinsImplant.addEventListener('click', function() {
               function MoveDown(value){
