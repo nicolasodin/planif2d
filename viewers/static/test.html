@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="con"></div>
+<script type="text/javascript" src="../../ext/kinetic/kinetic-v5.1.1-06.10.min.js"></script>
+<script>
+    var stage = new Kinetic.Stage({
+        container: 'con',
+        width: 578,
+        height: 200
+    });
+    var layer = new Kinetic.Layer();
+    stage.add(layer);
+    var line = new Kinetic.Line({
+        stroke : "red",
+        points : [10, 10, 250, 135],
+        strokeWidth : 10,
+        draggable: true
+    });
+    var tooltip;
+    function showTooltip() {
+        var x = line.points()[0] / 2 + line.points()[2] / 2 + line.x();
+        var y = line.points()[1] / 2 + line.points()[3] / 2 + line.y();
+        tooltip = new Kinetic.Label({
+            x: x,
+            y: y,
+            opacity: 0.75
+        });
+
+        tooltip.add(new Kinetic.Tag({
+            fill: 'green',
+            pointerDirection: 'down',
+            pointerWidth: 10,
+            pointerHeight: 10,
+            lineJoin: 'round',
+            shadowColor: 'black',
+            shadowBlur: 3,
+            shadowOffset: {x:2,y:2},
+            shadowOpacity: 0.1
+        }));
+
+        tooltip.add(new Kinetic.Text({
+            text: 'Tooltip pointing down',
+            fontFamily: 'Calibri',
+            fontSize: 18,
+            padding: 5,
+            fill: 'white'
+        }));
+        layer.add(tooltip);
+        layer.draw();
+    }
+    layer.add(line);
+    line.on('mouseenter', function() {
+        showTooltip();
+    });
+    line.on('mouseleave', function() {
+        tooltip.destroy();
+        layer.draw();
+    });
+    line.on('dragstart', function() {
+        tooltip.destroy();
+        layer.draw();
+    });
+    layer.draw();
+
+</script>
+</body>
+</html>

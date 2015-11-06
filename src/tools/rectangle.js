@@ -52,12 +52,15 @@ dwv.tool.RectangleFactory.prototype.create = function (points, style, image)
     // quantification
     var quant = image.quantifyRect( rectangle );
     var cm2 = quant.surface / 100;
+    var widh = quant.stdDev;
     var str = cm2.toPrecision(4) + " cm2";
+    var str2 = widh + " test";
     // quantification text
     var ktext = new Kinetic.Text({
         x: rectangle.getBegin().getX(),
         y: rectangle.getEnd().getY() + 10,
-        text: str,
+        text: str2,
+       // text: str,
         fontSize: style.getScaledFontSize(),
         fontFamily: style.getFontFamily(),
         fill: style.getLineColour(),

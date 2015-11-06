@@ -98,6 +98,10 @@ dwv.gui.Toolbox = function (app)
         open.appendChild(document.createTextNode("File"));
         open.onclick = function() { toggle("#openData"); };
         
+        var implantPatient = document.createElement("button");
+        implantPatient.appendChild(document.createTextNode("Implants et Patients"));
+        implantPatient.onclick = function() { toggle("#implantPatient"); };
+
         var toolbox = document.createElement("button");
         toolbox.appendChild(document.createTextNode("Toolbox"));
         toolbox.onclick = function() { toggle("#toolbox"); };
@@ -105,7 +109,11 @@ dwv.gui.Toolbox = function (app)
         var history = document.createElement("button");
         history.appendChild(document.createTextNode("History"));
         history.onclick = function() { toggle("#history"); };
-    
+        
+        var actionsImplant = document.createElement("button");
+        actionsImplant.appendChild(document.createTextNode("Actions implant"));
+        actionsImplant.onclick = function() { toggle("#actionsImplant"); };
+
         var tags = document.createElement("button");
         tags.appendChild(document.createTextNode("Tags"));
         tags.onclick = function() { toggle("#tags"); };
@@ -113,9 +121,6 @@ dwv.gui.Toolbox = function (app)
         var image = document.createElement("button");
         image.appendChild(document.createTextNode("Image"));
         image.onclick = function() { toggle("#layerDialog"); };
-        var image2 = document.createElement("button");
-        image2.appendChild(document.createTextNode("Image"));
-        image2.onclick = function() { toggle("#layerDialog"); };
 
         var info = document.createElement("button");
         info.appendChild(document.createTextNode("Info"));
@@ -127,11 +132,12 @@ dwv.gui.Toolbox = function (app)
     
         var node = document.getElementById("toolbar");
         node.appendChild(open);
+        node.appendChild(implantPatient);
         node.appendChild(toolbox);
         node.appendChild(history);
+        node.appendChild(actionsImplant);
         node.appendChild(tags);
         node.appendChild(image);
-        node.appendChild(image2);
         node.appendChild(info);
         node.appendChild(help);
         
@@ -194,11 +200,16 @@ dwv.gui.setup = function () {
         { primary: "ui-icon-comment" }, text: false });
     // create dialogs
     $("#openData").dialog({ position: 
-        {my: "left top", at: "left top", of: "#pageMain"} });
+        {my: "left top+10", at: "left top", of: "#pageMain"} });
+    // Ajout d'une fenêtre pour intégrer les patients et les implants
+    $("#implantPatient").dialog({ position: 
+        {my: "left top+170", at: "left top", of: "#pageMain"} });
     $("#toolbox").dialog({ position: 
-        {my: "left top+160", at: "left top", of: "#pageMain"} });
+        {my: "left top+330", at: "left top", of: "#pageMain"} });
     $("#history").dialog({ position: 
-        {my: "left top+350", at: "left top", of: "#pageMain"} });
+        {my: "left top+490", at: "left top", of: "#pageMain"} });
+    $("#actionsImplant").dialog({ position: 
+        {my: "right top+10", at: "right top", of: "#pageMain"} });
     $("#tags").dialog({ position: 
         {my: "right top", at: "right top", of: "#pageMain"},
         autoOpen: false, width: 500, height: 590 });
@@ -211,17 +222,15 @@ dwv.gui.setup = function () {
         {my: "left+320 top", at: "left top", of: "#pageMain"}});
     // default size
 
+    $("#layerDialog").dialog({ width: "auto", resizable: true});
 
-
-    $("#layerDialog").dialog({ width: "auto", resizable: false});
-
-    $(".drop").droppable({
+   /* $(".drop").droppable({
         drop: function(event, ui){
             console.log(ui.draggable.context)
             OR
             console.log(ui.draggable.clone() )
         }
-    });
+    });*/
 
     // Resizable but keep aspect ratio
     // TODO it seems to add a border that bothers getting the cursor position...

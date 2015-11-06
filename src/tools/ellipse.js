@@ -82,6 +82,7 @@ dwv.tool.EllipseFactory.prototype.create = function (points, style, image)
  */ 
 dwv.tool.UpdateEllipse = function (anchor, image)
 {
+    console.log("UpdateEllipse OK");
     // parent group
     var group = anchor.getParent();
     // associated shape

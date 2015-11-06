@@ -258,6 +258,16 @@ dwv.tool.ShapeEditor = function (app)
             addAnchor(group, ellipseX+radius.x, ellipseY+radius.y, 'bottomRight');
             addAnchor(group, ellipseX-radius.x, ellipseY+radius.y, 'bottomLeft');
         }
+        else if ( shape instanceof Kinetic.Circle ) {
+            updateFunction = dwv.tool.UpdateCircle;
+            var circleX = shape.x();
+            var circleY = shape.y();
+            var radiusCircle = shape.radius();
+            addAnchor(group, circleX, circleY, 'centerCircleAnchor');
+            addAnchor(group, circleX+radiusCircle, circleY, 'radiusPoint');
+            //addAnchor(group, circleX+radiusCircle, circleY+radiusCircle, 'bottomRight');
+            //addAnchor(group, circleX-radiusCircle, circleY+radiusCircle, 'bottomLeft');
+        }
         // add group to layer
         shape.getLayer().add( group );
     }
@@ -346,6 +356,9 @@ dwv.tool.ShapeEditor = function (app)
         }
         else if ( shape instanceof Kinetic.Ellipse ) {
             cmdName = "ellipse";
+        }
+        else if ( shape instanceof Kinetic.Circle ) {
+            cmdName = "circle";
         }
 
         // drag start listener

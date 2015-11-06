@@ -19,7 +19,7 @@ dwv.tool.DrawGroupCommand = function (group, name, layer)
      * @method getName
      * @return {String} The command name.
      */
-    this.getName = function () { return "Draw-"+name; };
+    this.getName = function () { return "Dessiner-"+name; };
     /**
      * Execute the command.
      * @method execute
@@ -662,6 +662,9 @@ dwv.tool.Draw = function (app, shapeFactoryList)
         else if ( shape instanceof Kinetic.Ellipse ) {
             cmdName = "ellipse";
         }
+        else if ( shape instanceof Kinetic.Circle ) {
+            cmdName = "circle";
+        }
         
         // shape colour
         var colour = shape.stroke();
@@ -867,7 +870,7 @@ dwv.tool.Draw = function (app, shapeFactoryList)
 dwv.tool.Draw.prototype.getHelp = function()
 {
     return {
-        'title': "Draw",
+        'title': "Dessiner",
         'brief': "Allows to draw shapes on the image. " +
             "Choose the shape and its colour from the drop down menus. Once created, shapes " +
             "can be edited by selecting them. Anchors will appear and allow specific shape edition. " +
