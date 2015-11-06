@@ -17,6 +17,9 @@
 		echo "<y1>" . $row[2] . "</y1>\n";
 		echo "<x2>" . $row[3] . "</x2>\n";
 		echo "<y2>" . $row[4] . "</y2>\n";
+		echo "<circleCenterX>" . $row[5] . "</circleCenterX>";
+		echo "<circleCenterY>" . $row[6] . "</circleCenterY>";
+
 	}
 	echo "</exemple>\n";
 	
