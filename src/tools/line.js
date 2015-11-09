@@ -49,7 +49,7 @@ dwv.tool.LineFactory.prototype.create = function (points, style, image)
     });
     // quantification
     var quant = image.quantifyLine( line );
-    var str = quant.length.toPrecision(4) + " mm";
+    var str = quant.length.toPrecision(4);
     // quantification text
     var dX = line.getBegin().getX() > line.getEnd().getX() ? 0 : -1;
     var dY = line.getBegin().getY() > line.getEnd().getY() ? -1 : 0.5;
@@ -119,7 +119,7 @@ dwv.tool.UpdateLine = function (anchor, image)
     var p2d1 = new dwv.math.Point2D(end.x(), end.y());
     var line = new dwv.math.Line(p2d0, p2d1);
     var quant = image.quantifyLine( line );
-    var str = quant.length.toPrecision(4) + " mm";
+    var str = quant.length.toPrecision(4);
     var dX = line.getBegin().getX() > line.getEnd().getX() ? 0 : -1;
     var dY = line.getBegin().getY() > line.getEnd().getY() ? -1 : 0.5;
     var textPos = { 

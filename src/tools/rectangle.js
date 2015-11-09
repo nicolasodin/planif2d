@@ -53,13 +53,13 @@ dwv.tool.RectangleFactory.prototype.create = function (points, style, image)
     var quant = image.quantifyRect( rectangle );
     var cm2 = quant.surface / 100;
     var widh = quant.stdDev;
-    var str = cm2.toPrecision(4) + " cm2";
-    var str2 = widh + " test";
+    var str = cm2.toPrecision(4);
+    //var str2 = widh + " test";
     // quantification text
     var ktext = new Kinetic.Text({
         x: rectangle.getBegin().getX(),
         y: rectangle.getEnd().getY() + 10,
-        text: str2,
+        text: str,
        // text: str,
         fontSize: style.getScaledFontSize(),
         fontFamily: style.getFontFamily(),
@@ -149,7 +149,7 @@ dwv.tool.UpdateRect = function (anchor, image)
     var rect = new dwv.math.Rectangle(p2d0, p2d1);
     var quant = image.quantifyRect( rect );
     var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
+    var str = cm2.toPrecision(4);
     var textPos = { 'x': rect.getBegin().getX(), 'y': rect.getEnd().getY() + 10 };
     ktext.position(textPos);
     ktext.text(str);

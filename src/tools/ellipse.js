@@ -54,7 +54,7 @@ dwv.tool.EllipseFactory.prototype.create = function (points, style, image)
     // quantification
     var quant = image.quantifyEllipse( ellipse );
     var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
+    var str = cm2.toPrecision(4);
     // quantification text
     var ktext = new Kinetic.Text({
         x: ellipse.getCenter().getX(),
@@ -149,7 +149,7 @@ dwv.tool.UpdateEllipse = function (anchor, image)
     var ellipse = new dwv.math.Ellipse(center, radiusX, radiusY);
     var quant = image.quantifyEllipse( ellipse );
     var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
+    var str = cm2.toPrecision(4);
     var textPos = { 'x': center.x, 'y': center.y };
     ktext.position(textPos);
     ktext.text(str);
