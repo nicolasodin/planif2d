@@ -235,7 +235,7 @@
             ctx.restore();
 
             console.log("weSnap:", weSnap)
-            if (weSnap==true)
+            /*if (weSnap==true)
             {
               MaxIdBis();
               if(mvtOffset>=0)
@@ -246,7 +246,7 @@
               {
                 MoveDownBis(mvtOffset);
               }
-            }
+            }*/
               
            }
            img.src = geturlimplant();
@@ -416,12 +416,9 @@
            var element = document.getElementById("button3");
            element.addEventListener('click', function(){
             // Fonction qui permet de récuperer l'id maximum de getdata et qui correspond à (x, y) du centre de l'axe du trapèze
-            
-             function MaxId() {
-               weSnap=true;
+            function getRoiCoordonnee()
+            {
                var xhr;
-               canvas.width = canvasWidth;
-               canvas.height = canvasHeight;
                if (window.XMLHttpRequest) {
                  xhr = new XMLHttpRequest();
                }
@@ -437,19 +434,53 @@
                var x1 = docXML.getElementsByTagName("x1");
                var y1 = docXML.getElementsByTagName("y1");
                var x2 = docXML.getElementsByTagName("x2");
-               var y2 = docXML.getElementsByTagName("y2");    
-               var circleCenterX = docXML.getElementsByTagName("circleCenterX");
-               var circleCenterY = docXML.getElementsByTagName("circleCenterY");
+               var y2 = docXML.getElementsByTagName("y2"); 
 
+               return {
+                X1 : x1.item(0).firstChild.data,
+                Y1 : y1.item(0).firstChild.data,
+                X2 : x2.item(0).firstChild.data,
+                Y2 : y2.item(0).firstChild.data
+               }
+            }
 
-               var X1 = x1.item(0).firstChild.data;
-               var Y1 = y1.item(0).firstChild.data;
-               var X2 = x2.item(0).firstChild.data;
-               var Y2 = y2.item(0).firstChild.data;
-               var CircleCenterX = circleCenterX.item(0).firstChild.data;
-               var CircleCenterY = circleCenterY.item(0).firstChild.data;
+            function getCicleCoordonnee()
+            {
+               var xhr;
+               if (window.XMLHttpRequest) {
+                 xhr = new XMLHttpRequest();
+               }
+               else if (window.ActiveXObject) {
+                 xhr = new ActiveXObject("Microsoft.XMLHTTP");
+               }
+               // On définit l'appel de la fonction au retour serveur
 
-               console.log("this the max id coordonnée "+X1+","+Y1+" et "+X2+","+Y2);
+               xhr.open("GET", "php/getDataCircle.php", false);
+               xhr.send(null);
+               xhr.responseText;
+               var docXML= xhr.responseXML;
+               var x = docXML.getElementsByTagName("circleCenterX");
+               var y = docXML.getElementsByTagName("circleCenterY");
+
+               return {
+                X : x.item(0).firstChild.data,
+                Y : y.item(0).firstChild.data
+               }
+            }
+             function MaxId() {
+               weSnap=true;
+
+               canvas.width = canvasWidth;
+               canvas.height = canvasHeight;
+
+               var roiCoordonnee = getRoiCoordonnee();
+
+               console.log("this the Roi coordonnée "+ roiCoordonnee.X1+", "+roiCoordonnee.Y1+" et "+roiCoordonnee.X2+", "+roiCoordonnee.Y2);
+
+               var circleCoordonnee = getCicleCoordonnee();
+
+               console.log("this the Circle coordonnée "+ circleCoordonnee.X+", "+circleCoordonnee.Y);
+
               // function showCoords(event) {
              /*  canvas.width = canvas.width *2 ;
                canvas.height = canvas.height *2 ;*/
@@ -457,11 +488,11 @@
                var imagelayer = document.getElementById("dwv-imageLayer");
                var width = readCookie("width");
                var height = readCookie("height");
-               var coord_global_x1 = (((X1*imagelayer.width) / width)); //-((645)-(canvasWidth/2)));
-               var coord_global_y1 = ((Y1*imagelayer.height) / height); 
-               var deltaY = Y2-Y1;
+               var coord_global_x1 = (((roiCoordonnee.X1*imagelayer.width) / width)); //-((645)-(canvasWidth/2)));
+               var coord_global_y1 = ((roiCoordonnee.Y1*imagelayer.height) / height); 
+               var deltaY = roiCoordonnee.Y2-roiCoordonnee.Y1;
                console.log("deltaY ",deltaY);
-               var deltaX = X2-X1;
+               var deltaX = roiCoordonnee.X2-roiCoordonnee.X1;
                console.log("deltaX ",deltaX);
                //var hypotenus = Math.sqrt(Math.pow(X2-X1,2)+Math.pow(Y2-Y1,2));
                //console.log("hypotenus ",hypotenus);
@@ -481,23 +512,37 @@
 
                var bonneHauteur = false;
                var b=0;
-               console.log("b : ", b);
+               console.log("tanAngleRad ",tanAngleRad);
+               console.log("circleCoordonnee.X : ",circleCoordonnee.X);
+               console.log("circleCoordonnee.Y : ",circleCoordonnee.Y);
+               console.log("Les cooordonnées ", final_coord_global_x1, final_coord_global_y1);
+
+
                while(bonneHauteur==false)
                {
-                var y = tanAngleRad*CircleCenterX+b;
-                console.log("y dans while :", y, " CircleCenterY : ",CircleCenterY);
+                var y = parseInt(tanAngleRad*circleCoordonnee.X+b);
+                console.log("y dans while :", y, " circleCoordonnee.Y : ",circleCoordonnee.Y);
                 console.log("b dans while :", b);
-                if(y==CircleCenterY)
+                if(y==circleCoordonnee.Y || b>=200)
                 {
                   bonneHauteur=true;
+                  final_coord_global_x1-=(b/coefDirecteur);
+                  final_coord_global_y1-=b;
+                                  
+                  ctx.save();
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  ctx.translate(final_coord_global_x1,final_coord_global_y1);
+                  ctx.rotate(angleAlignement);
+                  ctx.drawImage(img, 0, 0, img.width, img.height, -w / 2, -h / 2, w, h);
+                  ctx.restore();
                 }
                 else
                 {
                   b++;
                   console.log("b: ", b);
-                  //MoveUpBis(1);
                 }
                }
+
                // Démonstration
                /*  var houss1 = ( X * 1078) /3264;
                var houss2 = ( Y * 806) / 2448;*/
@@ -523,7 +568,7 @@
 
                
 
-                console.log("Les cooordonnées ", coord_global_x1, coord_global_y1);
+                console.log("Les cooordonnées ", final_coord_global_x1, final_coord_global_y1);
                 console.log("Image taille", img.width, "   ", img.height);
                 dragger(false);
                //}
