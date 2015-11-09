@@ -162,11 +162,11 @@
              var deltaX = X2-X1;
              console.log("deltaX ",deltaX);
              
-             var tan = deltaX/deltaY;
+             var tan = deltaX/deltaY
              console.log("tan ",tan);
              var atan = Math.atan(tan)*-1;
              console.log("atan ",atan);
-             angleAlignement=atan;
+             angleAlignement=atan
              
              ctx.save();
 
