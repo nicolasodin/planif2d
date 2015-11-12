@@ -50,27 +50,11 @@ dwv.tool.RectangleFactory.prototype.create = function (points, style, image)
         name: "shape"
     });
     // quantification
-    var quant = image.quantifyRect( rectangle );
-    var cm2 = quant.surface / 100;
-    var widh = quant.stdDev;
-    var str = cm2.toPrecision(4) + " cm2";
-    var str2 = widh + " test";
-    // quantification text
-    var ktext = new Kinetic.Text({
-        x: rectangle.getBegin().getX(),
-        y: rectangle.getEnd().getY() + 10,
-        text: str2,
-       // text: str,
-        fontSize: style.getScaledFontSize(),
-        fontFamily: style.getFontFamily(),
-        fill: style.getLineColour(),
-        name: "text"
-    });
+    
     // return group
     var group = new Kinetic.Group();
     group.name("rectangle-group");
     group.add(kshape);
-    group.add(ktext);
     return group;
 };
 
@@ -147,10 +131,4 @@ dwv.tool.UpdateRect = function (anchor, image)
     var p2d0 = new dwv.math.Point2D(topLeft.x(), topLeft.y());
     var p2d1 = new dwv.math.Point2D(bottomRight.x(), bottomRight.y());
     var rect = new dwv.math.Rectangle(p2d0, p2d1);
-    var quant = image.quantifyRect( rect );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
-    var textPos = { 'x': rect.getBegin().getX(), 'y': rect.getEnd().getY() + 10 };
-    ktext.position(textPos);
-    ktext.text(str);
 };

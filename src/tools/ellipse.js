@@ -52,24 +52,11 @@ dwv.tool.EllipseFactory.prototype.create = function (points, style, image)
         name: "shape"
     });
     // quantification
-    var quant = image.quantifyEllipse( ellipse );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
-    // quantification text
-    var ktext = new Kinetic.Text({
-        x: ellipse.getCenter().getX(),
-        y: ellipse.getCenter().getY(),
-        text: str,
-        fontSize: style.getScaledFontSize(),
-        fontFamily: style.getFontFamily(),
-        fill: style.getLineColour(),
-        name: "text"
-    });
+    
     // return group
     var group = new Kinetic.Group();
     group.name("ellipse-group");
     group.add(kshape);
-    group.add(ktext);
     return group;
 };
 
@@ -147,10 +134,5 @@ dwv.tool.UpdateEllipse = function (anchor, image)
     }
     // update text
     var ellipse = new dwv.math.Ellipse(center, radiusX, radiusY);
-    var quant = image.quantifyEllipse( ellipse );
-    var cm2 = quant.surface / 100;
-    var str = cm2.toPrecision(4) + " cm2";
-    var textPos = { 'x': center.x, 'y': center.y };
-    ktext.position(textPos);
-    ktext.text(str);
+    
 };
