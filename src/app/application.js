@@ -273,6 +273,9 @@ dwv.App = function ()
                             case "Circle":
                                 shapeList.Circle = dwv.tool.CircleFactory;
                                 break;
+                            case "Meter":
+                                shapeList.Meter = dwv.tool.MeterFactory;
+                                break;
                             }
                         }
                         toolList.Draw = new dwv.tool.Draw(this, shapeList);
