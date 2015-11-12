@@ -42,6 +42,8 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
     // add input points to the ROI
     roi.addPoints(points);
     // points stored the kineticjs way
+    var Yarr = [];
+    var Xarr = [];
     var arr = [];
     var aide = true;
 
@@ -52,7 +54,7 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
 
         arr.push( roi.getPoint(i).getX() );
         arr.push( roi.getPoint(i).getY() );
-
+        Yarr.push( roi.getPoint(i).getY());
         if (arr.length >= 8 ) {
             aide = false;
         }
@@ -67,11 +69,22 @@ dwv.tool.RoiFactory.prototype.create = function (points, style /*, image*/)
         closed: true
     });
 
+    Yarr.sort(function(a, b){return a-b});
+    for (var i = 0; i < Yarr.length; i++) {
+        for (var j = 1; j < arr.length; j+=2) {
+            if(Yarr[i]==arr[j])
+            {
+                Xarr.push(arr[j-1]);
+            }
+        };
+    };
+    
+    var x1 = Xarr[2] / 2 + Xarr[3] / 2 ;
+    var y1 = Yarr[2] / 2 + Yarr[3] / 2 ;
+    var x2 = Xarr[0] / 2 + Xarr[1] / 2 ;
+    var y2 = Yarr[0] / 2 + Yarr[1] / 2 ;
+
     var centre = [] ;
-    var x1 = arr[0] / 2 + arr[2] / 2 ;
-    var y1 = arr[1] / 2 + arr[3] / 2 ;
-    var x2 = arr[4] / 2 + arr[6] / 2 ;
-    var y2 = arr[5] / 2 + arr[7] / 2 ;
     centre.push(x1);
     centre.push(y1);
     centre.push(x2);
@@ -192,10 +205,27 @@ dwv.tool.UpdateRoi = function (anchor /*, image*/)
         return node.name() === 'shape2';
     })[0];
     // update self
-    var x1 = points[0] / 2 + points[2] / 2 ;
-    var y1 = points[1] / 2 + points[3] / 2 ;
-    var x2 = points[4] / 2 + points[6] / 2 ;
-    var y2 = points[5] / 2 + points[7] / 2 ;
+    var Xarr = [];
+    var Yarr = [];
+
+    for (var i = 1; i < points.length; i+=2) {
+        Yarr.push(points[i]);
+    };
+
+    Yarr.sort(function(a, b){return a-b});
+    for (var i = 0; i < Yarr.length; i++) {
+        for (var j = 1; j < points.length; j+=2) {
+            if(Yarr[i]==points[j])
+            {
+                Xarr.push(points[j-1]);
+            }
+        };
+    };
+    
+    var x1 = Xarr[2] / 2 + Xarr[3] / 2 ;
+    var y1 = Yarr[2] / 2 + Yarr[3] / 2 ;
+    var x2 = Xarr[0] / 2 + Xarr[1] / 2 ;
+    var y2 = Yarr[0] / 2 + Yarr[1] / 2 ;
 
     kline.points( [x1,y1,x2,y2] );
    
