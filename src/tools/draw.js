@@ -650,7 +650,14 @@ dwv.tool.Draw = function (app, shapeFactoryList)
                 cmdName = "line";
             }
             else if ( shape.points().length == 6 ) {
-                cmdName = "protractor";
+                if(shape.points[0]==shape.points[4] && shape.points[3]==shape.points[5])
+                {
+                    cmdName = "meter";
+                }
+                else
+                {
+                    cmdName = "protractor";
+                }                
             }
             else {
                 cmdName = "roi";

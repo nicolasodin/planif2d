@@ -219,11 +219,24 @@ dwv.tool.ShapeEditor = function (app)
                     addAnchor(group, p1x, p1y, 'end');
                 }
                 else {
-                    updateFunction = dwv.tool.UpdateProtractor;
-                    addAnchor(group, p1x, p1y, 'mid');
-                    var p2x = points[4] + shape.x();
-                    var p2y = points[5] + shape.y();
-                    addAnchor(group, p2x, p2y, 'end');
+
+                    if(shape.points[0]==shape.points[4] && shape.points[3]==shape.points[5])
+                    {
+                        updateFunction = dwv.tool.UpdateLine;
+                        addAnchor(group, p1x, p1y, 'mid');
+                        var p2x = points[4] + shape.x();
+                        var p2y = points[5] + shape.y();
+                        addAnchor(group, p2x, p2y, 'end');
+                    }
+                    else
+                    {
+                        updateFunction = dwv.tool.UpdateProtractor;
+                        addAnchor(group, p1x, p1y, 'mid');
+                        var p2x = points[4] + shape.x();
+                        var p2y = points[5] + shape.y();
+                        addAnchor(group, p2x, p2y, 'end');
+                    }                
+                    
                 }
             }
             else {

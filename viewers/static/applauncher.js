@@ -21,7 +21,7 @@ $(document).ready( function()
         "fitToWindow": true,
         "tools": ["Scroll", "Window/Level", "Zoom/Pan", "Draw", "Filter"],
         "filters": ["Threshold", "Sharpen", "Sobel"],
-        "shapes": ["Line", "Protractor", "Rectangle", "Roi", "Ellipse", "Circle"],
+        "shapes": ["Line", "Protractor", "Rectangle", "Roi", "Ellipse", "Circle", "Meter"],
         "gui": ["tool", "load", "help", "undo", "version", "tags"],
         "isMobile": false
     });
